@@ -1,0 +1,49 @@
+﻿@{
+    var description = "HITMAN status website provides the current status and incident reporting for HITMAN online services.";
+    var title = ViewData["Title"] != null ? string.Format("{0} - HITMAN Status", ViewData["Title"]) : "HITMAN Status";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="@description" />
+    <meta name="keywords" content="HITMAN, online, services, status" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@title" />
+    <meta property="og:description" content="@description" />
+    <meta property="og:url" content="https://hitmanstat.us/" />
+    <meta name="apple-mobile-web-app-title" content="@title" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="@title" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>@title</title>
+    <link rel="stylesheet" href="~/css/stylesheets.min.css" asp-append-version="true" />
+</head>
+<body class="d-flex flex-column">
+    <header>
+        <partial name="_Navbar">
+    </header>
+
+    <div id="backend-error-container"></div>
+
+    <div class="container">
+        <main role="main" class="flex-fill">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer mt-auto bg-dark box-shadow">
+        <div class="container">
+            <div class="text-center text-muted">
+                <p>&copy; 2017 - @DateTime.Now.Year HITMAN Status made with &hearts; by Hardware</p>
+                <p>HITMAN&trade; is a trademark owned and exclusively licensed to <a href="https://www.ioi.dk/">Io-Interactive A/S</a></p>
+            </div>
+        </div>
+    </footer>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

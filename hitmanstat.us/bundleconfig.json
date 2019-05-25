@@ -1,0 +1,26 @@
+﻿[
+  {
+    "outputFileName": "wwwroot/css/stylesheets.min.css",
+    "inputFiles": [
+      "Lib/external/twitter-bootstrap/css/bootstrap.min.css",
+      "Lib/local/css/site.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/scripts.min.js",
+    "inputFiles": [
+      "Lib/external/jquery/jquery.min.js",
+      "Lib/external/twitter-bootstrap/js/bootstrap.bundle.min.js",
+      "Lib/external/mithril/mithril.min.js",
+      "Lib/external/moment.js/moment.min.js",
+      "Lib/local/js/site.js",
+      "Lib/local/js/mithril/models/*.js",
+      "Lib/local/js/mithril/views/*.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  }
+]

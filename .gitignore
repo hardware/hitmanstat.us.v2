@@ -338,3 +338,10 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+#
+# CUSTOM 
+#
+/hitmanstat.us/lib/external
+/hitmanstat.us/wwwroot/css/stylesheets.min.css
+/hitmanstat.us/wwwroot/js/scripts.min.js

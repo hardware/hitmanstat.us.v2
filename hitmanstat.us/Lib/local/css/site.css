@@ -1,0 +1,256 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+nav.bg-dark {
+    background-color: rgba(52, 58, 64, 0.68) !important;
+}
+
+#next-refresh {
+    color: #02bdda;
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.card {
+    border: none;
+}
+
+.card-body {
+    text-align: center;
+    padding: 1.0rem;
+}
+
+.card-header {
+    height: 30px;
+}
+
+.card-header.up {
+    background-color: #61B329;
+}
+
+.card-header.maintenance {
+    background-color: #FFC107;
+}
+
+.card-header.warn {
+    background-color: #FF6A00;
+}
+
+.card-header.down, .card-header.error {
+    background-color: #CC0000;
+}
+
+.card-header.unknown, .card-header.loading {
+    background-color: #ccc;
+}
+
+.card-text {
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.card-text.up {
+    color: #61B329;
+}
+
+.card-text.maintenance {
+    color: #FFC107;
+}
+
+.card-text.warn {
+    color: #FF6A00;
+}
+
+.card-text.down, .card-text.error {
+    color: #CC0000;
+}
+
+.card-text.unknown, .card-text.loading {
+    color: #ccc;
+}
+
+.card-title {
+    color: #5a405f;
+    margin-bottom: 0;
+    text-transform: uppercase;
+}
+
+.card-deck {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+/* MAIN
+-------------------------------------------------- */
+body {
+    min-height: 100vh;
+    background-image: url(/img/grid.png),url(/img/bg.jpg);
+    background-size: auto,cover;
+    background-color: #121421;
+    background-position: top;
+    background-repeat: repeat,no-repeat;
+}
+
+.navbar {
+    border-bottom: 0px;
+}
+
+h3 {
+    color: #fff;
+}
+
+hr {
+    border-color: #c2ccd4;
+}
+
+.text-muted {
+    color: #c2ccd4 !important;
+}
+
+footer {
+    margin-top: 1rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+footer.bg-dark {
+    background-color: rgba(52, 58, 64, 0.55) !important;
+}
+
+footer p {
+    margin-bottom: .25rem;
+}
+
+footer p a {
+    color: #02bdda;
+    border-bottom: 1px solid rgba(255,255,255,.25);
+    transition: all ease .15s;
+}
+
+footer p a:hover {
+    color: #02bdda;
+    text-decoration: none;
+}
+
+
+.list-group-item {
+    text-align: center;
+    border: 0;
+    cursor: pointer;
+}
+
+.list-group-item.maintenance {
+    color: #484848;
+    background-color: #dedede;
+}
+
+.list-group-item.elusive-target {
+    color: #fff;
+}
+
+.alert-header {
+    background-color: rgba(255,0,0,.3);
+    color: #fff;
+}
+
+.alert-header .separator {
+    display: inline-block;
+    width: 200px;
+    height: 4px;
+    background: #be2f2f;
+    margin-bottom: 10px;
+}
+
+.alert-header a {
+    color: #02bdda;
+    border-bottom: 1px solid rgba(255,255,255,.25);
+    transition: all ease .15s;
+}
+
+.alert-header a:hover {
+    color: #02bdda;
+    text-decoration: none;
+}
+
+#backend-error-container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    display: none;
+    margin: 0 auto;
+    overflow: hidden;
+    color: #FFF;
+    font-size: 16px;
+    background-color: rgba(255,0,0,0.3);
+}
+
+#backend-error-container h1 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+#backend-error-container h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+#backend-error-container h3 {
+    font-size: 1.0rem;
+}
+
+#backend-error-container span {
+    display: inline-block;
+    width: 150px;
+    height: 4px;
+    background: #be2f2f;
+    margin-bottom: 10px;
+}
+
+::-webkit-scrollbar {
+    width: 10px
+}
+
+::-webkit-scrollbar-track {
+    background-color: #000
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #35081b
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #ff0068
+}

@@ -1,0 +1,36 @@
+﻿<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark box-shadow mb-3">
+    <div class="container">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HITMAN Status</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Events">Events</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Other
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="https://hitman.com/">Official website</a>
+                        <a class="dropdown-item" href="https://www.hitmanforum.com/">Forums</a>
+                        <a class="dropdown-item" href="https://www.reddit.com/r/HiTMAN/">Reddit</a>
+                        <a class="dropdown-item" href="https://www.hitman2maps.com/">Maps</a>
+                    </div>
+                </li>
+            </ul>
+            @if (Context.Request.Path == "/")
+            {
+                <span class="navbar-text">
+                    Next update in <span id="next-refresh">?</span> seconds.
+                </span>
+            }
+        </div>
+    </div>
+</nav>
