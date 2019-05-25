@@ -1,4 +1,4 @@
-﻿var count = 10;
+﻿var count = 30;
 var timer = {
     oninit: tick,
     view: function () {
@@ -9,7 +9,7 @@ var timer = {
 function tick() {
     setInterval(function () {
         if (count === 0) {
-            count = 10;
+            count = 30;
             services.refresh();
         } else
             count--;

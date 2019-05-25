@@ -5,14 +5,18 @@
 
 <div class="alert alert-header" role="alert">
     <div class="text-center">
-        <h4 class="alert-heading">Error</h4>
+        <h4 class="alert-heading">ERROR</h4>
         <span class="separator"></span>
         <p class="mb-0">An error occurred while processing your request.</p>
-        @if (Model.ShowRequestId)
-        {
-            <small>
+        <p>
+            @if (Model.ShowErrorCode)
+            {
+                <strong>Error Code:</strong> <code>@Model.ErrorCode</code>
+            }
+            @if (Model.ShowRequestId)
+            {
                 <strong>Request ID:</strong> <code>@Model.RequestId</code>
-            </small>
-        }
+            }
+        </p>
     </div>
 </div>

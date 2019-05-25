@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using hitmanstat.us.Clients;
 using hitmanstat.us.Models;
+using hitmanstat.us.Framework;
 
 namespace hitmanstat.us.Controllers
 {
@@ -44,7 +45,7 @@ namespace hitmanstat.us.Controllers
                         new MemoryCacheEntryOptions()
                             .SetAbsoluteExpiration(TimeSpan.FromSeconds(30)));
 
-                    // service.Status = Utilities.ReadResourceFile(Properties.Resources.hitmandebug);
+                    //service.Status = Utilities.ReadResourceFile(Properties.Resources.hitmandebug);
                     return Content(service.Status, responseContentType);
                 }
                 else

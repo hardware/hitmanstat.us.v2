@@ -1,20 +1,48 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
-}
+﻿/*
+ * Hitmanstat.us main css file
+ */
 
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+body {
+    min-height: 100vh;
+    background-image: url(/img/grid.png),url(/img/bg.jpg);
+    background-size: auto,cover;
+    background-color: #121421;
+    background-position: top;
+    background-repeat: repeat,no-repeat;
+}
+
+h3 {
+    color: #fff;
+}
+
+hr {
+    border-color: #c2ccd4;
+}
+
+.text-muted {
+    color: #c2ccd4 !important;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+/*
+ * NAVBAR
+ */
+
+.navbar {
+    border-bottom: 0px;
+}
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 nav.bg-dark {
@@ -25,29 +53,17 @@ nav.bg-dark {
     color: #02bdda;
 }
 
-.border-top {
-    border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
-}
+/*
+ * CARDS
+ */
 
 .card {
     border: none;
 }
 
-.card-body {
-    text-align: center;
-    padding: 1.0rem;
+.card-deck {
+    margin-top: 30px;
+    margin-bottom: 20px;
 }
 
 .card-header {
@@ -72,6 +88,17 @@ button.accept-policy {
 
 .card-header.unknown, .card-header.loading {
     background-color: #ccc;
+}
+
+.card-title {
+    color: #5a405f;
+    margin-bottom: 0;
+    text-transform: uppercase;
+}
+
+.card-body {
+    text-align: center;
+    padding: 1.0rem;
 }
 
 .card-text {
@@ -99,69 +126,9 @@ button.accept-policy {
     color: #ccc;
 }
 
-.card-title {
-    color: #5a405f;
-    margin-bottom: 0;
-    text-transform: uppercase;
-}
-
-.card-deck {
-    margin-top: 30px;
-    margin-bottom: 20px;
-}
-
-/* MAIN
--------------------------------------------------- */
-body {
-    min-height: 100vh;
-    background-image: url(/img/grid.png),url(/img/bg.jpg);
-    background-size: auto,cover;
-    background-color: #121421;
-    background-position: top;
-    background-repeat: repeat,no-repeat;
-}
-
-.navbar {
-    border-bottom: 0px;
-}
-
-h3 {
-    color: #fff;
-}
-
-hr {
-    border-color: #c2ccd4;
-}
-
-.text-muted {
-    color: #c2ccd4 !important;
-}
-
-footer {
-    margin-top: 1rem;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-}
-
-footer.bg-dark {
-    background-color: rgba(52, 58, 64, 0.55) !important;
-}
-
-footer p {
-    margin-bottom: .25rem;
-}
-
-footer p a {
-    color: #02bdda;
-    border-bottom: 1px solid rgba(255,255,255,.25);
-    transition: all ease .15s;
-}
-
-footer p a:hover {
-    color: #02bdda;
-    text-decoration: none;
-}
-
+/*
+ * LIST GROUPS
+ */
 
 .list-group-item {
     text-align: center;
@@ -177,6 +144,10 @@ footer p a:hover {
 .list-group-item.elusive-target {
     color: #fff;
 }
+
+/*
+ * ALERTS
+ */
 
 .alert-header {
     background-color: rgba(255,0,0,.3);
@@ -201,6 +172,10 @@ footer p a:hover {
     color: #02bdda;
     text-decoration: none;
 }
+
+/*
+ * ERROR CONTAINER
+ */
 
 #backend-error-container {
     padding-top: 20px;
@@ -239,6 +214,39 @@ footer p a:hover {
     margin-bottom: 10px;
 }
 
+/*
+ * FOOTER
+ */
+
+footer {
+    margin-top: 1rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+footer.bg-dark {
+    background-color: rgba(52, 58, 64, 0.55) !important;
+}
+
+footer p {
+    margin-bottom: .25rem;
+}
+
+footer p a {
+    color: #02bdda;
+    border-bottom: 1px solid rgba(255,255,255,.25);
+    transition: all ease .15s;
+}
+
+footer p a:hover {
+    color: #02bdda;
+    text-decoration: none;
+}
+
+/*
+ * CUSTOM SCROLLBAR (WEBKIT ENGINE ONLY)
+ */
+
 ::-webkit-scrollbar {
     width: 10px
 }
@@ -253,4 +261,14 @@ footer p a:hover {
 
 ::-webkit-scrollbar-thumb:hover {
     background-color: #ff0068
+}
+
+/*
+ * MEDIA QUERIES
+ */
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
 }
