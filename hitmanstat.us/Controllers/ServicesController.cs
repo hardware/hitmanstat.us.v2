@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Caching.Memory;
 using hitmanstat.us.Clients;
 using hitmanstat.us.Models;
@@ -13,78 +14,94 @@ namespace hitmanstat.us.Controllers
         private IMemoryCache MemoryCache;
         private readonly IHitmanClient HitmanClient;
         private readonly IHitmanForumClient HitmanForumClient;
+        private readonly IConfiguration Configuration;
+        private readonly EventManager EventManager;
 
         public ServicesController(
-            IMemoryCache memoryCache, 
-            IHitmanClient hitmanClient, 
-            IHitmanForumClient hitmanForumClient)
+            IConfiguration configuration, IMemoryCache memoryCache, 
+            IHitmanClient hitmanClient, IHitmanForumClient hitmanForumClient)
         {
+            Configuration = configuration;
             MemoryCache = memoryCache;
             HitmanClient = hitmanClient;
             HitmanForumClient = hitmanForumClient;
+
+            EventManager = new EventManager(
+                Configuration.GetConnectionString("HitmanstatusDB"),
+                Configuration.GetValue<string>("EventsTableName")
+            );
         }
 
         public async Task<IActionResult> Hitman()
         {
             string responseContentType = "application/json";
 
-            if (MemoryCache.TryGetValue(CacheKeys.HitmanKey, out ServiceStatus cachedService))
+            if (MemoryCache.TryGetValue(CacheKeys.HitmanKey, out EndpointStatus cachedEndpoint))
             {
-                return Content(cachedService.Status, responseContentType);
+                return Content(cachedEndpoint.Status, responseContentType);
             }
+
+            var endpointException = new EndpointStatus("HITMAN AUTHENTICATION");
 
             try
             {
-                ServiceStatus service = await HitmanClient.GetStatus();
+                EndpointStatus endpoint = await HitmanClient.GetStatus();
 
-                if (service.State == ServiceState.Up)
+                if (endpoint.State == EndpointState.Up)
                 {
                     MemoryCache.Set(
                         CacheKeys.HitmanKey,
-                        service,
+                        endpoint,
                         new MemoryCacheEntryOptions()
                             .SetAbsoluteExpiration(TimeSpan.FromSeconds(30)));
 
-                    //service.Status = Utilities.ReadResourceFile(Properties.Resources.hitmandebug);
-                    return Content(service.Status, responseContentType);
-                }
-                else
-                {
-                    return Json(service);
+                    // Fake data (debug purpose)
+                    // endpoint.Status = Utilities.ReadResourceFile(Properties.Resources.hitmandebug);
+
+                    _ = EventManager.InsertHitmanServicesEntities(endpoint.Status);
+                    return Content(endpoint.Status, responseContentType);
                 }
             }
             catch (Exception e)
             {
-                return Json(new ServiceStatus { Status = e.Message });
+                endpointException.Status = e.Message;
             }
+
+            _ = EventManager.InsertEndpointException(endpointException);
+            return Json(endpointException);
         }
 
         public async Task<IActionResult> HitmanForum()
         {
-            if (MemoryCache.TryGetValue(CacheKeys.HitmanForumKey, out ServiceStatus cachedService))
+            if (MemoryCache.TryGetValue(CacheKeys.HitmanForumKey, out EndpointStatus cachedEndpoint))
             {
-                return Json(cachedService);
+                return Json(cachedEndpoint);
             }
+
+            var endpointException = new EndpointStatus("HITMAN FORUM");
 
             try
             {
-                ServiceStatus service = await HitmanForumClient.GetStatus();
+                EndpointStatus endpoint = await HitmanForumClient.GetStatus();
 
-                if (service.State == ServiceState.Up)
+                if (endpoint.State == EndpointState.Up)
                 {
                     MemoryCache.Set(
                         CacheKeys.HitmanForumKey,
-                        service,
+                        endpoint,
                         new MemoryCacheEntryOptions()
                             .SetAbsoluteExpiration(TimeSpan.FromSeconds(60)));
-                }
 
-                return Json(service);
+                    return Json(endpoint);
+                }
             }
             catch (Exception e)
             {
-                return Json(new ServiceStatus { Status = e.Message });
+                endpointException.Status = e.Message;
             }
+
+            _ = EventManager.InsertEndpointException(endpointException);
+            return Json(endpointException);
         }
     }
 }

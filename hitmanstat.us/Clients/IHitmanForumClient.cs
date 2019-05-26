@@ -5,6 +5,6 @@ namespace hitmanstat.us.Clients
 {
     public interface IHitmanForumClient
     {
-        Task<ServiceStatus> GetStatus();
+        Task<EndpointStatus> GetStatus();
     }
 }

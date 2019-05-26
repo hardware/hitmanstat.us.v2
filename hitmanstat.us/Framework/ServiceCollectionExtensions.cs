@@ -16,7 +16,7 @@ namespace hitmanstat.us.Framework
 
         public static IServiceCollection AddPolicies(this IServiceCollection services, IConfiguration configuration)
         {
-            var section = configuration.GetSection(PoliciesConfigurationSectionName); // nameof(ApplicationOptions.Policies)
+            var section = configuration.GetSection(PoliciesConfigurationSectionName); // TODO : Test nameof(ApplicationOptions.Policies)
             services.Configure<PolicyOptions>(configuration);
             var policyOptions = section.Get<PolicyOptions>();
             var policyRegistry = services.AddPolicyRegistry();

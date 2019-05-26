@@ -11,64 +11,64 @@ namespace hitmanstat.us.Clients
 {
     public class HitmanClient : IHitmanClient
     {
-        private readonly HttpClient httpClient;
+        private readonly HttpClient HttpClient;
 
-        public HitmanClient(HttpClient client) => httpClient = client;
+        public HitmanClient(HttpClient httpClient) => HttpClient = httpClient;
 
-        public async Task<ServiceStatus> GetStatus()
+        public async Task<EndpointStatus> GetStatus()
         {
             HttpResponseMessage response = null;
-            var service = new ServiceStatus();
+            var endpoint = new EndpointStatus();
 
             try
             {
-                response = await httpClient.GetAsync("/status");
+                response = await HttpClient.GetAsync("/status");
                 response.EnsureSuccessStatusCode();
 
                 if (!Utilities.IsJsonResponse(response.Content.Headers))
                 {
-                    service.Status = "Bad data returned by authentication server";
+                    endpoint.Status = "Bad data returned by authentication server";
                 }
                 else
                 {
-                    service.State = ServiceState.Up;
+                    endpoint.State = EndpointState.Up;
                 }
             }
             catch (TimeoutRejectedException)
             {
-                service.Status = "Authentication server connection timeout";
+                endpoint.Status = "Authentication server connection timeout";
             }
             catch (BrokenCircuitException)
             {
-                service.Status = "Authentication server is down";
+                endpoint.Status = "Authentication server is down";
             }
             catch (HttpRequestException)
             {
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.InternalServerError:
-                        service.Status = "Internal authentication server error";
+                        endpoint.Status = "Internal authentication server error";
                         break;
                     case HttpStatusCode.BadGateway:
                     case HttpStatusCode.ServiceUnavailable:
                     case HttpStatusCode.GatewayTimeout:
-                        service.State = ServiceState.Maintenance;
-                        service.Status = "Temporary Azure backend maintenance";
+                        endpoint.State = EndpointState.Maintenance;
+                        endpoint.Status = "Temporary Azure backend maintenance";
                         break;
                     default:
-                        service.Status = string.Format("Unhandled error code returned by authentication server - error HTTP {0}", response.StatusCode);
+                        endpoint.Status = string.Format("Unhandled error code returned by authentication server - error HTTP {0}", response.StatusCode);
                         break;
                 }
             }
             finally
             {
-                if(service.State == ServiceState.Up)
+                if(endpoint.State == EndpointState.Up)
                 {
-                    service.Status = await response.Content.ReadAsStringAsync();
+                    endpoint.Status = await response.Content.ReadAsStringAsync();
                 }
             }
 
-            return service;
+            return endpoint;
         }
     }
 }

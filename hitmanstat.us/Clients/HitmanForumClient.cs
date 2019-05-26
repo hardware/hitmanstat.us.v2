@@ -8,35 +8,35 @@ namespace hitmanstat.us.Clients
 {
     public class HitmanForumClient : IHitmanForumClient
     {
-        private readonly HttpClient httpClient;
+        private readonly HttpClient HttpClient;
 
-        public HitmanForumClient(HttpClient client) => httpClient = client;
+        public HitmanForumClient(HttpClient httpClient) => HttpClient = httpClient;
 
-        public async Task<ServiceStatus> GetStatus()
+        public async Task<EndpointStatus> GetStatus()
         {
-            var service = new ServiceStatus();
+            var endpoint = new EndpointStatus();
             HttpResponseMessage response = null;
 
             try
             {
-                response = await httpClient.GetAsync("/");
+                response = await HttpClient.GetAsync("/");
                 response.EnsureSuccessStatusCode();
-                service.State = ServiceState.Up;
+                endpoint.State = EndpointState.Up;
             }
             catch (TimeoutRejectedException)
             {
-                service.Status = "timeout";
+                endpoint.Status = "timeout";
             }
             catch (BrokenCircuitException)
             {
-                service.Status = "broken";
+                endpoint.Status = "broken";
             }
             catch (HttpRequestException)
             {
-                service.Status = response.StatusCode.ToString();
+                endpoint.Status = response.StatusCode.ToString();
             }
             
-            return service;
+            return endpoint;
         }
     }
 }
