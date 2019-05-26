@@ -17,8 +17,7 @@ namespace hitmanstat.us.Controllers
         private readonly IConfiguration Configuration;
         private readonly EventManager EventManager;
 
-        public ServicesController(
-            IConfiguration configuration, IMemoryCache memoryCache, 
+        public ServicesController(IConfiguration configuration, IMemoryCache memoryCache, 
             IHitmanClient hitmanClient, IHitmanForumClient hitmanForumClient)
         {
             Configuration = configuration;
@@ -41,11 +40,11 @@ namespace hitmanstat.us.Controllers
                 return Content(cachedEndpoint.Status, responseContentType);
             }
 
-            var endpointException = new EndpointStatus("HITMAN AUTHENTICATION");
+            var endpointException = new EndpointStatusException("HITMAN AUTHENTICATION");
 
             try
             {
-                EndpointStatus endpoint = await HitmanClient.GetStatus();
+                EndpointStatus endpoint = await HitmanClient.GetStatusAsync();
 
                 if (endpoint.State == EndpointState.Up)
                 {
@@ -58,16 +57,21 @@ namespace hitmanstat.us.Controllers
                     // Fake data (debug purpose)
                     // endpoint.Status = Utilities.ReadResourceFile(Properties.Resources.hitmandebug);
 
-                    _ = EventManager.InsertHitmanServicesEntities(endpoint.Status);
+                    _ = EventManager.InsertHitmanServicesEntitiesAsync(endpoint.Status);
                     return Content(endpoint.Status, responseContentType);
+                }
+                else
+                {
+                    endpointException.Status = endpoint.Status;
+                    endpointException.State = endpoint.State;
                 }
             }
             catch (Exception e)
             {
-                endpointException.Status = e.Message;
+                endpointException.Message = e.Message;
             }
 
-            _ = EventManager.InsertEndpointException(endpointException);
+            _ = EventManager.InsertEndpointExceptionAsync(endpointException);
             return Json(endpointException);
         }
 
@@ -78,11 +82,11 @@ namespace hitmanstat.us.Controllers
                 return Json(cachedEndpoint);
             }
 
-            var endpointException = new EndpointStatus("HITMAN FORUM");
+            var endpointException = new EndpointStatusException("HITMAN FORUM");
 
             try
             {
-                EndpointStatus endpoint = await HitmanForumClient.GetStatus();
+                EndpointStatus endpoint = await HitmanForumClient.GetStatusAsync();
 
                 if (endpoint.State == EndpointState.Up)
                 {
@@ -94,13 +98,17 @@ namespace hitmanstat.us.Controllers
 
                     return Json(endpoint);
                 }
+                else
+                {
+                    endpointException.Status = endpoint.Status;
+                }
             }
             catch (Exception e)
             {
-                endpointException.Status = e.Message;
+                endpointException.Message = e.Message;
             }
 
-            _ = EventManager.InsertEndpointException(endpointException);
+            _ = EventManager.InsertEndpointExceptionAsync(endpointException);
             return Json(endpointException);
         }
     }

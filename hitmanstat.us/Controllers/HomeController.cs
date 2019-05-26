@@ -11,6 +11,7 @@ namespace hitmanstat.us.Controllers
             return View();
         }
 
+        [Route("/events")]
         public IActionResult Events()
         {
             return View();

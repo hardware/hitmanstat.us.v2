@@ -10,25 +10,22 @@ namespace hitmanstat.us.Framework
 
         public AzureTableStorage(string connectionString) => ConnectionString = connectionString;
 
-        public CloudStorageAccount CreateStorageAccountFromConnectionString() 
-            => CloudStorageAccount.Parse(ConnectionString);
+        public CloudStorageAccount GetStorageAccount() => CloudStorageAccount.Parse(ConnectionString);
 
         public async Task<CloudTable> GetTableAsync(string tableName)
         {
-            CloudStorageAccount storageAccount = CreateStorageAccountFromConnectionString();
-            CloudTableClient tableClient = storageAccount.CreateCloudTableClient(new TableClientConfiguration());
-            CloudTable table = tableClient.GetTableReference(tableName);
+            var storageAccount = GetStorageAccount();
+            var tableClient = storageAccount.CreateCloudTableClient(new TableClientConfiguration());
+            var table = tableClient.GetTableReference(tableName);
             await table.CreateIfNotExistsAsync();
 
             return table;
         }
 
-        public async Task<EventEntity> InsertEntityAsync(CloudTable table, EventEntity entity)
+        public async Task InsertEntityAsync(CloudTable table, EventEntity entity)
         {
-            TableOperation insertOperation = TableOperation.Insert(entity);
-            TableResult result = await table.ExecuteAsync(insertOperation);
-            
-            return result.Result as EventEntity;
+            var insertOperation = TableOperation.Insert(entity);
+            await table.ExecuteAsync(insertOperation);
         }
     }
 }

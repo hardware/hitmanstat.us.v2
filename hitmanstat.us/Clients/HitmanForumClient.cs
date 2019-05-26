@@ -12,7 +12,7 @@ namespace hitmanstat.us.Clients
 
         public HitmanForumClient(HttpClient httpClient) => HttpClient = httpClient;
 
-        public async Task<EndpointStatus> GetStatus()
+        public async Task<EndpointStatus> GetStatusAsync()
         {
             var endpoint = new EndpointStatus();
             HttpResponseMessage response = null;

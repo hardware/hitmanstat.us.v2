@@ -182,7 +182,6 @@ nav.bg-dark {
     padding-bottom: 20px;
     text-align: center;
     display: none;
-    margin: 0 auto;
     overflow: hidden;
     color: #FFF;
     font-size: 16px;
@@ -190,14 +189,14 @@ nav.bg-dark {
 }
 
 #backend-error-container h1 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 800;
     margin-bottom: 10px;
     text-transform: uppercase;
 }
 
 #backend-error-container h2 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 7px;
 }

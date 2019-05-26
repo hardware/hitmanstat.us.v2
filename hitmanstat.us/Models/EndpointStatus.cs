@@ -11,7 +11,13 @@ namespace hitmanstat.us.Models
         public EndpointState State { get; set; } = EndpointState.Down;
 
         public EndpointStatus() {}
-        public EndpointStatus(string name) => Name = name;
+    }
+
+    public class EndpointStatusException : EndpointStatus
+    {
+        public string Message { get; set; }
+
+        public EndpointStatusException(string name) => Name = name;
     }
 
     [JsonConverter(typeof(StringEnumConverter))]

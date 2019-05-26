@@ -15,7 +15,7 @@ namespace hitmanstat.us.Clients
 
         public HitmanClient(HttpClient httpClient) => HttpClient = httpClient;
 
-        public async Task<EndpointStatus> GetStatus()
+        public async Task<EndpointStatus> GetStatusAsync()
         {
             HttpResponseMessage response = null;
             var endpoint = new EndpointStatus();
@@ -56,7 +56,9 @@ namespace hitmanstat.us.Clients
                         endpoint.Status = "Temporary Azure backend maintenance";
                         break;
                     default:
-                        endpoint.Status = string.Format("Unhandled error code returned by authentication server - error HTTP {0}", response.StatusCode);
+                        endpoint.Status = string.Format(
+                            "Unhandled error code returned by authentication server - error HTTP {0}", 
+                            response.StatusCode);
                         break;
                 }
             }

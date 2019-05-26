@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.Azure.Cosmos.Table;
 using Newtonsoft.Json.Linq;
 using hitmanstat.us.Models;
 
@@ -20,7 +19,7 @@ namespace hitmanstat.us.Framework
             TableName = tableName;
         }
 
-        public async Task InsertHitmanServicesEntities(string jsonString)
+        public async Task InsertHitmanServicesEntitiesAsync(string jsonString)
         {
             var json = JObject.Parse(jsonString);
             var entities = new List<HitmanService> {
@@ -56,14 +55,13 @@ namespace hitmanstat.us.Framework
                 }
             }
 
-            await InsertHitmanEvents(entities);
+            await InsertHitmanEventsAsync(entities);
         }
 
-        public async Task InsertEndpointException(EndpointStatus entity)
+        public async Task InsertEndpointExceptionAsync(EndpointStatusException entity)
         {
             var storage = new AzureTableStorage(ConnectionString);
-            CloudTable table = await storage.GetTableAsync(TableName);
-
+            var table = await storage.GetTableAsync(TableName);
             var rowKey = string.Format("{0:D19}", DateTime.MaxValue.Ticks - DateTime.UtcNow.Ticks);
             var state = entity.State.GetAttribute<DisplayAttribute>();
 
@@ -79,10 +77,10 @@ namespace hitmanstat.us.Framework
             }
         }
 
-        private async Task InsertHitmanEvents(IEnumerable<HitmanService> services)
+        private async Task InsertHitmanEventsAsync(IEnumerable<HitmanService> services)
         {
             var storage = new AzureTableStorage(ConnectionString);
-            CloudTable table = await storage.GetTableAsync(TableName);
+            var table = await storage.GetTableAsync(TableName);
 
             foreach (var service in services)
             {
