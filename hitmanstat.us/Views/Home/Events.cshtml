@@ -1,16 +1,29 @@
-﻿@{
+﻿@model IEnumerable<EventEntity>
+@using System.Globalization
+@{
     ViewData["Title"] = "Events";
 }
 
-<div class="alert alert-header" role="alert">
-    <div class="text-center">
-        <h4 class="alert-heading">LATEST DOWN OR MAINTENANCE EVENTS REPORTED</h4>
-        <span class="separator"></span>
-        <p class="mb-0">Since 7 days ago &nbsp; | &nbsp; <a href="#">Show last month</a></p>
+@section EventsHeader {
+    <div class="alert alert-header" role="alert">
+        <div class="text-center">
+            <h4 class="alert-heading">LATEST DOWN OR MAINTENANCE EVENTS REPORTED</h4>
+            <span class="separator"></span>
+            <p class="mb-0">
+                Last @ViewBag.limit events &nbsp; | &nbsp;
+                @if (ViewBag.limit == 100)
+                {
+                    <a asp-area="" asp-controller="Home" asp-action="Events" asp-route-limit="20">Show last 20 events</a>
+                }
+                else
+                {
+                    <a asp-area="" asp-controller="Home" asp-action="Events" asp-route-limit="100">Show last 100 events</a>
+                }
+            </p>
+        </div>
     </div>
-</div>
-
-<table class="table table-striped table-light">
+}
+<table class="table table-sm table-responsive-sm table-bordered table-striped table-light">
     <thead class="thead-dark">
         <tr>
             <th scope="col">Date</th>
@@ -20,12 +33,54 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td class="text-center" colspan="4">No event occurred.</td>
-        </tr>
+        @if (Model.Count() > 0)
+        {
+            string lastDate = string.Empty;
+
+            @foreach (var eventEntity in Model)
+            {
+                var time = DateTime.Parse(eventEntity.Timestamp.ToString());
+                var isoTime = time.ToString("s", CultureInfo.InvariantCulture);
+                var date = time.ToString(CultureInfo.InvariantCulture);
+                var sdate = time.ToString("dddd, MMM d, yyyy", CultureInfo.InvariantCulture);
+                    
+                if(lastDate != sdate)
+                {
+                    <tr>
+                        <td class="table-secondary text-center" colspan="4">@sdate</td>
+                    </tr>
+                }
+
+                <tr>
+                    <td>@date</td>
+                    <td data-utcdate="@isoTime"></td>
+                    <td>@eventEntity.Service</td>
+                    <td>@eventEntity.Status</td>
+                </tr>
+
+                lastDate = sdate;
+            }
+        }
+        else
+        {
+            <tr>
+                <td class="text-center" colspan="4">No event occurred</td>
+            </tr>
+        }
     </tbody>
 </table>
 
 @section Scripts {
+
     <script src="~/js/jquery-bootstrap.min.js" asp-append-version="true"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('[data-utcdate]').each(function () {
+                var date = moment($(this).attr('data-utcdate'));
+                $(this).html(date.fromNow());
+            });
+        });
+    </script>
+
 }

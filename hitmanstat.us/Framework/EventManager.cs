@@ -19,6 +19,14 @@ namespace hitmanstat.us.Framework
             TableName = tableName;
         }
 
+        public async Task<List<EventEntity>> GetEventsAsync(int limit)
+        {
+            var storage = new AzureTableStorage(ConnectionString);
+            var table = await storage.GetTableAsync(TableName);
+
+            return await storage.GetTablePartitionEntitiesAsync(table, PARTITION_KEY, limit);
+        }
+
         public async Task InsertHitmanServicesEntitiesAsync(string jsonString)
         {
             var json = JObject.Parse(jsonString);

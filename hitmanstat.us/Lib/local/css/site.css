@@ -152,6 +152,8 @@ nav.bg-dark {
 .alert-header {
     background-color: rgba(255,0,0,.3);
     color: #fff;
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
 
 .alert-header .separator {
@@ -214,9 +216,20 @@ nav.bg-dark {
 }
 
 /*
- * FOOTER
+ * EVENTS PAGE
  */
 
+td.table-secondary {
+    font-weight: 500;
+    border-bottom: 2px solid #02bdda;
+    border-left: 1px solid #d6d8db;
+    border-right: 1px solid #d6d8db;
+}
+
+/*
+ * FOOTER
+ */
+ 
 footer {
     margin-top: 1rem;
     padding-top: 1.5rem;

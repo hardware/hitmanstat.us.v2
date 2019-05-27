@@ -17,6 +17,7 @@ namespace hitmanstat.us
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddResponseCaching();
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -49,6 +50,7 @@ namespace hitmanstat.us
             app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseResponseCaching();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
