@@ -7,105 +7,106 @@ using hitmanstat.us.Models;
 
 namespace hitmanstat.us.Framework
 {
-    public class EventManager
-    {
-        private readonly string ConnectionString;
-        private readonly string TableName;
-        private const string PARTITION_KEY = "Events";
 
-        public EventManager(string connectionString, string tableName)
-        {
-            ConnectionString = connectionString;
-            TableName = tableName;
-        }
+    //public class EventManager
+    //{
+    //    private readonly string ConnectionString;
+    //    private readonly string TableName;
+    //    private const string PARTITION_KEY = "Events";
 
-        public async Task<List<EventEntity>> GetEventsAsync(int limit)
-        {
-            var storage = new AzureTableStorage(ConnectionString);
-            var table = await storage.GetTableAsync(TableName);
+    //    public EventManager(string connectionString, string tableName)
+    //    {
+    //        ConnectionString = connectionString;
+    //        TableName = tableName;
+    //    }
 
-            return await storage.GetTablePartitionEntitiesAsync(table, PARTITION_KEY, limit);
-        }
+    //    public async Task<List<EventEntity>> GetEventsAsync(int limit)
+    //    {
+    //        var storage = new AzureTableStorage(ConnectionString);
+    //        var table = await storage.GetTableAsync(TableName);
 
-        public async Task InsertHitmanServicesEntitiesAsync(string jsonString)
-        {
-            var json = JObject.Parse(jsonString);
-            var entities = new List<HitmanService> {
-                new HitmanService { Name = "HITMAN PC", Node = "pc-service.hitman.io" },
-                new HitmanService { Name = "HITMAN PS4", Node = "ps4-service.hitman.io" },
-                new HitmanService { Name = "HITMAN XBOX ONE", Node = "xboxone-service.hitman.io" },
-                new HitmanService { Name = "HITMAN 2 PC", Node = "pc2-service.hitman.io" },
-                new HitmanService { Name = "HITMAN 2 PS4", Node = "ps42-service.hitman.io" },
-                new HitmanService { Name = "HITMAN 2 XBOX ONE", Node = "xboxone2-service.hitman.io" }
-            };
+    //        return await storage.GetTablePartitionEntitiesAsync(table, PARTITION_KEY, limit);
+    //    }
 
-            foreach (var entity in entities)
-            {
-                var health = (string)json["services"][entity.Node]["health"];
+    //    public async Task InsertHitmanServicesEntitiesAsync(string jsonString)
+    //    {
+    //        var json = JObject.Parse(jsonString);
+    //        var entities = new List<HitmanService> {
+    //            new HitmanService { Name = "HITMAN PC", Node = "pc-service.hitman.io" },
+    //            new HitmanService { Name = "HITMAN PS4", Node = "ps4-service.hitman.io" },
+    //            new HitmanService { Name = "HITMAN XBOX ONE", Node = "xboxone-service.hitman.io" },
+    //            new HitmanService { Name = "HITMAN 2 PC", Node = "pc2-service.hitman.io" },
+    //            new HitmanService { Name = "HITMAN 2 PS4", Node = "ps42-service.hitman.io" },
+    //            new HitmanService { Name = "HITMAN 2 XBOX ONE", Node = "xboxone2-service.hitman.io" }
+    //        };
 
-                switch (health)
-                {
-                    case "unknown":
-                        entity.Health = HitmanServiceHealth.Unknown;
-                        break;
-                    case "down":
-                        entity.Health = HitmanServiceHealth.Down;
-                        break;
-                    case "maintenance":
-                        entity.Health = HitmanServiceHealth.Maintenance;
-                        break;
-                    case "slow":
-                        entity.Health = HitmanServiceHealth.Slow;
-                        break;
-                    case "healthy":
-                        entity.Health = HitmanServiceHealth.Healthy;
-                        break;
-                }
-            }
+    //        foreach (var entity in entities)
+    //        {
+    //            var health = (string)json["services"][entity.Node]["health"];
 
-            await InsertHitmanEventsAsync(entities);
-        }
+    //            switch (health)
+    //            {
+    //                case "unknown":
+    //                    entity.Health = HitmanServiceHealth.Unknown;
+    //                    break;
+    //                case "down":
+    //                    entity.Health = HitmanServiceHealth.Down;
+    //                    break;
+    //                case "maintenance":
+    //                    entity.Health = HitmanServiceHealth.Maintenance;
+    //                    break;
+    //                case "slow":
+    //                    entity.Health = HitmanServiceHealth.Slow;
+    //                    break;
+    //                case "healthy":
+    //                    entity.Health = HitmanServiceHealth.Healthy;
+    //                    break;
+    //            }
+    //        }
 
-        public async Task InsertEndpointExceptionAsync(EndpointStatusException entity)
-        {
-            var storage = new AzureTableStorage(ConnectionString);
-            var table = await storage.GetTableAsync(TableName);
-            var rowKey = string.Format("{0:D19}", DateTime.MaxValue.Ticks - DateTime.UtcNow.Ticks);
-            var state = entity.State.GetAttribute<DisplayAttribute>();
+    //        await InsertHitmanEventsAsync(entities);
+    //    }
 
-            if (state != null)
-            {
-                var EventEntity = new EventEntity(PARTITION_KEY, rowKey)
-                {
-                    Service = entity.Name,
-                    Status = state.Name
-                };
+    //    public async Task InsertEndpointExceptionAsync(EndpointStatusException entity)
+    //    {
+    //        var storage = new AzureTableStorage(ConnectionString);
+    //        var table = await storage.GetTableAsync(TableName);
+    //        var rowKey = string.Format("{0:D19}", DateTime.MaxValue.Ticks - DateTime.UtcNow.Ticks);
+    //        var state = entity.State.GetAttribute<DisplayAttribute>();
 
-                await storage.InsertEntityAsync(table, EventEntity);
-            }
-        }
+    //        if (state != null)
+    //        {
+    //            var EventEntity = new EventEntity(PARTITION_KEY, rowKey)
+    //            {
+    //                Service = entity.Name,
+    //                Status = state.Name
+    //            };
 
-        private async Task InsertHitmanEventsAsync(IEnumerable<HitmanService> services)
-        {
-            var storage = new AzureTableStorage(ConnectionString);
-            var table = await storage.GetTableAsync(TableName);
+    //            await storage.InsertEntityAsync(table, EventEntity);
+    //        }
+    //    }
 
-            foreach (var service in services)
-            {
-                var rowKey = string.Format("{0:D19}", DateTime.MaxValue.Ticks - DateTime.UtcNow.Ticks);
-                var health = service.Health.GetAttribute<DisplayAttribute>();
+    //    private async Task InsertHitmanEventsAsync(IEnumerable<HitmanService> services)
+    //    {
+    //        var storage = new AzureTableStorage(ConnectionString);
+    //        var table = await storage.GetTableAsync(TableName);
 
-                if(health != null)
-                {
-                    var EventEntity = new EventEntity(PARTITION_KEY, rowKey)
-                    {
-                        Service = service.Name,
-                        Status = health.Name
-                    };
+    //        foreach (var service in services)
+    //        {
+    //            var rowKey = string.Format("{0:D19}", DateTime.MaxValue.Ticks - DateTime.UtcNow.Ticks);
+    //            var health = service.Health.GetAttribute<DisplayAttribute>();
 
-                    await storage.InsertEntityAsync(table, EventEntity);
-                }
-            };
-        }
-    }
+    //            if(health != null)
+    //            {
+    //                var EventEntity = new EventEntity(PARTITION_KEY, rowKey)
+    //                {
+    //                    Service = service.Name,
+    //                    Status = health.Name
+    //                };
+
+    //                await storage.InsertEntityAsync(table, EventEntity);
+    //            }
+    //        };
+    //    }
+    //}
 }

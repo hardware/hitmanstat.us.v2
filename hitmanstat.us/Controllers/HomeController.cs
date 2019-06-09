@@ -1,17 +1,20 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Linq;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 using hitmanstat.us.Models;
-using hitmanstat.us.Framework;
+using hitmanstat.us.Data;
 
 namespace hitmanstat.us.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IConfiguration Configuration;
+        private readonly DatabaseContext Db;
 
-        public HomeController(IConfiguration configuration) => Configuration = configuration;
+        public HomeController(DatabaseContext context) 
+            => Db = context;
 
         public IActionResult Index()
         {
@@ -19,19 +22,17 @@ namespace hitmanstat.us.Controllers
         }
 
         [Route("/events")]
-        [Route("/events/{limit:int:range(1,100)}")]
-        [ResponseCache(Duration = 120, Location = ResponseCacheLocation.Any, VaryByQueryKeys = new string[] { "limit" })]
-        public async Task<IActionResult> Events(int limit = 20)
+        [Route("/events/{days:int:range(1,365)}")]
+        [ResponseCache(Duration = 120, Location = ResponseCacheLocation.Any, VaryByQueryKeys = new string[] { "days" })]
+        public async Task<IActionResult> Events(int days = 7)
         {
-            var eventManager = new EventManager(
-                Configuration.GetConnectionString("HitmanstatusDB"), 
-                Configuration.GetValue<string>("EventsTableName")
-            );
+            ViewBag.days = days;
 
-            var events = await eventManager.GetEventsAsync(limit);
-            ViewBag.limit = limit;
+            var events = from e in Db.Events
+                         where e.Date > DateTime.Now.AddDays(-days)
+                         select e;
 
-            return View(events);
+            return View(await events.Take(300).ToListAsync());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

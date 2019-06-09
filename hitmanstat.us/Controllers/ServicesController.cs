@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Caching.Memory;
 using hitmanstat.us.Clients;
 using hitmanstat.us.Models;
@@ -11,54 +10,34 @@ namespace hitmanstat.us.Controllers
 {
     public class ServicesController : Controller
     {
-        private IMemoryCache MemoryCache;
-        private readonly IHitmanClient HitmanClient;
-        private readonly IHitmanForumClient HitmanForumClient;
-        private readonly IConfiguration Configuration;
-        private readonly EventManager EventManager;
+        private IMemoryCache _cache;
+        private readonly IHitmanClient _hitmanClient;
+        private readonly IHitmanForumClient _hitmanForumClient;
 
-        public ServicesController(IConfiguration configuration, IMemoryCache memoryCache, 
-            IHitmanClient hitmanClient, IHitmanForumClient hitmanForumClient)
+        public ServicesController(IMemoryCache cache, IHitmanClient hmClient, IHitmanForumClient hmfClient)
         {
-            Configuration = configuration;
-            MemoryCache = memoryCache;
-            HitmanClient = hitmanClient;
-            HitmanForumClient = hitmanForumClient;
-
-            EventManager = new EventManager(
-                Configuration.GetConnectionString("HitmanstatusDB"),
-                Configuration.GetValue<string>("EventsTableName")
-            );
+            _cache = cache;
+            _hitmanClient = hmClient;
+            _hitmanForumClient = hmfClient;
         }
 
         public async Task<IActionResult> Hitman()
         {
-            string responseContentType = "application/json";
-
-            if (MemoryCache.TryGetValue(CacheKeys.HitmanKey, out EndpointStatus cachedEndpoint))
+            // Get cached result from the background service
+            if (_cache.TryGetValue(CacheKeys.HitmanKey, out EndpointStatus cachedEndpoint))
             {
-                return Content(cachedEndpoint.Status, responseContentType);
+                return Content(cachedEndpoint.Status, "application/json");
             }
 
             var endpointException = new EndpointStatusException("HITMAN AUTHENTICATION");
 
             try
             {
-                EndpointStatus endpoint = await HitmanClient.GetStatusAsync();
+                EndpointStatus endpoint = await _hitmanClient.GetStatusAsync();
 
                 if (endpoint.State == EndpointState.Up)
                 {
-                    MemoryCache.Set(
-                        CacheKeys.HitmanKey,
-                        endpoint,
-                        new MemoryCacheEntryOptions()
-                            .SetAbsoluteExpiration(TimeSpan.FromSeconds(30)));
-
-                    // Fake data (debug purpose)
-                    // endpoint.Status = Utilities.ReadResourceFile(Properties.Resources.hitmandebug);
-
-                    _ = EventManager.InsertHitmanServicesEntitiesAsync(endpoint.Status);
-                    return Content(endpoint.Status, responseContentType);
+                    return Content(endpoint.Status, "application/json");
                 }
                 else
                 {
@@ -71,13 +50,13 @@ namespace hitmanstat.us.Controllers
                 endpointException.Message = e.Message;
             }
 
-            _ = EventManager.InsertEndpointExceptionAsync(endpointException);
             return Json(endpointException);
         }
 
         public async Task<IActionResult> HitmanForum()
         {
-            if (MemoryCache.TryGetValue(CacheKeys.HitmanForumKey, out EndpointStatus cachedEndpoint))
+            // Get cached result from the background service
+            if (_cache.TryGetValue(CacheKeys.HitmanForumKey, out EndpointStatus cachedEndpoint))
             {
                 return Json(cachedEndpoint);
             }
@@ -86,16 +65,10 @@ namespace hitmanstat.us.Controllers
 
             try
             {
-                EndpointStatus endpoint = await HitmanForumClient.GetStatusAsync();
+                EndpointStatus endpoint = await _hitmanForumClient.GetStatusAsync();
 
                 if (endpoint.State == EndpointState.Up)
                 {
-                    MemoryCache.Set(
-                        CacheKeys.HitmanForumKey,
-                        endpoint,
-                        new MemoryCacheEntryOptions()
-                            .SetAbsoluteExpiration(TimeSpan.FromSeconds(60)));
-
                     return Json(endpoint);
                 }
                 else
@@ -108,7 +81,6 @@ namespace hitmanstat.us.Controllers
                 endpointException.Message = e.Message;
             }
 
-            _ = EventManager.InsertEndpointExceptionAsync(endpointException);
             return Json(endpointException);
         }
     }

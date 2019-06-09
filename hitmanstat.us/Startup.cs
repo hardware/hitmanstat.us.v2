@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using hitmanstat.us.Clients;
 using hitmanstat.us.Framework;
 using hitmanstat.us.Options;
+using hitmanstat.us.Data;
 
 namespace hitmanstat.us
 {
@@ -17,11 +19,12 @@ namespace hitmanstat.us
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DatabaseContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddResponseCaching();
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
             services
                 .AddPolicies(Configuration)
                 .AddHttpClient<IHitmanClient, HitmanClient, HitmanClientOptions>(
@@ -30,8 +33,9 @@ namespace hitmanstat.us
                 .AddHttpClient<IHitmanForumClient, HitmanForumClient, HitmanForumClientOptions>(
                     Configuration,
                     nameof(ApplicationOptions.HitmanForumClient));
-
             services.AddMemoryCache();
+            services.AddHostedService<HitmanStatusSeekerHostedService>();
+            services.AddHostedService<HitmanForumStatusSeekerHostedService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

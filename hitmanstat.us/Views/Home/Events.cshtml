@@ -1,5 +1,5 @@
-﻿@model IEnumerable<EventEntity>
-@using System.Globalization
+﻿@model IEnumerable<hitmanstat.us.Models.Event>
+
 @{
     ViewData["Title"] = "Events";
 }
@@ -10,26 +10,33 @@
             <h4 class="alert-heading">LATEST DOWN OR MAINTENANCE EVENTS REPORTED</h4>
             <span class="separator"></span>
             <p class="mb-0">
-                Last @ViewBag.limit events &nbsp; | &nbsp;
-                @if (ViewBag.limit == 100)
+                Since @ViewBag.days days ago &nbsp; | &nbsp;
+                @if (ViewBag.days == 30)
                 {
-                    <a asp-area="" asp-controller="Home" asp-action="Events" asp-route-limit="20">Show last 20 events</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Events" asp-route-days="7">Show last week</a>
                 }
                 else
                 {
-                    <a asp-area="" asp-controller="Home" asp-action="Events" asp-route-limit="100">Show last 100 events</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Events" asp-route-days="30">Show last month</a>
                 }
             </p>
         </div>
     </div>
 }
-<table class="table table-sm table-responsive-sm table-bordered table-striped table-light">
+
+<table class="table table-bordered table-striped table-light">
     <thead class="thead-dark">
         <tr>
-            <th scope="col">Date</th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
             <th scope="col">Relative Time</th>
-            <th scope="col">Service</th>
-            <th scope="col">Status</th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Service)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -37,14 +44,11 @@
         {
             string lastDate = string.Empty;
 
-            @foreach (var eventEntity in Model)
+            @foreach (var item in Model)
             {
-                var time = DateTime.Parse(eventEntity.Timestamp.ToString());
-                var isoTime = time.ToString("s", CultureInfo.InvariantCulture);
-                var date = time.ToString(CultureInfo.InvariantCulture);
-                var sdate = time.ToString("dddd, MMM d, yyyy", CultureInfo.InvariantCulture);
-                    
-                if(lastDate != sdate)
+                var sdate = item.Date.ToString("dddd, MMM d, yyyy");
+
+                if (lastDate != sdate)
                 {
                     <tr>
                         <td class="table-secondary text-center" colspan="4">@sdate</td>
@@ -52,10 +56,10 @@
                 }
 
                 <tr>
-                    <td>@date</td>
-                    <td data-utcdate="@isoTime"></td>
-                    <td>@eventEntity.Service</td>
-                    <td>@eventEntity.Status</td>
+                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                    <td data-utcdate="@item.Date.ToString("s")"></td>
+                    <td>@Html.DisplayFor(modelItem => item.Service)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
                 </tr>
 
                 lastDate = sdate;
