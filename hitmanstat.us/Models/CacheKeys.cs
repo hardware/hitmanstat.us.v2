@@ -7,9 +7,26 @@
                 return "_Hitman";
             }
         }
+
+        public static string HitmanExceptionKey
+        {
+            get
+            {
+                return "_HitmanException";
+            }
+        }
+
         public static string HitmanForumKey {
             get {
                 return "_HitmanForum";
+            }
+        }
+
+        public static string HitmanForumExceptionKey
+        {
+            get
+            {
+                return "_HitmanForumException";
             }
         }
     }

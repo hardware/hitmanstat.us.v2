@@ -11,10 +11,10 @@ namespace hitmanstat.us.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly DatabaseContext Db;
+        private readonly DatabaseContext _db;
 
         public HomeController(DatabaseContext context) 
-            => Db = context;
+            => _db = context;
 
         public IActionResult Index()
         {
@@ -22,17 +22,20 @@ namespace hitmanstat.us.Controllers
         }
 
         [Route("/events")]
-        [Route("/events/{days:int:range(1,365)}")]
+        [Route("/events/{days:int:range(1,100)}")]
         [ResponseCache(Duration = 120, Location = ResponseCacheLocation.Any, VaryByQueryKeys = new string[] { "days" })]
         public async Task<IActionResult> Events(int days = 7)
         {
             ViewBag.days = days;
 
-            var events = from e in Db.Events
-                         where e.Date > DateTime.Now.AddDays(-days)
-                         select e;
+            var events = (from e in _db.Events
+                          where e.Date > DateTime.Now.AddDays(-days)
+                          select e)
+                            .OrderByDescending(e => e.ID)
+                            .Take(300)
+                            .ToListAsync();
 
-            return View(await events.Take(300).ToListAsync());
+            return View(await events);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

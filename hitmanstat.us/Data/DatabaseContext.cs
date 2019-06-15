@@ -14,6 +14,9 @@ namespace hitmanstat.us.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Event>().ToTable("Event");
+            modelBuilder.Entity<Event>()
+                .Property(e => e.Date)
+                .HasDefaultValueSql("getdate()");
         }
     }
 }

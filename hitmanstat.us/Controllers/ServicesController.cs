@@ -1,87 +1,51 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using hitmanstat.us.Clients;
 using hitmanstat.us.Models;
-using hitmanstat.us.Framework;
 
 namespace hitmanstat.us.Controllers
 {
     public class ServicesController : Controller
     {
         private IMemoryCache _cache;
-        private readonly IHitmanClient _hitmanClient;
-        private readonly IHitmanForumClient _hitmanForumClient;
 
-        public ServicesController(IMemoryCache cache, IHitmanClient hmClient, IHitmanForumClient hmfClient)
-        {
-            _cache = cache;
-            _hitmanClient = hmClient;
-            _hitmanForumClient = hmfClient;
-        }
+        public ServicesController(IMemoryCache cache) => _cache = cache;
 
         public async Task<IActionResult> Hitman()
         {
-            // Get cached result from the background service
-            if (_cache.TryGetValue(CacheKeys.HitmanKey, out EndpointStatus cachedEndpoint))
+            while(true)
             {
-                return Content(cachedEndpoint.Status, "application/json");
-            }
-
-            var endpointException = new EndpointStatusException("HITMAN AUTHENTICATION");
-
-            try
-            {
-                EndpointStatus endpoint = await _hitmanClient.GetStatusAsync();
-
-                if (endpoint.State == EndpointState.Up)
+                if (_cache.TryGetValue(CacheKeys.HitmanKey, out EndpointStatus cachedEndpoint))
                 {
-                    return Content(endpoint.Status, "application/json");
+                    return Content(cachedEndpoint.Status, "application/json");
                 }
-                else
+                else if (_cache.TryGetValue(CacheKeys.HitmanExceptionKey, out EndpointStatusException cachedExceptionEndpoint))
                 {
-                    endpointException.Status = endpoint.Status;
-                    endpointException.State = endpoint.State;
+                    return Json(cachedExceptionEndpoint);
                 }
-            }
-            catch (Exception e)
-            {
-                endpointException.Message = e.Message;
-            }
 
-            return Json(endpointException);
+                await Task.Delay(TimeSpan.FromMilliseconds(1000));
+            }
         }
 
         public async Task<IActionResult> HitmanForum()
         {
-            // Get cached result from the background service
-            if (_cache.TryGetValue(CacheKeys.HitmanForumKey, out EndpointStatus cachedEndpoint))
+            while (true)
             {
-                return Json(cachedEndpoint);
-            }
-
-            var endpointException = new EndpointStatusException("HITMAN FORUM");
-
-            try
-            {
-                EndpointStatus endpoint = await _hitmanForumClient.GetStatusAsync();
-
-                if (endpoint.State == EndpointState.Up)
+                if (_cache.TryGetValue(CacheKeys.HitmanForumKey, out EndpointStatus cachedEndpoint))
                 {
-                    return Json(endpoint);
+                    return Json(cachedEndpoint);
                 }
-                else
+                else if (_cache.TryGetValue(CacheKeys.HitmanForumExceptionKey, out EndpointStatusException cachedExceptionEndpoint))
                 {
-                    endpointException.Status = endpoint.Status;
+                    return Json(cachedExceptionEndpoint);
                 }
-            }
-            catch (Exception e)
-            {
-                endpointException.Message = e.Message;
-            }
 
-            return Json(endpointException);
+                await Task.Delay(TimeSpan.FromMilliseconds(1000));
+            }
         }
     }
 }

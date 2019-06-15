@@ -35,7 +35,7 @@
                 @Html.DisplayNameFor(model => model.Service)
             </th>
             <th scope="col">
-                @Html.DisplayNameFor(model => model.Status)
+                @Html.DisplayNameFor(model => model.State)
             </th>
         </tr>
     </thead>
@@ -59,7 +59,7 @@
                     <td>@Html.DisplayFor(modelItem => item.Date)</td>
                     <td data-utcdate="@item.Date.ToString("s")"></td>
                     <td>@Html.DisplayFor(modelItem => item.Service)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                    <td>@Html.DisplayFor(modelItem => item.State)</td>
                 </tr>
 
                 lastDate = sdate;

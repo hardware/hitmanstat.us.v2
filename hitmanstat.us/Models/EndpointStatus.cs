@@ -23,10 +23,13 @@ namespace hitmanstat.us.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum EndpointState
     {
+        [Display(Name = "up")]
         Up,
         [Display(Name = "down")]
         Down,
         [Display(Name = "maintenance")]
-        Maintenance
+        Maintenance,
+        [Display(Name = "unknown")]
+        Unknown
     }
 }

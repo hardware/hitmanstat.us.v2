@@ -73,6 +73,16 @@ namespace hitmanstat.us.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] hitmandebug_1down {
+            get {
+                object obj = ResourceManager.GetObject("hitmandebug_1down", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] hitmandebug_maintenance {
             get {
                 object obj = ResourceManager.GetObject("hitmandebug_maintenance", resourceCulture);
