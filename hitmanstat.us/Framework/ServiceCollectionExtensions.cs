@@ -12,11 +12,9 @@ namespace hitmanstat.us.Framework
 {
     public static class ServiceCollectionExtensions
     {
-        private const string PoliciesConfigurationSectionName = "Policies";
-
         public static IServiceCollection AddPolicies(this IServiceCollection services, IConfiguration configuration)
         {
-            var section = configuration.GetSection(PoliciesConfigurationSectionName); // TODO : Test nameof(ApplicationOptions.Policies)
+            var section = configuration.GetSection(nameof(ApplicationOptions.Policies));
             services.Configure<PolicyOptions>(configuration);
             var policyOptions = section.Get<PolicyOptions>();
             var policyRegistry = services.AddPolicyRegistry();

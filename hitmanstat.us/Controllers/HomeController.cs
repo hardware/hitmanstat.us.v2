@@ -28,9 +28,7 @@ namespace hitmanstat.us.Controllers
         {
             ViewBag.days = days;
 
-            var events = (from e in _db.Events
-                          where e.Date > DateTime.Now.AddDays(-days)
-                          select e)
+            var events = (from e in _db.Events where e.Date > DateTime.Now.AddDays(-days) select e)
                             .OrderByDescending(e => e.ID)
                             .Take(300)
                             .ToListAsync();

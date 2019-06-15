@@ -47,20 +47,30 @@ namespace hitmanstat.us
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                // app.UseHsts();
+
+                /* 
+                 * https://aka.ms/aspnetcore-hsts
+                 * HSTS already in use via Cloudflare
+                 * app.UseHsts();
+                 */
             }
 
             app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseResponseCaching();
-            app.UseMvc(routes =>
+
+            app.Use(async (context, next) =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                context.Response.Headers.Add("X-Xss-Protection", "1; mode=block");
+                context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+                context.Response.Headers.Add("Referrer-Policy", "no-referrer");
+                context.Response.Headers.Add("Feature-Policy", "fullscreen 'self';camera 'none';geolocation 'none';gyroscope 'none';magnetometer 'none';microphone 'none';midi 'none';payment 'none';speaker 'none';sync-xhr 'none'");
+                context.Response.Headers.Add("Content-Security-Policy", "default-src 'none'; script-src 'self' 'unsafe-inline' *.msecnd.net; style-src 'self'; img-src 'self' data:; frame-src 'self'; font-src 'self'; media-src 'self'; connect-src 'self' *.visualstudio.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
+                await next();
             });
+
+            app.UseMvcWithDefaultRoute();
         }
     }
 }

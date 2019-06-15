@@ -28,7 +28,8 @@
     "inputFiles": [
       "Lib/external/jquery/jquery.min.js",
       "Lib/external/moment.js/moment.min.js",
-      "Lib/external/twitter-bootstrap/js/bootstrap.bundle.min.js"
+      "Lib/external/twitter-bootstrap/js/bootstrap.bundle.min.js",
+      "Lib/local/js/events.js"
     ]
   }
 ]

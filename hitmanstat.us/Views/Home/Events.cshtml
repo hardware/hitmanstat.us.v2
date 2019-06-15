@@ -75,16 +75,5 @@
 </table>
 
 @section Scripts {
-
     <script src="~/js/jquery-bootstrap.min.js" asp-append-version="true"></script>
-
-    <script type="text/javascript">
-        $(function () {
-            $('[data-utcdate]').each(function () {
-                var date = moment($(this).attr('data-utcdate'));
-                $(this).html(date.fromNow());
-            });
-        });
-    </script>
-
 }

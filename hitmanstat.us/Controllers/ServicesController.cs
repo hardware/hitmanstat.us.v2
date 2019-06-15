@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
-using hitmanstat.us.Clients;
 using hitmanstat.us.Models;
 
 namespace hitmanstat.us.Controllers
