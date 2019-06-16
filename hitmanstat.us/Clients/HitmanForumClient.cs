@@ -31,9 +31,16 @@ namespace hitmanstat.us.Clients
             {
                 endpoint.Status = "broken";
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException e)
             {
-                endpoint.Status = response.StatusCode.ToString();
+                if(response != null)
+                {
+                    endpoint.Status = response.StatusCode.ToString();
+                }
+                else
+                {
+                    endpoint.Status = e.Message;
+                }
             }
             
             return endpoint;

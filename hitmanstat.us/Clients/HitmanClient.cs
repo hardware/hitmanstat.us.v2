@@ -41,24 +41,31 @@ namespace hitmanstat.us.Clients
             {
                 endpoint.Status = "Authentication server is down";
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException e)
             {
-                switch (response.StatusCode)
+                if (response != null)
                 {
-                    case HttpStatusCode.InternalServerError:
-                        endpoint.Status = "Internal authentication server error";
-                        break;
-                    case HttpStatusCode.BadGateway:
-                    case HttpStatusCode.ServiceUnavailable:
-                    case HttpStatusCode.GatewayTimeout:
-                        endpoint.State = EndpointState.Maintenance;
-                        endpoint.Status = "Temporary Azure backend maintenance";
-                        break;
-                    default:
-                        endpoint.Status = string.Format(
-                            "Unhandled error code returned by authentication server - error HTTP {0}", 
-                            response.StatusCode);
-                        break;
+                    switch (response.StatusCode)
+                    {
+                        case HttpStatusCode.InternalServerError:
+                            endpoint.Status = "Internal authentication server error";
+                            break;
+                        case HttpStatusCode.BadGateway:
+                        case HttpStatusCode.ServiceUnavailable:
+                        case HttpStatusCode.GatewayTimeout:
+                            endpoint.State = EndpointState.Maintenance;
+                            endpoint.Status = "Temporary Azure backend maintenance";
+                            break;
+                        default:
+                            endpoint.Status = string.Format(
+                                "Error code returned by authentication server - error HTTP {0}",
+                                response.StatusCode);
+                            break;
+                    }
+                }
+                else
+                {
+                    endpoint.Status = e.Message;
                 }
             }
             finally

@@ -8,7 +8,7 @@ html {
 
 body {
     min-height: 100vh;
-    background-image: url(/img/grid.png),url(/img/bg.jpg);
+    background-image: url(/images/grid.png),url(/images/bg.jpg);
     background-size: auto,cover;
     background-color: #121421;
     background-position: top;

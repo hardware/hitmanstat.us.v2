@@ -10,8 +10,8 @@
         "status": null,
         "health": "healthy",
         "nextWindow": {
-          "start": "2019-06-03T14:00:00+00:00",
-          "end": "2019-06-03T16:00:00+00:00",
+          "start": "2029-07-03T14:00:00+00:00",
+          "end": "2029-07-03T16:00:00+00:00",
           "status": null
         }
       },
@@ -24,22 +24,26 @@
         "status": null,
         "health": "maintenance",
         "nextWindow": {
-          "start": "2019-05-03T14:00:00+00:00",
-          "end": "2019-06-03T14:00:00+00:00",
+          "start": "2019-06-15T18:00:00+00:00",
+          "end": "2019-06-16T22:00:00+00:00",
           "status": null
         }
       },
       "ps42-service.hitman.io": {
         "status": null,
         "health": "maintenance",
-        "nextWindow": null
+        "nextWindow": {
+          "start": "2019-06-15T18:00:00+00:00",
+          "end": "2019-06-16T22:00:00+00:00",
+          "status": null
+        }
       },
       "xboxone2-service.hitman.io": {
         "status": null,
         "health": "maintenance",
         "nextWindow": {
-          "start": "2019-05-03T14:00:00+00:00",
-          "end": "2019-06-03T14:00:00+00:00",
+          "start": "2019-06-15T18:00:00+00:00",
+          "end": "2019-06-16T22:00:00+00:00",
           "status": null
         }
       }

@@ -15,7 +15,7 @@ services.refresh = function () {
     // --------- HITMAN ---------
     m.request({
         method: 'GET',
-        url: '/services/hitman',
+        url: '/status/hitman',
     })
     .then(function (result) {
         var lastCheck = moment();
@@ -90,7 +90,7 @@ services.refresh = function () {
     //  --------- Hitmanforum ---------
     m.request({
         method: 'GET',
-        url: '/services/hitmanforum',
+        url: '/status/hitmanforum',
     })
     .then(function (result) {
         var lastCheck = moment();
