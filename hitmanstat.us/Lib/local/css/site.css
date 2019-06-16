@@ -136,6 +136,10 @@ nav.bg-dark {
     cursor: pointer;
 }
 
+.list-group-item:hover {
+    text-decoration-line: underline;
+}
+
 .list-group-item.maintenance {
     color: #484848;
     background-color: #dedede;
@@ -175,10 +179,12 @@ nav.bg-dark {
     text-decoration: none;
 }
 
+.alert-desc {
+    font-size: 0.96rem;
+}
 /*
  * ERROR CONTAINER
  */
-
 #backend-error-container {
     padding-top: 20px;
     padding-bottom: 20px;

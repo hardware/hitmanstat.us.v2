@@ -1,0 +1,20 @@
+{
+  "name": "HITMAN Status",
+  "short_name": "HITMAN Status",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#212127",
+  "background_color": "#212127",
+  "icons": [
+    {
+      "src": "images/android-chrome-192x192.png?v=1",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/android-chrome-512x512.png?v=1",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

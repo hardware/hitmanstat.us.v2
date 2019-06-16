@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
@@ -154,7 +155,7 @@ namespace hitmanstat.us.Framework
             }
             else
             {
-                _logger.LogDebug("Database is locked by a delay, no events submitted");
+                _logger.LogDebug("Database is locked with a delay, no events submitted");
             }
         }
 
@@ -220,6 +221,45 @@ namespace hitmanstat.us.Framework
                     return;
                 }
 
+                if (events.Count > 2)
+                {
+                    var maintenance = HitmanServiceHealth.Maintenance.GetAttribute<DisplayAttribute>().Name;
+                    var maintenanceCount = events
+                        .Where(e => e.State == maintenance)
+                        .Count();
+
+                    if (maintenanceCount >= 3 && maintenanceCount < 6)
+                    {
+                        if (events.First().Service.StartsWith("HITMAN 2"))
+                        {
+                            events.Clear();
+                            events.Add(new Event()
+                            {
+                                Service = "HITMAN 2 PC / XBOX ONE / PS4",
+                                State = maintenance
+                            });
+                        }
+                        else
+                        {
+                            events.Clear();
+                            events.Add(new Event()
+                            {
+                                Service = "HITMAN PC / XBOX ONE / PS4",
+                                State = maintenance
+                            });
+                        }
+                    }
+                    else if (maintenanceCount == 6)
+                    {
+                        events.Clear();
+                        events.Add(new Event()
+                        {
+                            Service = "HITMAN & HITMAN 2 PC / XBOX ONE / PS4",
+                            State = maintenance
+                        });
+                    }
+                }
+
                 try
                 {
                     _db.AddRange(events);
@@ -242,7 +282,7 @@ namespace hitmanstat.us.Framework
             }
             else
             {
-                _logger.LogDebug("Database is locked by a delay, no events submitted");
+                _logger.LogDebug("Database is locked with a delay, no events submitted");
             }
         }
     }

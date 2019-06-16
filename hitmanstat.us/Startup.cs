@@ -48,17 +48,7 @@ namespace hitmanstat.us
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-
-                /* 
-                 * https://aka.ms/aspnetcore-hsts
-                 * HSTS already in use via Cloudflare
-                 * app.UseHsts();
-                 */
             }
-
-            app.UseStatusCodePagesWithReExecute("/error/{0}");
-            app.UseHttpsRedirection();
-            app.UseResponseCaching();
 
             app.Use(async (context, next) =>
             {
@@ -78,6 +68,9 @@ namespace hitmanstat.us
                 }
             });
 
+            app.UseHttpsRedirection();
+            app.UseResponseCaching();
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseMvcWithDefaultRoute();
         }
     }

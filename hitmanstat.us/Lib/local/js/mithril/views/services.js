@@ -97,7 +97,7 @@ function setElusiveModal(service) {
         var end = moment(service.elusive.nextWindow.end);
         var duration = moment.duration(start.diff(moment()));
         return m("div", { class: "modal fade", id: modalId, role: "dialog" },
-            m("div", { class: "modal-dialog modal-dialog-centered", role: "document" },
+            m("div", { class: "modal-dialog modal-dialog-centered modal-xl", role: "document" },
                 m("div", { class: "modal-content" }, [
                     m("div", { class: "modal-header" }, [
                         m("h5", { class: "modal-title" }, service.elusive.name),

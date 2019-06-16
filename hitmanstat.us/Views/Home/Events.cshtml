@@ -24,6 +24,11 @@
     </div>
 }
 
+<div class="alert alert-secondary text-center alert-desc" role="alert">
+    The first event appears if the service is unavailable for more than a minute. 
+    Following events are delayed each time until the service becomes available again.
+</div>
+
 <table class="table table-bordered table-striped table-light">
     <thead class="thead-dark">
         <tr>
@@ -56,8 +61,8 @@
                 }
 
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                    <td data-utcdate="@item.Date.ToString("s")"></td>
+                    <td>@Html.DisplayFor(modelItem => item.Date) UTC</td>
+                    <td data-utcdate="@item.Date.ToString("yyyy-MM-ddTHH:mm:sszzz")">N/D</td>
                     <td>@Html.DisplayFor(modelItem => item.Service)</td>
                     <td>@Html.DisplayFor(modelItem => item.State)</td>
                 </tr>
