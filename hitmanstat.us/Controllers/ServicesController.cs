@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using hitmanstat.us.Models;
@@ -26,7 +25,7 @@ namespace hitmanstat.us.Controllers
                     return Json(cachedExceptionEndpoint);
                 }
 
-                await Task.Delay(TimeSpan.FromMilliseconds(1000));
+                await Task.Delay(1000);
             }
         }
 
@@ -44,8 +43,14 @@ namespace hitmanstat.us.Controllers
                     return Json(cachedExceptionEndpoint);
                 }
 
-                await Task.Delay(TimeSpan.FromMilliseconds(1000));
+                await Task.Delay(1000);
             }
+        }
+
+        [Route("/status/steam")]
+        public IActionResult Steam()
+        {
+            return NoContent();
         }
     }
 }
