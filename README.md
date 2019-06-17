@@ -4,11 +4,11 @@ HITMAN status website provides the current status and incident reporting for HIT
 
 ## URLs
 
-* [https://hitmanstat.us](https://hitmanstat.us)
+[https://hitmanstat.us](https://hitmanstat.us)
 
 ## Credits
 
-* HITMAN™ is a trademark owned and exclusively licensed to [Io-Interactive A/S](http://www.ioi.dk/).
+HITMAN™ is a trademark owned and exclusively licensed to [Io-Interactive A/S](http://www.ioi.dk/).
 
 ## License
 
