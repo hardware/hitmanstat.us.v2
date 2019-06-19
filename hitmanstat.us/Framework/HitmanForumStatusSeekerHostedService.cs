@@ -47,7 +47,7 @@ namespace hitmanstat.us.Framework
                 {
                     _logger.LogDebug("HitmanForumStatusSeekerHostedService is running");
 
-                    var endpointException = new EndpointStatusException("HITMAN FORUM");
+                    var endpointException = new EndpointStatusException(EndpointName.HitmanForum);
 
                     try
                     {
@@ -56,7 +56,7 @@ namespace hitmanstat.us.Framework
                         if (endpoint.State == EndpointState.Up)
                         {
                             _cache.Set(CacheKeys.HitmanForumKey, endpoint, new MemoryCacheEntryOptions()
-                                .SetAbsoluteExpiration(TimeSpan.FromSeconds(60)));
+                                .SetPriority(CacheItemPriority.NeverRemove));
 
                             manager.RemoveCache(new List<string>
                             {
@@ -81,7 +81,7 @@ namespace hitmanstat.us.Framework
                         if (!string.IsNullOrEmpty(endpointException.Status))
                         {
                             _cache.Set(CacheKeys.HitmanForumExceptionKey, endpointException, new MemoryCacheEntryOptions()
-                                .SetAbsoluteExpiration(TimeSpan.FromSeconds(60)));
+                                .SetAbsoluteExpiration(TimeSpan.FromSeconds(45)));
 
                             await manager.InsertEndpointExceptionAsync(endpointException);
                         }

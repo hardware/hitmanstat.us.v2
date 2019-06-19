@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using hitmanstat.us.Models;
 using hitmanstat.us.Clients;
 using hitmanstat.us.Data;
@@ -47,7 +48,7 @@ namespace hitmanstat.us.Framework
                 {
                     _logger.LogDebug("HitmanStatusSeekerHostedService is running");
 
-                    var endpointException = new EndpointStatusException("HITMAN AUTHENTICATION");
+                    var endpointException = new EndpointStatusException(EndpointName.HitmanAuthentication);
 
                     try
                     {
@@ -59,17 +60,23 @@ namespace hitmanstat.us.Framework
                             //byte[] debugFile = Properties.Resources.hitmandebug_maintenance;
                             //endpoint.Status = Utilities.ReadResourceFile(debugFile);
 
-                            _cache.Set(CacheKeys.HitmanKey, endpoint, new MemoryCacheEntryOptions()
-                                .SetAbsoluteExpiration(TimeSpan.FromSeconds(60)));
+                            var json = JObject.Parse(endpoint.Status);
+                            var timestamp = (DateTime)json["timestamp"];
+
+                            if (manager.IsMostRecentStatus(timestamp))
+                            {
+                                _cache.Set(CacheKeys.HitmanKey, endpoint, new MemoryCacheEntryOptions()
+                                    .SetPriority(CacheItemPriority.NeverRemove));
+
+                                await Task.Run(()
+                                    => manager.InsertHitmanServicesEntitiesAsync(json), stoppingToken);
+                            }
 
                             manager.RemoveCache(new List<string>
                             {
                                 CacheKeys.HitmanErrorCountKey,
                                 CacheKeys.HitmanErrorEventKey
                             });
-
-                            await Task.Run(() 
-                                => manager.InsertHitmanServicesEntitiesAsync(endpoint.Status), stoppingToken);
                         }
                         else
                         {
@@ -89,7 +96,7 @@ namespace hitmanstat.us.Framework
                         if(!string.IsNullOrEmpty(endpointException.Status))
                         {
                             _cache.Set(CacheKeys.HitmanExceptionKey, endpointException, new MemoryCacheEntryOptions()
-                                .SetAbsoluteExpiration(TimeSpan.FromSeconds(60)));
+                                .SetAbsoluteExpiration(TimeSpan.FromSeconds(45)));
 
                             await manager.InsertEndpointExceptionAsync(endpointException);
                         }

@@ -36,16 +36,52 @@ namespace hitmanstat.us.Framework
             }
         }
 
-        public async Task InsertHitmanServicesEntitiesAsync(string jsonString)
+        public bool IsMostRecentStatus(DateTime timestamp)
         {
-            var json = JObject.Parse(jsonString);
+            bool result = false;
+
+            if (_cache.TryGetValue(CacheKeys.HitmanLastRequestTimestampKey, out DateTime cachedTimestamp))
+            {
+                if(timestamp > cachedTimestamp)
+                {
+                    result = true;
+                }
+            }
+            else
+            {
+                result = true;
+            }
+
+            if (result)
+            {
+                _cache.Set(CacheKeys.HitmanLastRequestTimestampKey, timestamp, new MemoryCacheEntryOptions()
+                    .SetPriority(CacheItemPriority.NeverRemove));
+            }
+
+            return result;
+        }
+
+        public async Task InsertHitmanServicesEntitiesAsync(JObject json)
+        {
             var entities = new List<HitmanService> {
-                new HitmanService { Name = "HITMAN PC", Node = "pc-service.hitman.io" },
-                new HitmanService { Name = "HITMAN PS4", Node = "ps4-service.hitman.io" },
-                new HitmanService { Name = "HITMAN XBOX ONE", Node = "xboxone-service.hitman.io" },
-                new HitmanService { Name = "HITMAN 2 PC", Node = "pc2-service.hitman.io" },
-                new HitmanService { Name = "HITMAN 2 PS4", Node = "ps42-service.hitman.io" },
-                new HitmanService { Name = "HITMAN 2 XBOX ONE", Node = "xboxone2-service.hitman.io" }
+                new HitmanService {
+                    Name = "HITMAN PC",
+                    Node = "pc-service.hitman.io" },
+                new HitmanService {
+                    Name = "HITMAN PS4",
+                    Node = "ps4-service.hitman.io" },
+                new HitmanService {
+                    Name = "HITMAN XBOX ONE",
+                    Node = "xboxone-service.hitman.io" },
+                new HitmanService {
+                    Name = "HITMAN 2 PC",
+                    Node = "pc2-service.hitman.io" },
+                new HitmanService {
+                    Name = "HITMAN 2 PS4",
+                    Node = "ps42-service.hitman.io" },
+                new HitmanService {
+                    Name = "HITMAN 2 XBOX ONE",
+                    Node = "xboxone2-service.hitman.io" }
             };
 
             foreach (var entity in entities)
@@ -82,11 +118,11 @@ namespace hitmanstat.us.Framework
 
             switch (endpoint.Name)
             {
-                case "HITMAN AUTHENTICATION":
+                case EndpointName.HitmanAuthentication:
                     cacheCountKey = CacheKeys.HitmanErrorCountKey;
                     cacheEventKey = CacheKeys.HitmanErrorEventKey;
                     break;
-                case "HITMAN FORUM":
+                case EndpointName.HitmanForum:
                     cacheCountKey = CacheKeys.HitmanForumErrorCountKey;
                     cacheEventKey = CacheKeys.HitmanForumErrorEventKey;
                     break;
@@ -125,9 +161,11 @@ namespace hitmanstat.us.Framework
                 }
 
                 var state = endpoint.State.GetAttribute<DisplayAttribute>();
+                var service = endpoint.Name.GetAttribute<DisplayAttribute>();
+
                 var entity = new Event()
                 {
-                    Service = endpoint.Name,
+                    Service = service.Name,
                     State = state.Name,
                     Status = endpoint.Status,
                     Message = endpoint.Message

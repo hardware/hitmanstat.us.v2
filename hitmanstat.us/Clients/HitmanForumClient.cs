@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Polly.Timeout;
 using Polly.CircuitBreaker;
@@ -42,7 +43,11 @@ namespace hitmanstat.us.Clients
                     endpoint.Status = e.Message;
                 }
             }
-            
+            catch (OperationCanceledException)
+            {
+                endpoint.Status = "timeout";
+            }
+
             return endpoint;
         }
     }

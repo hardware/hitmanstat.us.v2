@@ -16,13 +16,13 @@ namespace hitmanstat.us.Controllers
         {
             while(true)
             {
-                if (_cache.TryGetValue(CacheKeys.HitmanKey, out EndpointStatus cachedEndpoint))
-                {
-                    return Content(cachedEndpoint.Status, "application/json");
-                }
-                else if (_cache.TryGetValue(CacheKeys.HitmanExceptionKey, out EndpointStatusException cachedExceptionEndpoint))
+                if (_cache.TryGetValue(CacheKeys.HitmanExceptionKey, out EndpointStatusException cachedExceptionEndpoint))
                 {
                     return Json(cachedExceptionEndpoint);
+                }
+                else if (_cache.TryGetValue(CacheKeys.HitmanKey, out EndpointStatus cachedEndpoint))
+                {
+                    return Content(cachedEndpoint.Status, "application/json");
                 }
 
                 await Task.Delay(1000);
@@ -34,13 +34,13 @@ namespace hitmanstat.us.Controllers
         {
             while (true)
             {
-                if (_cache.TryGetValue(CacheKeys.HitmanForumKey, out EndpointStatus cachedEndpoint))
-                {
-                    return Json(cachedEndpoint);
-                }
-                else if (_cache.TryGetValue(CacheKeys.HitmanForumExceptionKey, out EndpointStatusException cachedExceptionEndpoint))
+                if (_cache.TryGetValue(CacheKeys.HitmanForumExceptionKey, out EndpointStatusException cachedExceptionEndpoint))
                 {
                     return Json(cachedExceptionEndpoint);
+                }
+                else if (_cache.TryGetValue(CacheKeys.HitmanForumKey, out EndpointStatus cachedEndpoint))
+                {
+                    return Json(cachedEndpoint);
                 }
 
                 await Task.Delay(1000);

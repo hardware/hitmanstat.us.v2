@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Polly.Timeout;
@@ -67,6 +68,10 @@ namespace hitmanstat.us.Clients
                 {
                     endpoint.Status = e.Message;
                 }
+            }
+            catch (OperationCanceledException)
+            {
+                endpoint.Status = "Authentication server connection timeout";
             }
             finally
             {
