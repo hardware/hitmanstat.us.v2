@@ -18,14 +18,5 @@ namespace hitmanstat.us.Framework
 
             return value.Contains("application/json");
         }
-
-        public static string ReadResourceFile(byte[] resource)
-        {
-            using (Stream stream = new MemoryStream(resource))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
-        }
     }
 }

@@ -56,10 +56,6 @@ namespace hitmanstat.us.Framework
 
                         if (endpoint.State == EndpointState.Up)
                         {
-                            // Fake data (debug purpose)
-                            //byte[] debugFile = Properties.Resources.hitmandebug_maintenance;
-                            //endpoint.Status = Utilities.ReadResourceFile(debugFile);
-
                             var json = JObject.Parse(endpoint.Status);
                             var timestamp = (DateTime)json["timestamp"];
 

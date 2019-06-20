@@ -44,6 +44,7 @@ namespace hitmanstat.us
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {

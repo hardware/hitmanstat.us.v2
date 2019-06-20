@@ -17,10 +17,6 @@
     <Content Include="Lib\local\js\site.js" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="Resources\hitmandebug.json" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.9.406" />

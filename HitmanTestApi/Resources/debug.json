@@ -8,7 +8,7 @@
     },
     "ps4-service.hitman.io": {
       "status": null,
-      "health": "down",
+      "health": "healthy",
       "nextWindow": null
     },
     "xboxone-service.hitman.io": {

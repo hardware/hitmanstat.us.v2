@@ -261,14 +261,18 @@ namespace hitmanstat.us.Framework
 
                 if (events.Count > 2)
                 {
+                    var down = HitmanServiceHealth.Down.GetAttribute<DisplayAttribute>().Name;
                     var maintenance = HitmanServiceHealth.Maintenance.GetAttribute<DisplayAttribute>().Name;
+
                     var maintenanceCount = events
                         .Where(e => e.State == maintenance)
                         .Count();
 
                     if (maintenanceCount >= 3 && maintenanceCount < 6)
                     {
-                        if (events.First().Service.StartsWith("HITMAN 2"))
+                        var downEvents = events.Where(e => e.State == down).ToList();
+
+                        if (events.First(e => e.State == maintenance).Service.StartsWith("HITMAN 2"))
                         {
                             events.Clear();
                             events.Add(new Event()
@@ -285,6 +289,11 @@ namespace hitmanstat.us.Framework
                                 Service = "HITMAN PC / XBOX ONE / PS4",
                                 State = maintenance
                             });
+                        }
+
+                        if(downEvents.Count() > 0)
+                        {
+                            events.AddRange(downEvents);
                         }
                     }
                     else if (maintenanceCount == 6)
