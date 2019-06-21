@@ -12,6 +12,7 @@ namespace hitmanstat.us.Controllers
         public ServicesController(IMemoryCache cache) => _cache = cache;
 
         [Route("/status/hitman")]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Hitman()
         {
             while(true)
@@ -30,6 +31,7 @@ namespace hitmanstat.us.Controllers
         }
 
         [Route("/status/hitmanforum")]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> HitmanForum()
         {
             while (true)
