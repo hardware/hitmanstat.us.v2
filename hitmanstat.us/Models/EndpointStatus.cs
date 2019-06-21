@@ -6,7 +6,6 @@ namespace hitmanstat.us.Models
 {
     public class EndpointStatus
     {
-        public EndpointName Name { get; set; }
         public EndpointState State { get; set; } = EndpointState.Down;
         public string Status { get; set; }
 
@@ -15,11 +14,13 @@ namespace hitmanstat.us.Models
 
     public class EndpointStatusException : EndpointStatus
     {
+        public EndpointName Name { get; set; }
         public string Message { get; set; }
 
         public EndpointStatusException(EndpointName name) => Name = name;
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum EndpointName
     {
         [Display(Name = "HITMAN AUTHENTICATION")]

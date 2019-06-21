@@ -90,39 +90,40 @@ nav.bg-dark {
     background-color: #ccc;
 }
 
-.card-title {
-    color: #5a405f;
-    margin-bottom: 0;
-    text-transform: uppercase;
-}
-
 .card-body {
     text-align: center;
     padding: 1.0rem;
 }
 
 .card-text {
-    font-weight: 500;
     text-transform: uppercase;
+    font-weight: 500;
 }
 
-.card-text.up {
+.card-span-title {
+    color: #5a405f;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    display: block;
+}
+
+.card-span-status.up {
     color: #61B329;
 }
 
-.card-text.maintenance {
+.card-span-status.maintenance {
     color: #FFC107;
 }
 
-.card-text.warn {
+.card-span-status.warn {
     color: #FF6A00;
 }
 
-.card-text.down, .card-text.error {
+.card-span-status.down, .card-span-status.error {
     color: #CC0000;
 }
 
-.card-text.unknown, .card-text.loading {
+.card-span-status.unknown, .card-span-status.loading {
     color: #ccc;
 }
 
@@ -150,10 +151,16 @@ nav.bg-dark {
 }
 
 /*
+ * MODALS
+ */
+.modal-content {
+    background-color: rgba(255, 255, 255, 0.92);
+}
+
+/*
  * ALERTS
  */
-
-.alert-header {
+    .alert-header {
     background-color: rgba(255,0,0,.3);
     color: #fff;
     padding-top: 1em;

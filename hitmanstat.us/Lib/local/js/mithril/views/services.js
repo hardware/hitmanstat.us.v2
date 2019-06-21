@@ -22,9 +22,8 @@ function setServicesGroup(services, groupName) {
             return [
                 m("div", { class: "card" }, [
                     m("div", { class: setHeaderClass(service) }),
-                    m("div", { class: "card-body" }, [
-                        m("h5", { class: "card-title" }, service.name),
-                        setState(service)
+                    m("div", { class: "card-body d-flex align-items-center justify-content-center" }, [
+                        setBody(service)
                     ]),
                     m("ul", { class: "list-group list-group-flush" }, [
                         setMaintenance(service),
@@ -49,13 +48,14 @@ function setHeaderClass(service) {
     return "card-header " + status;
 }
 
-function setState(service) {
-    var status = (service.status) ? service.status.toLowerCase() : "loading...";
+function setBody(service) {
+    var status = (service.status) ? service.status.toLowerCase() : "loading";
     var title = (service.title) ? " - " + service.title : "";
     var label = (status == "up") ? "online" : status;
-    return m("p", {
-        class: "card-text " + status
-    }, label + title);
+    return m("p", { class: "card-text" }, [
+        m("span", { class: "card-span-title" }, service.name),
+        m("span", { class: "card-span-status " + status }, label + title),
+    ]);
 }
 
 function setLink(service) {
@@ -97,7 +97,7 @@ function setElusiveModal(service) {
         var end = moment(service.elusive.nextWindow.end);
         var duration = moment.duration(start.diff(moment()));
         return m("div", { class: "modal fade", id: modalId, role: "dialog" },
-            m("div", { class: "modal-dialog modal-dialog-centered modal-xl", role: "document" },
+            m("div", { class: "modal-dialog modal-dialog-centered modal-lg", role: "document" },
                 m("div", { class: "modal-content" }, [
                     m("div", { class: "modal-header" }, [
                         m("h5", { class: "modal-title" }, service.elusive.name),
