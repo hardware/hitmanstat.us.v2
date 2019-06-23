@@ -85,28 +85,5 @@ namespace hitmanstat.us.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
-        [Route("/report/{id}")]
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var report = await _db.UserReports.FirstOrDefaultAsync(r => r.ID == id);
-
-            if (report == null)
-            {
-                return NotFound();
-            }
-
-            return Json(new
-            {
-                report.Fingerprint,
-                report.Date,
-                IPAddress = report.IPAddress.ToString()
-            });
-        }
     }
 }

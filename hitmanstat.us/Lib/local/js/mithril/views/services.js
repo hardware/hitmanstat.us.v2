@@ -198,7 +198,7 @@ function reportService(e) {
             },
             success: function (data, textStatus, xhr) {
                 if (xhr.status == "204") {
-                    showNotification("warning", null, "You can not submit more than once. Please wait before submitting your next report.");
+                    showNotification("info", null, "You can not submit more than once. Please wait before submitting your next report.");
                 } else {
                     showNotification("success", "Your report has been saved.", "Platform : " + name);
                 }

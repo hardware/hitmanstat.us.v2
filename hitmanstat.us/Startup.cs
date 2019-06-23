@@ -11,6 +11,7 @@ using hitmanstat.us.Clients;
 using hitmanstat.us.Framework;
 using hitmanstat.us.Options;
 using hitmanstat.us.Data;
+using System.Net;
 
 namespace hitmanstat.us
 {
@@ -61,11 +62,15 @@ namespace hitmanstat.us
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            var options = new ForwardedHeadersOptions
             {
-                //ForwardedForHeaderName = "CF-Connecting-IP",
-                ForwardedHeaders = ForwardedHeaders.All
-            }); ;
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor,
+                ForwardedForHeaderName = "CF-CONNECTING-IP"
+            };
+
+            options.KnownNetworks.Clear();
+            options.KnownProxies.Clear();
+            app.UseForwardedHeaders(options);
 
             if (env.IsDevelopment())
             {
