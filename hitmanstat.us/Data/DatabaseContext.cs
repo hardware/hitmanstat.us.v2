@@ -12,6 +12,8 @@ namespace hitmanstat.us.Data
 
         public DbSet<UserReport> UserReports { get; set; }
 
+        public DbSet<UserReportCounter> UserReportCounters { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Event>().ToTable("Event");
@@ -21,7 +23,30 @@ namespace hitmanstat.us.Data
 
             modelBuilder.Entity<UserReport>().ToTable("UserReport");
             modelBuilder.Entity<UserReport>()
-                .Property(e => e.Date)
+                .Property(r => r.Date)
+                .HasDefaultValueSql("getdate()");
+
+            modelBuilder.Entity<UserReportCounter>().ToTable("UserReportCounter");
+            modelBuilder.Entity<UserReportCounter>()
+                .Property(c => c.H1pc)
+                .HasDefaultValue(0);
+            modelBuilder.Entity<UserReportCounter>()
+                .Property(c => c.H1xb)
+                .HasDefaultValue(0);
+            modelBuilder.Entity<UserReportCounter>()
+                .Property(c => c.H1ps)
+                .HasDefaultValue(0);
+            modelBuilder.Entity<UserReportCounter>()
+                .Property(c => c.H2pc)
+                .HasDefaultValue(0);
+            modelBuilder.Entity<UserReportCounter>()
+                .Property(c => c.H2xb)
+                .HasDefaultValue(0);
+            modelBuilder.Entity<UserReportCounter>()
+                .Property(c => c.H2ps)
+                .HasDefaultValue(0);
+            modelBuilder.Entity<UserReportCounter>()
+                .Property(c => c.Date)
                 .HasDefaultValueSql("getdate()");
         }
     }

@@ -15,16 +15,20 @@
     </div>
 </noscript>
 
-@*
-    TODO: Uncomment this alert
-    <div class="alert alert-secondary text-center alert-report" role="alert">
-        If a service isn't working on your side, you can click on the exclamation point to share your reporting.
-    </div>
-*@
+<div class="alert alert-secondary text-center alert-report" role="alert">
+    If a service isn't working for you, click on the exclamation point to share your reporting. A significant number of reports may indicate an issue with game servers.
+</div>
 
 @Html.AntiForgeryToken()
 
 <div id="services-container"></div>
+
+<h3 class="mb-4">
+    Players reports 
+    <small class="text-muted">per day</small>
+</h3>
+
+<div class="mb-5" id="chart"></div>
 
 @section Scripts {
     <script src="~/js/scripts.min.js" asp-append-version="true"></script>

@@ -48,6 +48,13 @@
       "files": [
         "fingerprint2.min.js"
       ]
+    },
+    {
+      "library": "apexcharts@3.6.12",
+      "destination": "Lib/external/apexcharts/",
+      "files": [
+        "apexcharts.min.js"
+      ]
     }
   ]
 }

@@ -106,3 +106,84 @@ services.refresh = function () {
         });
     });
 };
+
+var chartRendered = false;
+
+services.renderChart = function () {
+    m.request({
+        method: 'GET',
+        url: '/UserReports/GetReports',
+    })
+    .then(function (result) {
+        if (chartRendered) {
+            ApexCharts.exec('playersReports', 'updateOptions', {
+                xaxis: {
+                    categories: result.categories,
+                }
+            }, false, true);
+            ApexCharts.exec('playersReports', 'updateSeries', result.series, true);
+        } else {
+            var options = {
+                chart: {
+                    height: 350,
+                    type: 'line',
+                    id: 'playersReports',
+                    shadow: {
+                        enabled: true,
+                        color: '#000',
+                        top: 18,
+                        left: 7,
+                        blur: 10,
+                        opacity: 1
+                    },
+                    toolbar: {
+                        show: false
+                    }
+                },
+                colors: ['#cc2d00', '#6d9e01', '#017db5', '#ff3800', '#97dc00', '#00a7f3'],
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'smooth'
+                },
+                series: result.series,
+                grid: {
+                    borderColor: '#e7e7e7',
+                    row: {
+                        colors: ['#f3f3f3', 'transparent'],
+                        opacity: 0.5
+                    },
+                },
+                markers: {
+                    size: 6
+                },
+                xaxis: {
+                    categories: result.categories,
+                    labels: {
+                        style: {
+                            fontSize: '14px'
+                        }
+                    }
+                },
+                yaxis: {
+                    labels: {
+                        style: {
+                            fontSize: '14px'
+                        },
+                        formatter: function (value) {
+                            return Math.round(value);
+                        }
+                    }
+                },
+                legend: {
+                    show: false
+                }
+            }
+
+            var chart = new ApexCharts(document.querySelector("#chart"), options);
+            chart.render();
+            chartRendered = true;
+        }
+    });
+};

@@ -13,5 +13,7 @@
         public static string HitmanEntityEventKey          { get { return "_HitmanEntityEvent"; } }
         public static string HitmanEntityCountKey          { get { return "_HitmanEntityCount"; } }
         public static string HitmanLastRequestTimestampKey { get { return "_HitmanLastRequestTimestamp"; } }
+        public static string CurrentUserReportCountersKey  { get { return "_CurrentUserReportCounters"; } }
+        public static string HitmanChartKey                { get { return "_HitmanChart"; } }
     }
 }

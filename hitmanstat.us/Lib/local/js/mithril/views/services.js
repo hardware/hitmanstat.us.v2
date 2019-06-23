@@ -4,6 +4,7 @@ var dateFormat = 'YYYY.MM.DD hh:mmA';
 services.oncreate = function () {
     window.addEventListener("load", function () {
         services.refresh();
+        services.renderChart();
     });
 };
 
@@ -71,7 +72,7 @@ function setReport(service) {
     if (service.group != "ot") {
         var name = service.name.toUpperCase();
         return m("button", {
-            class: "btn btn-outline-light btn-sm float-right", // TODO: Replace with btn-outline-warning
+            class: "btn btn-outline-warning btn-sm float-right",
             title: "I want to report an issue on " + name,
             id: "spinner-" + service.ref,
             onclick: reportService,
@@ -192,7 +193,7 @@ function reportService(e) {
 
         $.ajax({
             type: "post",
-            url: "/report",
+            url: "/UserReports/SubmitReport",
             data: {
                 reference: ref,
                 fingerprint: murmur,

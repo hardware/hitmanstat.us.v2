@@ -199,6 +199,15 @@ nav.bg-dark {
 .alert-report {
     border: 0;
     background-color: rgba(226, 227, 229, 0.71);
+    font-size: 0.93rem;
+}
+
+/*
+ * CHART
+ */
+
+#chart {
+    background-color: rgba(255, 255, 255, 0.54);
 }
 
 /*
