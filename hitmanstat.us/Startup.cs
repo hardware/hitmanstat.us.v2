@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Net.Http.Headers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,12 +22,33 @@ namespace hitmanstat.us
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // Database context
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            // HTTP Response Caching
             services.AddResponseCaching();
+
+            // ASP.NET Core MVC middleware
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            // CSRF protection
+            services.AddAntiforgery(options =>
+            {
+                options.Cookie.Name = "X-CSRF-TOKEN";
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            });
+
+            // Cloudflare client IP header forwarding
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedForHeaderName = "CF-Connecting-IP";
+                options.ForwardedHeaders = ForwardedHeaders.XForwardedFor;
+            });
+
+            // IHttpClientFactory policies and clients
             services
                 .AddPolicies(Configuration)
                 .AddHttpClient<IHitmanClient, HitmanClient, HitmanClientOptions>(
@@ -34,13 +57,19 @@ namespace hitmanstat.us
                 .AddHttpClient<IHitmanForumClient, HitmanForumClient, HitmanForumClientOptions>(
                     Configuration,
                     nameof(ApplicationOptions.HitmanForumClient));
+
+            // Memory caching
             services.AddMemoryCache();
+
+            // Status seekers Hosted services
             services.AddHostedService<HitmanStatusSeekerHostedService>();
             services.AddHostedService<HitmanForumStatusSeekerHostedService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseForwardedHeaders();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

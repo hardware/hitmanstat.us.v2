@@ -10,10 +10,17 @@ namespace hitmanstat.us.Data
 
         public DbSet<Event> Events { get; set; }
 
+        public DbSet<UserReport> UserReports { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Event>().ToTable("Event");
             modelBuilder.Entity<Event>()
+                .Property(e => e.Date)
+                .HasDefaultValueSql("getdate()");
+
+            modelBuilder.Entity<UserReport>().ToTable("UserReport");
+            modelBuilder.Entity<UserReport>()
                 .Property(e => e.Date)
                 .HasDefaultValueSql("getdate()");
         }

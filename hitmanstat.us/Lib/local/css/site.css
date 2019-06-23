@@ -127,6 +127,10 @@ nav.bg-dark {
     color: #ccc;
 }
 
+.card-footer > .btn-outline-warning {
+    color: #6c757d;
+}
+
 /*
  * LIST GROUPS
  */
@@ -153,6 +157,7 @@ nav.bg-dark {
 /*
  * MODALS
  */
+
 .modal-content {
     background-color: rgba(255, 255, 255, 0.92);
 }
@@ -160,7 +165,8 @@ nav.bg-dark {
 /*
  * ALERTS
  */
-    .alert-header {
+
+.alert-header {
     background-color: rgba(255,0,0,.3);
     color: #fff;
     padding-top: 1em;
@@ -189,9 +195,16 @@ nav.bg-dark {
 .alert-desc {
     font-size: 0.96rem;
 }
+
+.alert-report {
+    border: 0;
+    background-color: rgba(226, 227, 229, 0.71);
+}
+
 /*
  * ERROR CONTAINER
  */
+
 #backend-error-container {
     padding-top: 20px;
     padding-bottom: 20px;

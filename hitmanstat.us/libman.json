@@ -33,6 +33,21 @@
         "jquery.min.js",
         "jquery.min.map"
       ]
+    },
+    {
+      "library": "toastr.js@2.1.4",
+      "destination": "Lib/external/toastr.js/",
+      "files": [
+        "toastr.min.js",
+        "toastr.min.css"
+      ]
+    },
+    {
+      "library": "fingerprintjs2@2.1.0",
+      "destination": "Lib/external/fingerprintjs2/",
+      "files": [
+        "fingerprint2.min.js"
+      ]
     }
   ]
 }

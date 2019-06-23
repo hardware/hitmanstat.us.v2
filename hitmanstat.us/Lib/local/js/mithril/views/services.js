@@ -33,7 +33,8 @@ function setServicesGroup(services, groupName) {
                         m("small", {
                             class: "text-muted"
                         }, "Last updated : " + moment(service.lastCheck).fromNow()),
-                        setLink(service)
+                        setLink(service),
+                        setReport(service)
                     ])
                 ]),
                 setElusiveModal(service),
@@ -62,7 +63,22 @@ function setLink(service) {
     if (service.url) {
         return m("a", {
             class: "btn btn-outline-secondary btn-sm float-right", href: service.url
-        }, "Website")
+        }, "Website");
+    }
+}
+
+function setReport(service) {
+    if (service.group != "ot") {
+        var name = service.name.toUpperCase();
+        return m("button", {
+            class: "btn btn-outline-light btn-sm float-right", // TODO: Replace with btn-outline-warning
+            title: "I want to report an issue on " + name,
+            onclick: reportService,
+            "data-service-name": name,
+            "data-service-ref": service.ref,
+            "data-toggle": "tooltip",
+            "data-placement": "bottom"
+        }, "!")
     }
 }
 
@@ -161,6 +177,37 @@ function setMaintenanceModal(service) {
             )
         )
     }
+}
+
+function reportService(e) {
+    var ref = e.target.getAttribute('data-service-ref');
+    var name = e.target.getAttribute('data-service-name');
+    var token = $("input[name='__RequestVerificationToken']").val();
+
+    Fingerprint2.get(function (components) {
+        var values = components.map(function (component) { return component.value });
+        var murmur = Fingerprint2.x64hash128(values.join(''), 31);
+
+        $.ajax({
+            type: "post",
+            url: "/report",
+            data: {
+                reference: ref,
+                fingerprint: murmur,
+                __RequestVerificationToken: token
+            },
+            success: function (data, textStatus, xhr) {
+                if (xhr.status == "204") {
+                    showNotification("warning", null, "You can not submit more than once. Please wait before submitting your next report.");
+                } else {
+                    showNotification("success", "Your report has been saved.", "Platform : " + name);
+                }
+            },
+            error: function () {
+                showNotification("error", null, "An error has occurred.");
+            }
+        });
+    })
 }
 
 m.mount(servicesView, services);

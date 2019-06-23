@@ -3,6 +3,7 @@
     "outputFileName": "wwwroot/css/stylesheets.min.css",
     "inputFiles": [
       "Lib/external/twitter-bootstrap/css/bootstrap.min.css",
+      "Lib/external/toastr.js/toastr.min.css",
       "Lib/local/css/site.css"
     ]
   },
@@ -13,6 +14,8 @@
       "Lib/external/twitter-bootstrap/js/bootstrap.bundle.min.js",
       "Lib/external/mithril/mithril.min.js",
       "Lib/external/moment.js/moment.min.js",
+      "Lib/external/toastr.js/toastr.min.js",
+      "Lib/external/fingerprintjs2/fingerprint2.min.js",
       "Lib/local/js/site.js",
       "Lib/local/js/mithril/models/*.js",
       "Lib/local/js/mithril/views/*.js"
