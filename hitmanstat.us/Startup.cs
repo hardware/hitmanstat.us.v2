@@ -41,13 +41,6 @@ namespace hitmanstat.us
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             });
 
-            // Cloudflare client IP header forwarding
-            services.Configure<ForwardedHeadersOptions>(options =>
-            {
-                options.ForwardedForHeaderName = "CF-Connecting-IP";
-                options.ForwardedHeaders = ForwardedHeaders.XForwardedFor;
-            });
-
             // IHttpClientFactory policies and clients
             services
                 .AddPolicies(Configuration)
@@ -68,7 +61,11 @@ namespace hitmanstat.us
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseForwardedHeaders();
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                //ForwardedForHeaderName = "CF-Connecting-IP",
+                ForwardedHeaders = ForwardedHeaders.All
+            }); ;
 
             if (env.IsDevelopment())
             {

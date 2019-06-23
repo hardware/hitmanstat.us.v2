@@ -29,7 +29,7 @@ namespace hitmanstat.us.Controllers
                 return BadRequest();
             }
 
-            IPAddress address = HttpContext.Connection.RemoteIpAddress;
+            IPAddress address = Request.HttpContext.Connection.RemoteIpAddress;
 
             var count = (from r in _db.UserReports
                          where (r.IPAddressBytes == address.GetAddressBytes() 
