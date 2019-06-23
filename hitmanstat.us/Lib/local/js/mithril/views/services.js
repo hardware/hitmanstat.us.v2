@@ -73,6 +73,7 @@ function setReport(service) {
         return m("button", {
             class: "btn btn-outline-light btn-sm float-right", // TODO: Replace with btn-outline-warning
             title: "I want to report an issue on " + name,
+            id: "spinner-" + service.ref,
             onclick: reportService,
             "data-service-name": name,
             "data-service-ref": service.ref,
@@ -183,6 +184,7 @@ function reportService(e) {
     var ref = e.target.getAttribute('data-service-ref');
     var name = e.target.getAttribute('data-service-name');
     var token = $("input[name='__RequestVerificationToken']").val();
+    $("#spinner-" + ref).html('<span class="spinner-grow spinner-grow-sm text-secondary" role="status"></span>');
 
     Fingerprint2.get(function (components) {
         var values = components.map(function (component) { return component.value });
@@ -199,12 +201,21 @@ function reportService(e) {
             success: function (data, textStatus, xhr) {
                 if (xhr.status == "204") {
                     showNotification("info", null, "You can not submit more than once. Please wait before submitting your next report.");
+                    $("#spinner-" + ref)
+                        .html("&times")
+                        .css("color", "#ff6a00");
                 } else {
                     showNotification("success", "Your report has been saved.", "Platform : " + name);
+                    $("#spinner-" + ref)
+                        .html("&#10003")
+                        .css("color", "#61b329");
                 }
             },
             error: function () {
                 showNotification("error", null, "An error has occurred.");
+                $("#spinner-" + ref)
+                    .html("&times")
+                    .css("color", "#c00");
             }
         });
     })
