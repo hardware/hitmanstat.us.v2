@@ -11,7 +11,6 @@ using hitmanstat.us.Clients;
 using hitmanstat.us.Framework;
 using hitmanstat.us.Options;
 using hitmanstat.us.Data;
-using System.Net;
 
 namespace hitmanstat.us
 {

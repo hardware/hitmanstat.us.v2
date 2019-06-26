@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +22,18 @@ namespace hitmanstat.us.Controllers
         {
             _db = context;
             _cache = cache;
+        }
+
+        [Route("/ip")]
+        public IActionResult Ip()
+        {
+            IPAddress address = Request.HttpContext.Connection.RemoteIpAddress;
+
+            return Json(new
+            {
+                addr = address.ToString(),
+                bytes = address.GetAddressBytes()
+            });
         }
 
         public async Task<IActionResult> GetReports()
@@ -57,9 +70,9 @@ namespace hitmanstat.us.Controllers
                 h2ps.Add(counter.H2ps);
             }
 
-            series.Add(new ChartSerie { Name = "HITMAN 1 PC", Data = h1pc });
-            series.Add(new ChartSerie { Name = "HITMAN 1 XBOX ONE", Data = h1xb });
-            series.Add(new ChartSerie { Name = "HITMAN 1 PS4", Data = h1ps });
+            series.Add(new ChartSerie { Name = "HITMAN PC", Data = h1pc });
+            series.Add(new ChartSerie { Name = "HITMAN XBOX ONE", Data = h1xb });
+            series.Add(new ChartSerie { Name = "HITMAN PS4", Data = h1ps });
             series.Add(new ChartSerie { Name = "HITMAN 2 PC", Data = h2pc });
             series.Add(new ChartSerie { Name = "HITMAN 2 XBOX ONE", Data = h2xb });
             series.Add(new ChartSerie { Name = "HITMAN 2 PS4", Data = h2ps });
@@ -80,7 +93,9 @@ namespace hitmanstat.us.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitReport(string reference, string fingerprint)
         {
-            if (reference == null || fingerprint == null)
+            var match = Regex.Match(fingerprint, @"^[a-z0-9]{32}$");
+
+            if (reference == null || fingerprint == null || !match.Success)
             {
                 return BadRequest();
             }

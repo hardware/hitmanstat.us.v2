@@ -36,7 +36,7 @@ namespace hitmanstat.us.Clients
             {
                 if(response != null)
                 {
-                    endpoint.Status = response.StatusCode.ToString();
+                    endpoint.Status = response.ReasonPhrase;
                 }
                 else
                 {
