@@ -93,11 +93,11 @@ namespace hitmanstat.us.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitReport(string reference, string fingerprint)
         {
-            var match = Regex.Match(fingerprint, @"^[a-z0-9]{32}$");
+            var badRequest = new { type = "error", message = "Invalid submitted data." };
 
-            if (reference == null || fingerprint == null || !match.Success)
+            if (reference == null || fingerprint == null || !Regex.Match(fingerprint, @"^[a-z0-9]{32}$").Success)
             {
-                return BadRequest();
+                return Json(badRequest);
             }
 
             IPAddress address = Request.HttpContext.Connection.RemoteIpAddress;
@@ -110,7 +110,8 @@ namespace hitmanstat.us.Controllers
 
             if (count > 0)
             {
-                return NoContent();
+                return Json(new { type = "info", message = "You can not submit more than once. " +
+                    "Please wait before submitting your next report." });
             }
 
             string service;
@@ -124,7 +125,7 @@ namespace hitmanstat.us.Controllers
                 case "h2xb": service = "HITMAN 2 XBOX ONE"; break;
                 case "h2ps": service = "HITMAN 2 PS4"; break;
                 default:
-                    return BadRequest();
+                    return Json(badRequest);
             }
 
             try
@@ -164,11 +165,12 @@ namespace hitmanstat.us.Controllers
                 }
 
                 await _db.SaveChangesAsync();
-                return Ok();
+
+                return Json(new { type = "success" });
             }
-            catch
+            catch(Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return Json(new { type = "error", message = e.Message });
             }
         }
 

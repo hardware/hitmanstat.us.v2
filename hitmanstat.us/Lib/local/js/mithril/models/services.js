@@ -140,7 +140,7 @@ services.renderChart = function () {
                         show: false
                     }
                 },
-                colors: ['#607d8b', '#6d9e01', '#017db5', '#9e9e9e', '#97dc00', '#00a7f3'],
+                colors: ['#cc2d00', '#6d9e01', '#017db5', '#ff3800', '#97dc00', '#00a7f3'],
                 dataLabels: {
                     enabled: false
                 },

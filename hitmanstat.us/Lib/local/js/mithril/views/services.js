@@ -207,17 +207,22 @@ function reportService(e) {
                 fingerprint: murmur,
                 __RequestVerificationToken: token
             },
-            success: function (data, textStatus, xhr) {
-                if (xhr.status == "204") {
-                    showNotification("info", null, "You can not submit more than once. Please wait before submitting your next report.");
-                    $("#spinner-" + ref)
-                        .html("&times")
-                        .css("color", "#ff6a00");
-                } else {
+            success: function (data) {
+                if (data.type == "success") {
                     showNotification("success", "Your report has been saved.", "Platform : " + name);
                     $("#spinner-" + ref)
                         .html("&#10003")
                         .css("color", "#61b329");
+                } else if (data.type = "info") {
+                    showNotification("info", null, data.message);
+                    $("#spinner-" + ref)
+                        .html("&times")
+                        .css("color", "#ff6a00");
+                } else if (data.type = "error") {
+                    showNotification("error", null, data.message);
+                    $("#spinner-" + ref)
+                        .html("&times")
+                        .css("color", "#c00");
                 }
             },
             error: function () {
