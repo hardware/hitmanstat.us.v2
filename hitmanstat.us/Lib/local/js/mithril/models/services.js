@@ -126,7 +126,7 @@ services.renderChart = function () {
             var options = {
                 chart: {
                     height: 350,
-                    type: 'line',
+                    type: 'area',
                     id: 'playersReports',
                     shadow: {
                         enabled: true,
