@@ -21,7 +21,7 @@ services.refresh = function () {
         var lastCheck = moment();
         if (result.state) {
             errorElement.style.display = 'block';
-            errorElement.innerHTML = '<h1>All hitman services are unavailable</h1><span></span><h2>' + result.status + '</h2><h3>Status : ' + result.state + '</h3>';
+            errorElement.innerHTML = '<h1>All hitman services are unavailable</h1><span></span><h2>' + result.status + '</h2>';
             services.list.map(function (service) {
                 if (service.platform == 'azure') {
                     service.status = 'down';
