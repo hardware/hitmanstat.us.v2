@@ -162,7 +162,7 @@ function setMaintenanceModal(service) {
                     ]),
                     m("div", { class: "modal-body" }, [
                         m("div", {
-                            class: "alert alert-info", role: "alert"
+                            class: "alert alert-info text-center", role: "alert"
                         }, "All online features are unavailable during maintenance. However, the game remains playable in offline mode."),
                         m("table", { class: "table" }, [
                             m("tr", [m("th", (moment().isAfter(start)) ? 'Started since' : 'Start in'), m("td", duration.humanize())]),

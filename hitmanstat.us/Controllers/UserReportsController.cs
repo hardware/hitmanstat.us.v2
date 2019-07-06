@@ -36,6 +36,9 @@ namespace hitmanstat.us.Controllers
             });
         }
 
+        [Route("/reports")]
+        [Route("/UserReports/GetReports")]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> GetReports()
         {
             if (_cache.TryGetValue(CacheKeys.HitmanChartKey, out Chart cachedChart))

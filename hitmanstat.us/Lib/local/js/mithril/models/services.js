@@ -112,7 +112,7 @@ var chartRendered = false;
 services.renderChart = function () {
     m.request({
         method: 'GET',
-        url: '/UserReports/GetReports',
+        url: '/reports',
     })
     .then(function (result) {
         if (chartRendered) {

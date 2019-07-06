@@ -21,12 +21,7 @@
       "Lib/local/js/night-mode.js",
       "Lib/local/js/mithril/models/*.js",
       "Lib/local/js/mithril/views/*.js"
-    ],
-    "minify": {
-      "enabled": true,
-      "renameLocals": true
-    },
-    "sourceMap": false
+    ]
   },
   {
     "outputFileName": "wwwroot/js/jquery-bootstrap.min.js",
