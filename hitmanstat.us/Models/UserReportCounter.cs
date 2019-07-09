@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace hitmanstat.us.Models
 {
@@ -12,7 +12,7 @@ namespace hitmanstat.us.Models
         public int H2pc { get; set; }
         public int H2xb { get; set; }
         public int H2ps { get; set; }
-        [DataType(DataType.Date)]
+        [Column(TypeName = "date")]
         public DateTime Date { get; set; }
     }
 }

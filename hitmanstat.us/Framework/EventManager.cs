@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using hitmanstat.us.Data;
 using hitmanstat.us.Models;
@@ -59,6 +60,44 @@ namespace hitmanstat.us.Framework
             }
 
             return result;
+        }
+
+        public async Task SeedCurrentUserReportCountersAsync()
+        {
+            if (!_cache.TryGetValue(CacheKeys.CurrentUserReportCountersKey, out dynamic _))
+            {
+                _cache.Set(CacheKeys.CurrentUserReportCountersKey, string.Empty, new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
+                var today = await _db.UserReportCounters
+                    .AsNoTracking()
+                    .SingleOrDefaultAsync(c => c.Date.Date == DateTime.Today);
+
+                if (today == null)
+                {
+                    _db.Add(new UserReportCounter());
+                }
+
+                var oldCounters = (from c in _db.UserReportCounters
+                                   where c.Date < DateTime.Now.AddDays(-15)
+                                   select c);
+
+                if (oldCounters.Count() > 0)
+                {
+                    _db.UserReportCounters.RemoveRange(oldCounters);
+                }
+
+                var oldReports = (from r in _db.UserReports
+                                  where r.Date < DateTime.Now.AddDays(-15)
+                                  select r);
+
+                if (oldReports.Count() > 0)
+                {
+                    _db.UserReports.RemoveRange(oldReports);
+                }
+
+                await _db.SaveChangesAsync();
+            }
         }
 
         public async Task InsertHitmanServicesEntitiesAsync(JObject json)

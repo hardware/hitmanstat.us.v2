@@ -98,6 +98,9 @@ namespace hitmanstat.us.Framework
                         }
                     }
 
+                    await Task.Run(()
+                            => manager.SeedCurrentUserReportCountersAsync(), stoppingToken);
+
                     await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
                 }
 

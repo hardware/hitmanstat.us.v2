@@ -46,8 +46,6 @@ namespace hitmanstat.us.Controllers
                 return Json(cachedChart);
             }
 
-            await SeedCurrentUserReportCounters();
-
             var counters = await (from c in _db.UserReportCounters
                             where c.Date > DateTime.Now.AddDays(-7)
                             select c).AsNoTracking().ToListAsync();
@@ -174,49 +172,6 @@ namespace hitmanstat.us.Controllers
             catch(Exception e)
             {
                 return Json(new { type = "error", message = e.Message });
-            }
-        }
-
-        private async Task SeedCurrentUserReportCounters()
-        {
-            if (!_cache.TryGetValue(CacheKeys.CurrentUserReportCountersKey, out dynamic _))
-            {
-                _cache.Set(CacheKeys.CurrentUserReportCountersKey, string.Empty, new MemoryCacheEntryOptions()
-                        .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
-
-                var today = await _db.UserReportCounters
-                    .AsNoTracking()
-                    .SingleOrDefaultAsync(c => c.Date.Date == DateTime.Today);
-
-                if (today == null)
-                {
-                    _db.Add(new UserReportCounter());
-                }
-
-                var oldCounters = (from c in _db.UserReportCounters
-                                    where c.Date < DateTime.Now.AddDays(-15)
-                                    select c);
-
-                if (oldCounters.Count() > 0)
-                {
-                    _db.UserReportCounters.RemoveRange(oldCounters);
-                }
-
-                var oldReports = (from r in _db.UserReports
-                                    where r.Date < DateTime.Now.AddDays(-15)
-                                    select r);
-
-                if (oldReports.Count() > 0)
-                {
-                    _db.UserReports.RemoveRange(oldReports);
-                }
-
-                try
-                {
-                    await _db.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                { }
             }
         }
     }

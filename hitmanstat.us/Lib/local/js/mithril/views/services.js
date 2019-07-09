@@ -213,12 +213,12 @@ function reportService(e) {
                     $("#spinner-" + ref)
                         .html("&#10003")
                         .css("color", "#61b329");
-                } else if (data.type = "info") {
+                } else if (data.type == "info") {
                     showNotification("info", null, data.message);
                     $("#spinner-" + ref)
                         .html("&times")
                         .css("color", "#ff6a00");
-                } else if (data.type = "error") {
+                } else if (data.type == "error") {
                     showNotification("error", null, data.message);
                     $("#spinner-" + ref)
                         .html("&times")

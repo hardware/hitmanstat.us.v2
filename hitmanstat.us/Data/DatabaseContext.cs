@@ -48,6 +48,9 @@ namespace hitmanstat.us.Data
             modelBuilder.Entity<UserReportCounter>()
                 .Property(c => c.Date)
                 .HasDefaultValueSql("getdate()");
+            modelBuilder.Entity<UserReportCounter>()
+                .HasIndex(c => c.Date)
+                .IsUnique();
         }
     }
 }
