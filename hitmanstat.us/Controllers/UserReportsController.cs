@@ -181,6 +181,9 @@ namespace hitmanstat.us.Controllers
         {
             if (!_cache.TryGetValue(CacheKeys.CurrentUserReportCountersKey, out dynamic _))
             {
+                _cache.Set(CacheKeys.CurrentUserReportCountersKey, string.Empty, new MemoryCacheEntryOptions()
+                        .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
                 var today = await _db.UserReportCounters
                     .AsNoTracking()
                     .SingleOrDefaultAsync(c => c.Date.Date == DateTime.Today);
@@ -188,31 +191,32 @@ namespace hitmanstat.us.Controllers
                 if (today == null)
                 {
                     _db.Add(new UserReportCounter());
-                    await _db.SaveChangesAsync();
                 }
 
                 var oldCounters = (from c in _db.UserReportCounters
-                                   where c.Date < DateTime.Now.AddDays(-15)
-                                   select c);
+                                    where c.Date < DateTime.Now.AddDays(-15)
+                                    select c);
 
                 if (oldCounters.Count() > 0)
                 {
                     _db.UserReportCounters.RemoveRange(oldCounters);
-                    await _db.SaveChangesAsync();
                 }
 
                 var oldReports = (from r in _db.UserReports
-                                  where r.Date < DateTime.Now.AddDays(-15)
-                                  select r);
+                                    where r.Date < DateTime.Now.AddDays(-15)
+                                    select r);
 
                 if (oldReports.Count() > 0)
                 {
                     _db.UserReports.RemoveRange(oldReports);
-                    await _db.SaveChangesAsync();
                 }
 
-                _cache.Set(CacheKeys.CurrentUserReportCountersKey, string.Empty, new MemoryCacheEntryOptions()
-                        .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+                try
+                {
+                    await _db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                { }
             }
         }
     }
