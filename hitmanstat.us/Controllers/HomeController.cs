@@ -22,18 +22,18 @@ namespace hitmanstat.us.Controllers
         }
 
         [Route("/events")]
-        [Route("/events/{days:int:range(1,100)}")]
+        [Route("/events/{days:int:range(1,30)}")]
         [ResponseCache(Duration = 120, Location = ResponseCacheLocation.Any, VaryByQueryKeys = new string[] { "days" })]
         public async Task<IActionResult> Events(int days = 7)
         {
             ViewBag.days = days;
 
-            var events = (from e in _db.Events where e.Date > DateTime.Now.AddDays(-days) select e)
+            var events = await (from e in _db.Events where e.Date > DateTime.Now.AddDays(-days) select e)
                             .OrderByDescending(e => e.ID)
-                            .Take(300)
+                            .AsNoTracking()
                             .ToListAsync();
 
-            return View(await events);
+            return View(events);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

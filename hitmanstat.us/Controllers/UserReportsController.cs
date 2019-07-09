@@ -48,9 +48,9 @@ namespace hitmanstat.us.Controllers
 
             await SeedCurrentUserReportCounters();
 
-            var counters = (from c in _db.UserReportCounters
+            var counters = await (from c in _db.UserReportCounters
                             where c.Date > DateTime.Now.AddDays(-7)
-                            select c).ToListAsync();
+                            select c).AsNoTracking().ToListAsync();
 
             var categories = new List<string>();
             var series = new List<ChartSerie>();
@@ -62,7 +62,7 @@ namespace hitmanstat.us.Controllers
             var h2xb = new List<int>();
             var h2ps = new List<int>();
 
-            foreach (var counter in await counters)
+            foreach (var counter in counters)
             {
                 categories.Add(counter.Date.ToString("MMM d"));
                 h1pc.Add(counter.H1pc);
@@ -105,11 +105,11 @@ namespace hitmanstat.us.Controllers
 
             IPAddress address = Request.HttpContext.Connection.RemoteIpAddress;
 
-            var count = (from r in _db.UserReports
+            var count = await (from r in _db.UserReports
                          where (r.IPAddressBytes == address.GetAddressBytes() 
                          || r.Fingerprint == fingerprint)
                          && r.Date > DateTime.Now.AddHours(-1)
-                         select r).Count();
+                         select r).AsNoTracking().CountAsync();
 
             if (count > 0)
             {
@@ -140,7 +140,7 @@ namespace hitmanstat.us.Controllers
                     Service = service
                 });
 
-                var today = _db.UserReportCounters.SingleOrDefault(c => c.Date.Date == DateTime.Today);
+                var today = await _db.UserReportCounters.SingleOrDefaultAsync(c => c.Date.Date == DateTime.Today);
 
                 if (today != null)
                 {
@@ -181,7 +181,9 @@ namespace hitmanstat.us.Controllers
         {
             if (!_cache.TryGetValue(CacheKeys.CurrentUserReportCountersKey, out dynamic _))
             {
-                var today = _db.UserReportCounters.SingleOrDefault(c => c.Date.Date == DateTime.Today);
+                var today = await _db.UserReportCounters
+                    .AsNoTracking()
+                    .SingleOrDefaultAsync(c => c.Date.Date == DateTime.Today);
 
                 if (today == null)
                 {

@@ -10,8 +10,8 @@ services.oncreate = function () {
 
 services.view = function () {
     return [
-        setServicesGroup(services, "h1"),
         setServicesGroup(services, "h2"),
+        setServicesGroup(services, "h1"),
         m("h3", ["Other", m("small", { class: "text-muted" }, " services")]),
         setServicesGroup(services, "ot")
     ]
