@@ -24,7 +24,7 @@ hr {
 }
 
 .text-muted {
-    color: #c2ccd4 !important;
+    color: #a8adb1 !important;
 }
 
 .box-shadow {
@@ -63,6 +63,7 @@ nav.bg-dark {
 
 .card {
     border: none;
+    background-color: #f8f8f8;
 }
 
 .card-deck {

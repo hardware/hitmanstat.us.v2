@@ -48,11 +48,5 @@ namespace hitmanstat.us.Controllers
                 await Task.Delay(1000);
             }
         }
-
-        [Route("/status/steam")]
-        public IActionResult Steam()
-        {
-            return NoContent();
-        }
     }
 }
