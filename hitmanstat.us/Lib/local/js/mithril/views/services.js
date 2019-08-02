@@ -191,11 +191,13 @@ function reportService(e) {
         var values = components.map(function (component) { return component.value });
         var murmur = Fingerprint2.x64hash128(values.join(''), 31);
 
-        if (!murmur || 0 === murmur.length) {
-            showNotification("error", null, "Your browser is not compatible with this operation.");
-            $("#spinner-" + ref)
-                .html("&times")
-                .css("color", "#ff6a00");
+        if (!murmur || 32 !== murmur.length) {
+            browserNotCompatible("Invalid hash.", ref);
+            return;
+        }
+
+        if (!token || 0 === token.length) {
+            browserNotCompatible("Missing form token.", ref);
             return;
         }
 
@@ -232,7 +234,15 @@ function reportService(e) {
                     .css("color", "#c00");
             }
         });
-    })
+
+    });
+}
+
+function browserNotCompatible(errorMessage, ref) {
+    showNotification("error", null, "Your browser is not compatible with this operation : " + errorMessage);
+    $("#spinner-" + ref)
+        .html("&times")
+        .css("color", "#ff6a00");
 }
 
 m.mount(servicesView, services);

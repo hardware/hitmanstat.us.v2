@@ -32,10 +32,10 @@
 <table class="table table-bordered table-striped table-light">
     <thead class="thead-dark">
         <tr>
-            <th scope="col" class="col1">
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Date)
             </th>
-            <th scope="col">Relative Time</th>
+            <th scope="col" class="col1">Relative Time</th>
             <th scope="col">
                 @Html.DisplayNameFor(model => model.Service)
             </th>
@@ -61,8 +61,8 @@
                 }
 
                 <tr>
-                    <td class="col1">@Html.DisplayFor(modelItem => item.Date) UTC</td>
-                    <td data-utcdate="@item.Date.ToString("yyyy-MM-ddTHH:mm:sszzz")">N/D</td>
+                    <td>@Html.DisplayFor(modelItem => item.Date) UTC</td>
+                    <td class="col1" data-utcdate="@item.Date.ToString("yyyy-MM-ddTHH:mm:sszzz")">N/D</td>
                     <td>@Html.DisplayFor(modelItem => item.Service)</td>
                     <td>@Html.DisplayFor(modelItem => item.State)</td>
                 </tr>
