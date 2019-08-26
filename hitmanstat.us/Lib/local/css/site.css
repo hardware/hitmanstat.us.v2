@@ -61,6 +61,10 @@ nav.bg-dark {
  * PAGE CONTENT
  */
 
+.page-content.bg-white {
+    background-color: rgba(255, 255, 255, 0.90) !important;
+}
+
 .page-content h1, .page-content h4 {
     border-bottom: 1px dotted #ccc;
 }
@@ -424,7 +428,7 @@ body.night-mode .modal-footer {
 }
 
 body.night-mode .page-content {
-    background-color: #242525 !important;
+    background-color: rgba(36, 37, 37, 0.58) !important;
     color: #d8d2c9;
 }
 
