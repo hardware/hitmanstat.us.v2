@@ -3,7 +3,7 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "mithril@1.1.6",
+      "library": "mithril@2.0.4",
       "destination": "Lib/external/mithril/",
       "files": [
         "mithril.min.js"
@@ -50,7 +50,7 @@
       ]
     },
     {
-      "library": "apexcharts@3.6.12",
+      "library": "apexcharts@3.8.5",
       "destination": "Lib/external/apexcharts/",
       "files": [
         "apexcharts.min.js"

@@ -22,6 +22,7 @@ namespace hitmanstat.us.Controllers
         }
 
         [Route("/about")]
+        [ResponseCache(Duration = 43200, Location = ResponseCacheLocation.Any)]
         public IActionResult About()
         {
             return View();

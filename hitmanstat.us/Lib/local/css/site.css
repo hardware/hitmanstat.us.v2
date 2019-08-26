@@ -124,12 +124,17 @@ nav.bg-dark {
     display: block;
 }
 
+.card-span-status {
+    color: #61B329;
+    font-weight: 600;
+}
+
 .card-span-status.up {
     color: #61B329;
 }
 
 .card-span-status.maintenance {
-    color: #FFC107;
+    color: #E1A900;
 }
 
 .card-span-status.warn {
