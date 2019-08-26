@@ -58,6 +58,14 @@ nav.bg-dark {
 }
 
 /*
+ * PAGE CONTENT
+ */
+
+.page-content h1, .page-content h4 {
+    border-bottom: 1px dotted #ccc;
+}
+
+/*
  * CARDS
  */
 
@@ -413,6 +421,15 @@ body.night-mode .modal-body .table th {
 
 body.night-mode .modal-footer {
     border-top: 1px solid #3e444a;
+}
+
+body.night-mode .page-content {
+    background-color: #242525 !important;
+    color: #d8d2c9;
+}
+
+body.night-mode .page-content a {
+    color: #48a0c8;
 }
 
 /*

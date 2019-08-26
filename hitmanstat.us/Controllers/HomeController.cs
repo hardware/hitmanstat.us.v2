@@ -21,6 +21,11 @@ namespace hitmanstat.us.Controllers
             return View();
         }
 
+        public IActionResult About()
+        {
+            return View();
+        }
+
         [Route("/events")]
         [Route("/events/{days:int:range(1,30)}")]
         [ResponseCache(Duration = 120, Location = ResponseCacheLocation.Any, VaryByQueryKeys = new string[] { "days" })]
