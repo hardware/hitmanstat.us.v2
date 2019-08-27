@@ -99,7 +99,7 @@ function setMaintenance(service) {
     if (service.nextWindow && service.ref) {
         var modalId = "#" + service.ref + "_maintenance";
         var start = moment(service.nextWindow.start);
-        var state = (moment().isAfter(start)) ? "Maintenance in progress" : "Maintenance scheduled";
+        var state = (moment().isAfter(start)) ? "Maintenance in progress" : "Scheduled maintenance";
         return m("li", {
             class: "list-group-item maintenance",
             "data-toggle": "modal",
@@ -155,7 +155,7 @@ function setMaintenanceModal(service) {
             m("div", { class: "modal-dialog modal-dialog-centered", role: "document" },
                 m("div", { class: "modal-content" }, [
                     m("div", { class: "modal-header" }, [
-                        m("h5", { class: "modal-title" }, (moment().isAfter(start)) ? "Maintenance in progress" : "Maintenance scheduled"),
+                        m("h5", { class: "modal-title" }, (moment().isAfter(start)) ? "Maintenance in progress" : "Scheduled maintenance"),
                         m("button", { class: "close", type: "button", "data-dismiss": "modal" },
                             m("span", m.trust("&times"))
                         )
