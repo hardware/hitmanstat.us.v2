@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace HitmanTestApi
+namespace HitmanAPI
 {
     public class Program
     {

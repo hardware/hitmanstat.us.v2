@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "HitmanTestApi": {
+    "HitmanAPI": {
       "commandName": "Project",
       "launchBrowser": false,
       "launchUrl": "status",

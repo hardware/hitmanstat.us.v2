@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hitmanstat.us", "hitmanstat.us\hitmanstat.us.csproj", "{87A2A0E1-60EC-4F2F-9FCF-20CE021BA326}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HitmanTestApi", "HitmanTestApi\HitmanTestApi.csproj", "{21996C0C-C787-431F-B452-AD7E01E7417C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HitmanAPI", "HitmanAPI\HitmanAPI.csproj", "{21996C0C-C787-431F-B452-AD7E01E7417C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

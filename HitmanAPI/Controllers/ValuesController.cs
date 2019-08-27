@@ -3,7 +3,7 @@ using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
-namespace HitmanTestApi.Controllers
+namespace HitmanAPI.Controllers
 {
     [ApiController]
     public class ValuesController : ControllerBase
