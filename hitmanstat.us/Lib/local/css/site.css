@@ -451,6 +451,10 @@ body.night-mode .page-content a {
 }
 
 @media (max-width: 991px) {
+    .navbar-text.feedback-button {
+        display: none;
+    }
+
     .card-span-title {
         font-size: 1.1rem;
     }
