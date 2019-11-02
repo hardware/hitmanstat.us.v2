@@ -224,6 +224,18 @@ nav.bg-dark {
     font-size: 0.93rem;
 }
 
+.alert-report a {
+    color: #007284;
+    border-bottom: 1px solid rgba(93, 93, 93, 0.52);
+    transition: all ease .15s;
+}
+
+.alert-report a:hover {
+    color: #0092a9;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(251, 251, 251, 0.52);
+}
+
 /*
  * CHART
  */
@@ -439,6 +451,18 @@ body.night-mode .page-content {
 
 body.night-mode .page-content a {
     color: #48a0c8;
+}
+
+body.night-mode .alert-report a {
+    color: #02bdda;
+    border-bottom: 1px solid rgba(255,255,255,.25);
+    transition: all ease .15s;
+}
+
+body.night-mode .alert-report a:hover {
+    color: #00ddff;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.85);
 }
 
 /*
