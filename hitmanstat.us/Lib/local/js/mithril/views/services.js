@@ -61,7 +61,7 @@ function setBody(service) {
 
 function setCardTitle(service) {
     if (service.name.indexOf("pc") !== -1) {
-        return '<i class="fab fa-windows"></i> <i class="fab fa-linux"></i><br />' + service.name;
+        return '<i class="fab fa-steam"></i><br />' + service.name;
     } else if (service.name.indexOf("xbox") !== -1) {
         return '<i class="fab fa-xbox"></i><br />' + service.name;
     } else if (service.name.indexOf("ps4") !== -1) {

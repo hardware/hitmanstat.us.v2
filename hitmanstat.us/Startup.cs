@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Net.Http.Headers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using hitmanstat.us.Clients;
 using hitmanstat.us.Framework;
@@ -30,9 +30,8 @@ namespace hitmanstat.us
             services.AddResponseCaching();
 
             // ASP.NET Core MVC middleware
-            services
-                .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddControllersWithViews()
+                    .AddNewtonsoftJson();
 
             // CSRF protection
             services.AddAntiforgery(options =>
@@ -59,7 +58,7 @@ namespace hitmanstat.us
             services.AddHostedService<HitmanForumStatusSeekerHostedService>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             var options = new ForwardedHeadersOptions
             {
@@ -99,10 +98,15 @@ namespace hitmanstat.us
                 }
             });
 
+            app.UseRouting();
             app.UseHttpsRedirection();
             app.UseResponseCaching();
             app.UseStatusCodePagesWithReExecute("/error/{0}");
-            app.UseMvcWithDefaultRoute();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+            });
         }
     }
 }

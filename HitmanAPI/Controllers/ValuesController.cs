@@ -23,11 +23,10 @@ namespace HitmanAPI.Controllers
 
         private string ReadResourceFile(byte[] resource)
         {
-            using (Stream stream = new MemoryStream(resource))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
+            using Stream stream = new MemoryStream(resource);
+            using StreamReader reader = new StreamReader(stream);
+
+            return reader.ReadToEnd();
         }
     }
 }
