@@ -1,6 +1,6 @@
 ﻿<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark box-shadow mb-3">
     <div class="container">
-        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HITMAN Status</a>
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-barcode"></i> HITMAN Status</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -25,14 +25,14 @@
                         <a class="dropdown-item" href="https://www.ioi.dk/">IO Interactive Blog</a>
                         <a class="dropdown-item" href="https://www.hitmanforum.com/">Forums</a>
                         <a class="dropdown-item" href="https://www.reddit.com/r/HiTMAN/">Reddit</a>
-                        <a class="dropdown-item" href="https://www.hitman2maps.com/">Interactive maps</a>
+                        <a class="dropdown-item" href="https://www.hitmaps.com/">Interactive maps</a>
                         <a class="dropdown-item" href="https://hitman-feedback.herokuapp.com/">Feedback</a>
                         <a class="dropdown-item" href="https://story.hitmanstat.us/">Season 1 story</a>
                     </div>
                 </li>
             </ul>
             <span class="navbar-text feedback-button">
-                <a href="https://hitman-feedback.herokuapp.com/" data-toggle="tooltip" data-placement="bottom" data-original-title="New ! Visit HITMAN 2 Feedback website" class="btn btn-danger btn-sm mr-3">Feedback</a>
+                <a href="https://hitman-feedback.herokuapp.com/" data-toggle="tooltip" data-placement="bottom" data-original-title="Visit HITMAN 2 Feedback website" class="btn btn-danger btn-sm mr-3"><i class="fas fa-comments"></i> Feedback</a>
             </span>
             @if (Context.Request.Path == "/")
             {

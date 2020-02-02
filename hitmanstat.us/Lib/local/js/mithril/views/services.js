@@ -12,7 +12,6 @@ services.view = function () {
     return [
         setServicesGroup(services, "h2"),
         setServicesGroup(services, "h1"),
-        m("h3", ["Other", m("small", { class: "text-muted" }, " services")]),
         setServicesGroup(services, "ot")
     ]
 };
@@ -55,9 +54,23 @@ function setBody(service) {
     var title = (service.title) ? " - " + service.title : "";
     var label = (status == "up") ? "online" : status;
     return m("p", { class: "card-text" }, [
-        m("span", { class: "card-span-title" }, service.name),
+        m("span", { class: "card-span-title" }, m.trust(setCardTitle(service))),
         m("span", { class: "card-span-status " + status }, label + title),
     ]);
+}
+
+function setCardTitle(service) {
+    if (service.name.indexOf("pc") !== -1) {
+        return '<i class="fab fa-windows"></i> <i class="fab fa-linux"></i><br />' + service.name;
+    } else if (service.name.indexOf("xbox") !== -1) {
+        return '<i class="fab fa-xbox"></i><br />' + service.name;
+    } else if (service.name.indexOf("ps4") !== -1) {
+        return '<i class="fab fa-playstation"></i><br />' + service.name;
+    } else if (service.name.indexOf("auth") !== -1) {
+        return '<i class="fas fa-user-lock"></i> ' + service.name;
+    } else if (service.name.indexOf("forum") !== -1) {
+        return '<i class="fab fa-discourse"></i> ' + service.name;
+    }
 }
 
 function setLink(service) {

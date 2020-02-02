@@ -3,6 +3,9 @@
     "outputFileName": "wwwroot/css/stylesheets.min.css",
     "inputFiles": [
       "Lib/external/twitter-bootstrap/css/bootstrap.min.css",
+      "wwwroot/lib/font-awesome/css/brands.min.css",
+      "wwwroot/lib/font-awesome/css/fontawesome.min.css",
+      "wwwroot/lib/font-awesome/css/solid.min.css",
       "Lib/external/toastr.js/toastr.min.css",
       "Lib/local/css/site.css"
     ]

@@ -7,17 +7,17 @@
 @section EventsHeader {
     <div class="alert alert-header" role="alert">
         <div class="text-center">
-            <h4 class="alert-heading">LATEST DOWN OR MAINTENANCE EVENTS REPORTED</h4>
+            <h4 class="alert-heading">LATEST DOWN OR MAINTENANCE EVENTS DETECTED</h4>
             <span class="separator"></span>
             <p class="mb-0">
                 Since @ViewBag.days days ago &nbsp; | &nbsp;
                 @if (ViewBag.days == 30)
                 {
-                    <a asp-area="" asp-controller="Home" asp-action="Events" asp-route-days="7">Show last week</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Events" asp-route-days="7"><i class="fas fa-calendar-alt"></i> Show last week</a>
                 }
                 else
                 {
-                    <a asp-area="" asp-controller="Home" asp-action="Events" asp-route-days="30">Show last month</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Events" asp-route-days="30"><i class="fas fa-calendar-alt"></i> Show last month</a>
                 }
             </p>
         </div>

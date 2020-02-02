@@ -16,17 +16,18 @@
 </noscript>
 
 <div class="alert alert-secondary text-center alert-report" role="alert">
-    If a service isn't working for you, click on the exclamation mark to share your reporting. A significant number of reports may indicate an issue with game servers. Keep in mind that Hitman's services also rely on Azure's infrastructure and third-party digital distribution  platforms services. If Hitman's servers appear online here but you still have some issues, you can check <a href="https://steamstat.us/">Steam status</a>, <a href="https://status.playstation.com/">PSN status</a>, <a href="https://support.xbox.com/en-US/xbox-live-status">Xbox Live status</a> and <a href="https://status.azure.com/">Azure status</a> websites to get more informations.
+    <i class="fas fa-info-circle"></i> If a service isn't working for you, click on the exclamation mark to share your reporting. A significant number of reports may indicate an issue with game servers. Keep in mind that Hitman's services also rely on Azure's infrastructure and third-party digital distribution  platforms services. If Hitman's servers appear online here but you still have some issues, you can check <a href="https://steamstat.us/">Steam status</a>, <a href="https://status.playstation.com/">PSN status</a>, <a href="https://support.xbox.com/en-US/xbox-live-status">Xbox Live status</a> and <a href="https://status.azure.com/">Azure status</a> websites to get more informations.
 </div>
 
 @Html.AntiForgeryToken()
 
 <div id="services-container"></div>
 
-<h3 class="mb-4">
-    Down reports 
-    <small class="text-muted">per day</small>
-</h3>
+<h4 class="mb-4">
+    <i class="fas fa-chart-bar"></i>
+    Down reported last week
+    <small class="text-muted">(by community players)</small>
+</h4>
 
 <div class="mb-5" id="chart"></div>
 
