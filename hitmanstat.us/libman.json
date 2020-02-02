@@ -17,7 +17,7 @@
       ]
     },
     {
-      "library": "twitter-bootstrap@4.3.1",
+      "library": "twitter-bootstrap@4.4.1",
       "destination": "Lib/external/twitter-bootstrap/",
       "files": [
         "css/bootstrap.min.css",
@@ -50,7 +50,7 @@
       ]
     },
     {
-      "library": "apexcharts@3.8.5",
+      "library": "apexcharts@3.15.3",
       "destination": "Lib/external/apexcharts/",
       "files": [
         "apexcharts.min.js"
