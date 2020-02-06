@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.ApplicationInsights.Extensibility;
 using hitmanstat.us.Clients;
 using hitmanstat.us.Framework;
 using hitmanstat.us.Options;
@@ -56,9 +57,12 @@ namespace hitmanstat.us
             // Status seekers Hosted services
             services.AddHostedService<HitmanStatusSeekerHostedService>();
             services.AddHostedService<HitmanForumStatusSeekerHostedService>();
+
+            // Enable Application Insights Telemetry
+            services.AddApplicationInsightsTelemetry();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TelemetryConfiguration configuration)
         {
             var options = new ForwardedHeadersOptions
             {
@@ -74,6 +78,7 @@ namespace hitmanstat.us
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                configuration.DisableTelemetry = true;
             }
             else
             {
@@ -98,10 +103,10 @@ namespace hitmanstat.us
                 }
             });
 
-            app.UseRouting();
             app.UseHttpsRedirection();
             app.UseResponseCaching();
             app.UseStatusCodePagesWithReExecute("/error/{0}");
+            app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
