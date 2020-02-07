@@ -102,52 +102,7 @@ namespace hitmanstat.us.Framework
 
         public async Task InsertHitmanServicesEntitiesAsync(JObject json)
         {
-            var entities = new List<HitmanService> {
-                new HitmanService {
-                    Name = "HITMAN PC",
-                    Node = "pc-service.hitman.io" },
-                new HitmanService {
-                    Name = "HITMAN PS4",
-                    Node = "ps4-service.hitman.io" },
-                new HitmanService {
-                    Name = "HITMAN XBOX ONE",
-                    Node = "xboxone-service.hitman.io" },
-                new HitmanService {
-                    Name = "HITMAN 2 PC",
-                    Node = "pc2-service.hitman.io" },
-                new HitmanService {
-                    Name = "HITMAN 2 PS4",
-                    Node = "ps42-service.hitman.io" },
-                new HitmanService {
-                    Name = "HITMAN 2 XBOX ONE",
-                    Node = "xboxone2-service.hitman.io" }
-            };
-
-            foreach (var entity in entities)
-            {
-                var health = (string)json["services"][entity.Node]["health"];
-
-                switch (health)
-                {
-                    case "unknown":
-                        entity.Health = HitmanServiceHealth.Unknown;
-                        break;
-                    case "down":
-                        entity.Health = HitmanServiceHealth.Down;
-                        break;
-                    case "maintenance":
-                        entity.Health = HitmanServiceHealth.Maintenance;
-                        break;
-                    case "slow":
-                        entity.Health = HitmanServiceHealth.Slow;
-                        break;
-                    case "healthy":
-                        entity.Health = HitmanServiceHealth.Healthy;
-                        break;
-                }
-            }
-
-            await InsertHitmanEventsAsync(entities);
+            await InsertHitmanEventsAsync(Utilities.ParseHitmanServicesEntities(json));
         }
 
         public async Task InsertEndpointExceptionAsync(EndpointStatusException endpoint)

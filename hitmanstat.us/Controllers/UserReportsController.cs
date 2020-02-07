@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using hitmanstat.us.Data;
 using hitmanstat.us.Models;
+using hitmanstat.us.Framework;
 
 namespace hitmanstat.us.Controllers
 {
@@ -91,13 +94,54 @@ namespace hitmanstat.us.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SubmitReport(string reference, string fingerprint)
+        public async Task<IActionResult> SubmitReport(string reference, string fingerprint, string state)
         {
-            var badRequest = new { type = "error", message = "Invalid submitted data." };
+            string service;
 
-            if (reference == null || fingerprint == null || !Regex.Match(fingerprint, @"^[a-z0-9]{32}$").Success)
+            var badRequest = new { 
+                type = "error", 
+                message = "Invalid submitted data."
+            };
+
+            var maintenance = new { 
+                type = "warning", 
+                message = "This service is currently under maintenance, reporting is disabled."
+            };
+
+            if (reference == null || fingerprint == null || state == null || !Regex.Match(fingerprint, @"^[a-z0-9]{32}$").Success)
             {
                 return Json(badRequest);
+            }
+
+            switch (reference)
+            {
+                case "h1pc": service = "HITMAN PC"; break;
+                case "h1xb": service = "HITMAN XBOX ONE"; break;
+                case "h1ps": service = "HITMAN PS4"; break;
+                case "h2pc": service = "HITMAN 2 PC"; break;
+                case "h2xb": service = "HITMAN 2 XBOX ONE"; break;
+                case "h2ps": service = "HITMAN 2 PS4"; break;
+                default:
+                    return Json(badRequest);
+            }
+
+            if (_cache.TryGetValue(CacheKeys.HitmanKey, out EndpointStatus cachedEndpoint))
+            {
+                var json = JObject.Parse(cachedEndpoint.Status);
+                var services = Utilities.ParseHitmanServicesEntities(json);
+                var refService = services.Where(service => service.Ref == reference).First();
+
+                if(refService.Health == HitmanServiceHealth.Maintenance)
+                {
+                    return Json(maintenance);
+                }
+            }
+            else
+            {
+                if (state == HitmanServiceHealth.Maintenance.GetAttribute<DisplayAttribute>().Name)
+                {
+                    return Json(maintenance);
+                }
             }
 
             IPAddress address = Request.HttpContext.Connection.RemoteIpAddress;
@@ -110,22 +154,10 @@ namespace hitmanstat.us.Controllers
 
             if (count > 0)
             {
-                return Json(new { type = "info", message = "You can not submit more than once. " +
-                    "Please wait before submitting your next report." });
-            }
-
-            string service;
-
-            switch (reference)
-            {
-                case "h1pc": service = "HITMAN PC"; break;
-                case "h1xb": service = "HITMAN XBOX ONE"; break;
-                case "h1ps": service = "HITMAN PS4"; break;
-                case "h2pc": service = "HITMAN 2 PC"; break;
-                case "h2xb": service = "HITMAN 2 XBOX ONE"; break;
-                case "h2ps": service = "HITMAN 2 PS4"; break;
-                default:
-                    return Json(badRequest);
+                return Json(new { 
+                    type = "info", 
+                    message = "You can not submit more than once. Please wait before submitting your next report." 
+                });
             }
 
             try

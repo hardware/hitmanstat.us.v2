@@ -6,6 +6,7 @@ namespace hitmanstat.us.Models
     {
         public string Name { get; set; }
         public string Node { get; set; }
+        public string Ref { get; set; }
         public HitmanServiceHealth Health { get; set; }
     }
 

@@ -84,16 +84,30 @@ function setLink(service) {
 function setReport(service) {
     if (service.group != "ot") {
         var name = service.name.toUpperCase();
-        return m("button", {
-            class: "btn btn-outline-warning btn-sm float-right",
-            title: "I want to report an issue on " + name,
-            id: "spinner-" + service.ref,
-            onclick: reportService,
-            "data-service-name": name,
-            "data-service-ref": service.ref,
-            "data-toggle": "tooltip",
-            "data-placement": "bottom"
-        }, "!")
+        if (service.status == "maintenance") {
+            return m("button", {
+                class: "btn btn-outline-warning btn-sm float-right",
+                style: "cursor:not-allowed",
+                title: "",
+                id: "spinner-" + service.ref,
+                "data-original-title": "This service is currently under maintenance, reporting is disabled.",
+                "data-toggle": "tooltip",
+                "data-placement": "bottom",
+            }, "!")
+        } else {
+            return m("button", {
+                class: "btn btn-outline-warning btn-sm float-right",
+                title: "I want to report an issue on " + name,
+                id: "spinner-" + service.ref,
+                onclick: reportService,
+                "data-service-name": name,
+                "data-service-ref": service.ref,
+                "data-service-state": service.status,
+                "data-toggle": "tooltip",
+                "data-placement": "bottom"
+            }, "!")
+        }
+        
     }
 }
 
@@ -197,6 +211,7 @@ function setMaintenanceModal(service) {
 function reportService(e) {
     var ref = e.target.getAttribute('data-service-ref');
     var name = e.target.getAttribute('data-service-name');
+    var status = e.target.getAttribute('data-service-state');
     var token = $("input[name='__RequestVerificationToken']").val();
     $("#spinner-" + ref).html('<span class="spinner-grow spinner-grow-sm text-secondary" role="status"></span>');
 
@@ -220,6 +235,7 @@ function reportService(e) {
             data: {
                 reference: ref,
                 fingerprint: murmur,
+                state: status,
                 __RequestVerificationToken: token
             },
             success: function (data) {
@@ -230,6 +246,11 @@ function reportService(e) {
                         .css("color", "#61b329");
                 } else if (data.type == "info") {
                     showNotification("info", null, data.message);
+                    $("#spinner-" + ref)
+                        .html("&times")
+                        .css("color", "#ff6a00");
+                } else if (data.type == "warning") {
+                    showNotification("warning", null, data.message);
                     $("#spinner-" + ref)
                         .html("&times")
                         .css("color", "#ff6a00");
