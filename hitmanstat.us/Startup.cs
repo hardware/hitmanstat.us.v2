@@ -24,8 +24,10 @@ namespace hitmanstat.us
         public void ConfigureServices(IServiceCollection services)
         {
             // Database context
-            services.AddDbContext<DatabaseContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DatabaseContext>(
+                options => options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection"),
+                    providerOptions => providerOptions.EnableRetryOnFailure()));
 
             // HTTP Response Caching
             services.AddResponseCaching();
