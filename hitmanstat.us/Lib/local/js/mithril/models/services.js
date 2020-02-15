@@ -140,11 +140,27 @@ services.renderChart = function () {
                         show: false
                     }
                 },
-                colors: ['#cc2d00', '#6d9e01', '#017db5', '#ff3800', '#97dc00', '#00a7f3'],
+                annotations: {
+                    yaxis: [{
+                        y: 30,
+                        borderColor: '#FF0000',
+                        label: {
+                            borderColor: '#FF4560',
+                            style: {
+                                color: '#fff',
+                                background: '#FF4560',
+                            },
+                            text: 'threshold = 30',
+                            show: true,
+                        }
+                    }]
+                },
+                colors: ['#cc2d00', '#6d9e01', '#017db5', '#ff3800', '#97dc00', '#00a7f3', 'transparent'],
                 dataLabels: {
                     enabled: false
                 },
                 stroke: {
+                    width: 3,
                     curve: 'smooth'
                 },
                 series: result.series,
@@ -155,9 +171,6 @@ services.renderChart = function () {
                         opacity: 0.5
                     },
                 },
-                markers: {
-                    size: 6
-                },
                 xaxis: {
                     categories: result.categories,
                     labels: {
@@ -167,6 +180,7 @@ services.renderChart = function () {
                     }
                 },
                 yaxis: {
+                    tickAmount: 6,
                     labels: {
                         style: {
                             fontSize: '14px'

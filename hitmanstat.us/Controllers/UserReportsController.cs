@@ -61,6 +61,7 @@ namespace hitmanstat.us.Controllers
             var h2pc = new List<int>();
             var h2xb = new List<int>();
             var h2ps = new List<int>();
+            var thre = new List<int>();
 
             foreach (var counter in counters)
             {
@@ -71,6 +72,7 @@ namespace hitmanstat.us.Controllers
                 h2pc.Add(counter.H2pc);
                 h2xb.Add(counter.H2xb);
                 h2ps.Add(counter.H2ps);
+                thre.Add(30);
             }
 
             series.Add(new ChartSerie { Name = "HITMAN PC", Data = h1pc });
@@ -79,6 +81,7 @@ namespace hitmanstat.us.Controllers
             series.Add(new ChartSerie { Name = "HITMAN 2 PC", Data = h2pc });
             series.Add(new ChartSerie { Name = "HITMAN 2 XBOX ONE", Data = h2xb });
             series.Add(new ChartSerie { Name = "HITMAN 2 PS4", Data = h2ps });
+            series.Add(new ChartSerie { Name = "THRESHOLD", Data = thre });
 
             var chart = new Chart
             {

@@ -244,6 +244,11 @@ nav.bg-dark {
     border-bottom: 1px solid rgba(251, 251, 251, 0.52);
 }
 
+.alert-threshold {
+    color: #c2ccd4;
+    background-color: rgba(220, 53, 69, 0.36);
+}
+
 /*
  * CHART
  */
@@ -471,6 +476,10 @@ body.night-mode .alert-report a:hover {
     color: #00ddff;
     text-decoration: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.85);
+}
+
+body.night-mode .alert-threshold {
+    background-color: rgba(220, 53, 69, 0.36);
 }
 
 /*
