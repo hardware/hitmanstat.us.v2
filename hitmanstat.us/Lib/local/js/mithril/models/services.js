@@ -150,7 +150,7 @@ services.renderChart = function () {
                                 color: '#fff',
                                 background: '#FF4560',
                             },
-                            text: 'threshold = 30',
+                            text: 'threshold',
                             show: true,
                         }
                     }]

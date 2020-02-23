@@ -485,6 +485,7 @@ body.night-mode .alert-threshold {
 /*
  * MEDIA QUERIES
  */
+
 @media (min-width: 768px) {
     html {
         font-size: 16px;
@@ -556,6 +557,10 @@ body.night-mode .alert-threshold {
     .list-group-item.elusive-target, 
     .list-group-item.maintenance {
         font-size: 1rem;
+    }
+
+    h4.index-title small {
+        display: none;
     }
 
     .card-footer {
