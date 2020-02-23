@@ -348,3 +348,4 @@ healthchecksdb
 /hitmanstat.us/wwwroot/js/scripts.min.js
 /hitmanstat.us/wwwroot/js/jquery-bootstrap.min.js
 /hitmanstat.us/appsettings.Development.json
+/hitmanstat.us/Properties/launchSettings.json

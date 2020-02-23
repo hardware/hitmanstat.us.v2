@@ -209,66 +209,78 @@ function setMaintenanceModal(service) {
 }
 
 function reportService(e) {
+
     var ref = e.target.getAttribute('data-service-ref');
     var name = e.target.getAttribute('data-service-name');
     var status = e.target.getAttribute('data-service-state');
     var token = $("input[name='__RequestVerificationToken']").val();
+    var recaptchaKey = document.getElementById('scriptsTag').getAttribute("data-recaptcha-key");
+
     $("#spinner-" + ref).html('<span class="spinner-grow spinner-grow-sm text-secondary" role="status"></span>');
 
-    Fingerprint2.get(function (components) {
-        var values = components.map(function (component) { return component.value });
-        var murmur = Fingerprint2.x64hash128(values.join(''), 31);
+    grecaptcha.ready(function () {
+        grecaptcha.execute(recaptchaKey, { action: 'UserReport' }).then(function (recaptchaToken) {
+            Fingerprint2.get(function (components) {
+                var values = components.map(function (component) { return component.value });
+                var murmur = Fingerprint2.x64hash128(values.join(''), 31);
 
-        if (!murmur || 32 !== murmur.length) {
-            browserNotCompatible("Invalid hash.", ref);
-            return;
-        }
-
-        if (!token || 0 === token.length) {
-            browserNotCompatible("Missing form token.", ref);
-            return;
-        }
-
-        $.ajax({
-            type: "post",
-            url: "/UserReports/SubmitReport",
-            data: {
-                reference: ref,
-                fingerprint: murmur,
-                state: status,
-                __RequestVerificationToken: token
-            },
-            success: function (data) {
-                if (data.type == "success") {
-                    showNotification("success", "Your report has been saved.", "Platform : " + name);
-                    $("#spinner-" + ref)
-                        .html("&#10003")
-                        .css("color", "#61b329");
-                } else if (data.type == "info") {
-                    showNotification("info", null, data.message);
-                    $("#spinner-" + ref)
-                        .html("&times")
-                        .css("color", "#ff6a00");
-                } else if (data.type == "warning") {
-                    showNotification("warning", null, data.message);
-                    $("#spinner-" + ref)
-                        .html("&times")
-                        .css("color", "#ff6a00");
-                } else if (data.type == "error") {
-                    showNotification("error", null, data.message);
-                    $("#spinner-" + ref)
-                        .html("&times")
-                        .css("color", "#c00");
+                if (!murmur || 32 !== murmur.length) {
+                    browserNotCompatible("Invalid hash.", ref);
+                    return;
                 }
-            },
-            error: function () {
-                showNotification("error", null, "An error has occurred.");
-                $("#spinner-" + ref)
-                    .html("&times")
-                    .css("color", "#c00");
-            }
-        });
 
+                if (!token || 0 === token.length) {
+                    browserNotCompatible("Missing form token.", ref);
+                    return;
+                }
+
+                if (!recaptchaToken || 0 === recaptchaToken.length) {
+                    browserNotCompatible("Missing recaptcha token.", ref);
+                    return;
+                }
+
+                $.ajax({
+                    type: "post",
+                    url: "/UserReports/SubmitReport",
+                    data: {
+                        reference: ref,
+                        fingerprint: murmur,
+                        state: status,
+                        recaptchaToken: recaptchaToken,
+                        __RequestVerificationToken: token
+                    },
+                    success: function (data) {
+                        if (data.type == "success") {
+                            showNotification("success", "Your report has been saved.", "Platform : " + name);
+                            $("#spinner-" + ref)
+                                .html("&#10003")
+                                .css("color", "#61b329");
+                        } else if (data.type == "info") {
+                            showNotification("info", null, data.message);
+                            $("#spinner-" + ref)
+                                .html("&times")
+                                .css("color", "#ff6a00");
+                        } else if (data.type == "warning") {
+                            showNotification("warning", null, data.message);
+                            $("#spinner-" + ref)
+                                .html("&times")
+                                .css("color", "#ff6a00");
+                        } else if (data.type == "error") {
+                            showNotification("error", null, data.message);
+                            $("#spinner-" + ref)
+                                .html("&times")
+                                .css("color", "#c00");
+                        }
+                    },
+                    error: function () {
+                        showNotification("error", null, "An error has occurred.");
+                        $("#spinner-" + ref)
+                            .html("&times")
+                            .css("color", "#c00");
+                    }
+                });
+            });
+        });
     });
 }
 

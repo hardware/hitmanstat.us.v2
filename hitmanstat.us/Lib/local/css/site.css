@@ -74,6 +74,14 @@ nav.bg-dark {
 }
 
 /*
+ * RECAPTCHA
+ */
+
+.grecaptcha-badge {
+    visibility: hidden;
+}
+
+/*
  * CARDS
  */
 

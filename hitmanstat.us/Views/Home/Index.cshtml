@@ -1,4 +1,8 @@
-﻿@section EventsHeader {
+﻿@{
+    var recaptchaKey = Environment.GetEnvironmentVariable("RECAPTCHA_PUBLIC_KEY");
+}
+
+@section EventsHeader {
     <div class="mb-4" id="backend-error-container"></div>
 }
 
@@ -36,5 +40,6 @@
 <div class="mb-5" id="chart"></div>
 
 @section Scripts {
-    <script src="~/js/scripts.min.js" asp-append-version="true"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=@recaptchaKey"></script>
+    <script id="scriptsTag" data-recaptcha-key="@recaptchaKey" src="~/js/scripts.min.js" asp-append-version="true"></script>
 }

@@ -97,42 +97,40 @@ namespace hitmanstat.us.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SubmitReport(string reference, string fingerprint, string state)
+        public async Task<IActionResult> SubmitReport([FromForm]SubmitReport model)
         {
-            string service;
+            if (!ModelState.IsValid)
+            {
+                return Json(new
+                {
+                    type = "error",
+                    message = "The submission failed, you sent invalid data."
+                });
+            }
 
-            var badRequest = new { 
-                type = "error", 
-                message = "Invalid submitted data."
-            };
+            var address = Request.HttpContext.Connection.RemoteIpAddress;
 
-            var maintenance = new { 
-                type = "warning", 
+            if (!ReCaptcha.Validate(model.RecaptchaToken, address))
+            {
+                return Json(new
+                {
+                    type = "error",
+                    message = "The submission failed the spam bot verification. " +
+                              "If you have JavaScript disabled in your browser, please enable it and try again."
+                });
+            }
+
+            var maintenance = new
+            {
+                type = "warning",
                 message = "This service is currently under maintenance, reporting is disabled."
             };
-
-            if (reference == null || fingerprint == null || state == null || !Regex.Match(fingerprint, @"^[a-z0-9]{32}$").Success)
-            {
-                return Json(badRequest);
-            }
-
-            switch (reference)
-            {
-                case "h1pc": service = "HITMAN PC"; break;
-                case "h1xb": service = "HITMAN XBOX ONE"; break;
-                case "h1ps": service = "HITMAN PS4"; break;
-                case "h2pc": service = "HITMAN 2 PC"; break;
-                case "h2xb": service = "HITMAN 2 XBOX ONE"; break;
-                case "h2ps": service = "HITMAN 2 PS4"; break;
-                default:
-                    return Json(badRequest);
-            }
 
             if (_cache.TryGetValue(CacheKeys.HitmanKey, out EndpointStatus cachedEndpoint))
             {
                 var json = JObject.Parse(cachedEndpoint.Status);
                 var services = Utilities.ParseHitmanServicesEntities(json);
-                var refService = services.Where(service => service.Ref == reference).First();
+                var refService = services.Where(service => service.Ref == model.Reference).First();
 
                 if(refService.Health == HitmanServiceHealth.Maintenance)
                 {
@@ -141,17 +139,15 @@ namespace hitmanstat.us.Controllers
             }
             else
             {
-                if (state == HitmanServiceHealth.Maintenance.GetAttribute<DisplayAttribute>().Name)
+                if (model.State == HitmanServiceHealth.Maintenance.GetAttribute<DisplayAttribute>().Name)
                 {
                     return Json(maintenance);
                 }
             }
 
-            IPAddress address = Request.HttpContext.Connection.RemoteIpAddress;
-
             var count = await (from r in _db.UserReports
                          where (r.IPAddressBytes == address.GetAddressBytes() 
-                         || r.Fingerprint == fingerprint)
+                         || r.Fingerprint == model.Fingerprint)
                          && r.Date > DateTime.Now.AddHours(-1)
                          select r).AsNoTracking().CountAsync();
 
@@ -168,15 +164,15 @@ namespace hitmanstat.us.Controllers
                 _db.Add(new UserReport
                 {
                     IPAddress = address,
-                    Fingerprint = fingerprint,
-                    Service = service
-                });
+                    Fingerprint = model.Fingerprint,
+                    Service = GetServiceName(model.Reference)
+                }); ;
 
                 var today = await _db.UserReportCounters.SingleOrDefaultAsync(c => c.Date.Date == DateTime.Today);
 
                 if (today != null)
                 {
-                    switch (reference)
+                    switch (model.Reference)
                     {
                         case "h1pc": today.H1pc++; break;
                         case "h1xb": today.H1xb++; break;
@@ -190,12 +186,12 @@ namespace hitmanstat.us.Controllers
                 {
                     _db.Add(new UserReportCounter
                     {
-                        H1pc = reference == "h1pc" ? 1 : 0,
-                        H1xb = reference == "h1xb" ? 1 : 0,
-                        H1ps = reference == "h1ps" ? 1 : 0,
-                        H2pc = reference == "h2pc" ? 1 : 0,
-                        H2xb = reference == "h2xb" ? 1 : 0,
-                        H2ps = reference == "h2ps" ? 1 : 0,
+                        H1pc = model.Reference == "h1pc" ? 1 : 0,
+                        H1xb = model.Reference == "h1xb" ? 1 : 0,
+                        H1ps = model.Reference == "h1ps" ? 1 : 0,
+                        H2pc = model.Reference == "h2pc" ? 1 : 0,
+                        H2xb = model.Reference == "h2xb" ? 1 : 0,
+                        H2ps = model.Reference == "h2ps" ? 1 : 0,
                     });
                 }
 
@@ -207,6 +203,35 @@ namespace hitmanstat.us.Controllers
             {
                 return Json(new { type = "error", message = e.Message });
             }
+        }
+
+        private string GetServiceName(string reference)
+        {
+            string name = null;
+
+            switch (reference)
+            {
+                case "h1pc":
+                    name = "HITMAN PC";
+                    break;
+                case "h1xb":
+                    name = "HITMAN XBOX ONE";
+                    break;
+                case "h1ps":
+                    name = "HITMAN PS4";
+                    break;
+                case "h2pc":
+                    name = "HITMAN 2 PC";
+                    break;
+                case "h2xb":
+                    name = "HITMAN 2 XBOX ONE";
+                    break;
+                case "h2ps":
+                    name = "HITMAN 2 PS4";
+                    break;
+            }
+
+            return name;
         }
     }
 }
