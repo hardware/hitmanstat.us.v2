@@ -17,7 +17,7 @@ namespace hitmanstat.us.Framework
         private readonly ILogger _logger;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IHitmanForumClient _client;
-        private IMemoryCache _cache;
+        private readonly IMemoryCache _cache;
 
         public HitmanForumStatusSeekerHostedService(
             ILogger<HitmanForumStatusSeekerHostedService> logger, 
@@ -38,60 +38,58 @@ namespace hitmanstat.us.Framework
             stoppingToken.Register(() =>
                 _logger.LogDebug("HitmanForumStatusSeekerHostedService has been canceled"));
 
-            using (var scope = _scopeFactory.CreateScope())
+            using var scope = _scopeFactory.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+            var manager = new EventManager(db, _logger, _cache);
+
+            while (!stoppingToken.IsCancellationRequested)
             {
-                var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
-                var manager = new EventManager(db, _logger, _cache);
+                _logger.LogDebug("HitmanForumStatusSeekerHostedService is running");
 
-                while (!stoppingToken.IsCancellationRequested)
+                var endpointException = new EndpointStatusException(EndpointName.HitmanForum);
+
+                try
                 {
-                    _logger.LogDebug("HitmanForumStatusSeekerHostedService is running");
+                    EndpointStatus endpoint = await _client.GetStatusAsync();
 
-                    var endpointException = new EndpointStatusException(EndpointName.HitmanForum);
-
-                    try
+                    if (endpoint.State == EndpointState.Up)
                     {
-                        EndpointStatus endpoint = await _client.GetStatusAsync();
+                        _cache.Set(CacheKeys.HitmanForumKey, endpoint, new MemoryCacheEntryOptions()
+                            .SetPriority(CacheItemPriority.NeverRemove));
 
-                        if (endpoint.State == EndpointState.Up)
-                        {
-                            _cache.Set(CacheKeys.HitmanForumKey, endpoint, new MemoryCacheEntryOptions()
-                                .SetPriority(CacheItemPriority.NeverRemove));
-
-                            manager.RemoveCache(new List<string>
+                        manager.RemoveCache(new List<string>
                             {
                                 CacheKeys.HitmanForumErrorCountKey,
                                 CacheKeys.HitmanForumErrorEventKey
                             });
-                        }
-                        else
-                        {
-                            endpointException.Status = endpoint.Status;
-                        }
                     }
-                    catch (Exception e)
+                    else
                     {
-                        _logger.LogError(e, "Exception in the HitmanForumStatusSeekerHostedService");
-
-                        endpointException.Status = "Unhandled error";
-                        endpointException.Message = e.Message;
+                        endpointException.Status = endpoint.Status;
                     }
-                    finally
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e, "Exception in the HitmanForumStatusSeekerHostedService");
+
+                    endpointException.Status = "Unhandled error";
+                    endpointException.Message = e.Message;
+                }
+                finally
+                {
+                    if (!string.IsNullOrEmpty(endpointException.Status))
                     {
-                        if (!string.IsNullOrEmpty(endpointException.Status))
-                        {
-                            _cache.Set(CacheKeys.HitmanForumExceptionKey, endpointException, new MemoryCacheEntryOptions()
-                                .SetAbsoluteExpiration(TimeSpan.FromSeconds(45)));
+                        _cache.Set(CacheKeys.HitmanForumExceptionKey, endpointException, new MemoryCacheEntryOptions()
+                            .SetAbsoluteExpiration(TimeSpan.FromSeconds(45)));
 
-                            await manager.InsertEndpointExceptionAsync(endpointException);
-                        }
+                        await manager.InsertEndpointExceptionAsync(endpointException);
                     }
-
-                    await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
                 }
 
-                _logger.LogDebug("HitmanForumStatusSeekerHostedService has been stopped");
+                await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
             }
+
+            _logger.LogDebug("HitmanForumStatusSeekerHostedService has been stopped");
         }
     }
 }

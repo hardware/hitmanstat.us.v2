@@ -20,19 +20,12 @@ namespace hitmanstat.us.Framework
 
             var response = JsonConvert.DeserializeObject<ReCaptchaResponse>(client.DownloadString(url));
 
-            /*
-             * No action taken for now. Enable it with an adapted score when Recaptcha 
-             * will have learned enough real traffic in production.
-             
             if (response.Success && response.Action == "UserReport")
             {
                 return (response.Score >= 0.5) ? true : false;
             }
 
             return false;
-            */
-
-            return true;
         }
 
         private class ReCaptchaResponse

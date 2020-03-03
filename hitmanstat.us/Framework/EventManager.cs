@@ -16,7 +16,7 @@ namespace hitmanstat.us.Framework
     {
         private readonly DatabaseContext _db;
         private readonly ILogger _logger;
-        private IMemoryCache _cache;
+        private readonly IMemoryCache _cache;
 
         public EventManager(DatabaseContext context, ILogger logger, IMemoryCache cache)
         {

@@ -7,7 +7,7 @@ namespace hitmanstat.us.Controllers
 {
     public class ServicesController : Controller
     {
-        private IMemoryCache _cache;
+        private readonly IMemoryCache _cache;
 
         public ServicesController(IMemoryCache cache) => _cache = cache;
 

@@ -18,7 +18,7 @@ namespace hitmanstat.us.Framework
         private readonly ILogger _logger;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IHitmanClient _client;
-        private IMemoryCache _cache;
+        private readonly IMemoryCache _cache;
 
         public HitmanStatusSeekerHostedService(
             ILogger<HitmanStatusSeekerHostedService> logger, 
@@ -39,73 +39,72 @@ namespace hitmanstat.us.Framework
             stoppingToken.Register(() =>
                 _logger.LogDebug("HitmanStatusSeekerHostedService has been canceled"));
 
-            using (var scope = _scopeFactory.CreateScope())
+            using var scope = _scopeFactory.CreateScope();
+
+            var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+            var manager = new EventManager(db, _logger, _cache);
+
+            while (!stoppingToken.IsCancellationRequested)
             {
-                var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
-                var manager = new EventManager(db, _logger, _cache);
+                _logger.LogDebug("HitmanStatusSeekerHostedService is running");
 
-                while (!stoppingToken.IsCancellationRequested)
+                var endpointException = new EndpointStatusException(EndpointName.HitmanAuthentication);
+
+                try
                 {
-                    _logger.LogDebug("HitmanStatusSeekerHostedService is running");
+                    EndpointStatus endpoint = await _client.GetStatusAsync();
 
-                    var endpointException = new EndpointStatusException(EndpointName.HitmanAuthentication);
-
-                    try
+                    if (endpoint.State == EndpointState.Up)
                     {
-                        EndpointStatus endpoint = await _client.GetStatusAsync();
+                        var json = JObject.Parse(endpoint.Status);
+                        var timestamp = (DateTime)json["timestamp"];
 
-                        if (endpoint.State == EndpointState.Up)
+                        if (manager.IsMostRecentStatus(timestamp))
                         {
-                            var json = JObject.Parse(endpoint.Status);
-                            var timestamp = (DateTime)json["timestamp"];
+                            _cache.Set(CacheKeys.HitmanKey, endpoint, new MemoryCacheEntryOptions()
+                                .SetPriority(CacheItemPriority.NeverRemove));
 
-                            if (manager.IsMostRecentStatus(timestamp))
-                            {
-                                _cache.Set(CacheKeys.HitmanKey, endpoint, new MemoryCacheEntryOptions()
-                                    .SetPriority(CacheItemPriority.NeverRemove));
+                            await Task.Run(()
+                                => manager.InsertHitmanServicesEntitiesAsync(json), stoppingToken);
+                        }
 
-                                await Task.Run(()
-                                    => manager.InsertHitmanServicesEntitiesAsync(json), stoppingToken);
-                            }
-
-                            manager.RemoveCache(new List<string>
+                        manager.RemoveCache(new List<string>
                             {
                                 CacheKeys.HitmanErrorCountKey,
                                 CacheKeys.HitmanErrorEventKey
                             });
-                        }
-                        else
-                        {
-                            endpointException.Status = endpoint.Status;
-                            endpointException.State = endpoint.State;
-                        }
                     }
-                    catch (Exception e)
+                    else
                     {
-                        _logger.LogError(e, "Exception in the HitmanStatusSeekerHostedService");
-
-                        endpointException.Status = "Unhandled error";
-                        endpointException.Message = e.Message;
+                        endpointException.Status = endpoint.Status;
+                        endpointException.State = endpoint.State;
                     }
-                    finally
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e, "Exception in the HitmanStatusSeekerHostedService");
+
+                    endpointException.Status = "Unhandled error";
+                    endpointException.Message = e.Message;
+                }
+                finally
+                {
+                    if (!string.IsNullOrEmpty(endpointException.Status))
                     {
-                        if(!string.IsNullOrEmpty(endpointException.Status))
-                        {
-                            _cache.Set(CacheKeys.HitmanExceptionKey, endpointException, new MemoryCacheEntryOptions()
-                                .SetAbsoluteExpiration(TimeSpan.FromSeconds(45)));
+                        _cache.Set(CacheKeys.HitmanExceptionKey, endpointException, new MemoryCacheEntryOptions()
+                            .SetAbsoluteExpiration(TimeSpan.FromSeconds(45)));
 
-                            await manager.InsertEndpointExceptionAsync(endpointException);
-                        }
+                        await manager.InsertEndpointExceptionAsync(endpointException);
                     }
-
-                    await Task.Run(()
-                            => manager.SeedCurrentUserReportCountersAsync(), stoppingToken);
-
-                    await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
                 }
 
-                _logger.LogDebug("HitmanStatusSeekerHostedService has been stopped");
+                await Task.Run(()
+                        => manager.SeedCurrentUserReportCountersAsync(), stoppingToken);
+
+                await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
             }
+
+            _logger.LogDebug("HitmanStatusSeekerHostedService has been stopped");
         }
     }
 }

@@ -18,7 +18,7 @@ namespace hitmanstat.us.Controllers
     public class UserReportsController : Controller
     {
         private readonly DatabaseContext _db;
-        private IMemoryCache _cache;
+        private readonly IMemoryCache _cache;
 
         public UserReportsController(DatabaseContext context, IMemoryCache cache)
         {
@@ -115,8 +115,7 @@ namespace hitmanstat.us.Controllers
                 return Json(new
                 {
                     type = "error",
-                    message = "The submission failed the spam bot verification. " +
-                              "If you have JavaScript disabled in your browser, please enable it and try again."
+                    message = "The submission failed the spam bot verification. Are you human ?"
                 });
             }
 
