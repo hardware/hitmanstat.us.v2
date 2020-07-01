@@ -74,6 +74,14 @@ nav.bg-dark {
 }
 
 /*
+ * HEATMAP
+ */
+
+#heatmap {
+    height: 500px;
+}
+
+/*
  * RECAPTCHA
  */
 
@@ -257,6 +265,10 @@ nav.bg-dark {
     background-color: rgba(220, 53, 69, 0.36);
 }
 
+.alert-bis {
+    padding: 10px 12px;
+}
+
 /*
  * CHART
  */
@@ -374,6 +386,13 @@ body.night-mode .alert {
     background-color: #322f35;
     color: #c2ccd4;
     border: 0;
+}
+
+body.night-mode .alert-bis {
+    background-color: #4a4a4a;
+    color: #c2ccd4;
+    border: 0;
+    padding: 10px 12px;
 }
 
 body.night-mode .alert.alert-header {

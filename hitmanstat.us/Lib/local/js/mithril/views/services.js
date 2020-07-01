@@ -209,14 +209,26 @@ function setMaintenanceModal(service) {
 }
 
 function reportService(e) {
-
     var ref = e.target.getAttribute('data-service-ref');
+    $("#spinner-" + ref).html('<span class="spinner-grow spinner-grow-sm text-secondary" role="status"></span>');
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            triggerReport(e, ref, position.coords.latitude, position.coords.longitude);
+        }, function () {
+            triggerReport(e, ref, 0.0, 0.0);
+        });
+    } else {
+        triggerReport(e, ref, 0.0, 0.0);
+    }
+}
+
+function triggerReport(e, ref, latitude, longitude) {
+
     var name = e.target.getAttribute('data-service-name');
     var status = e.target.getAttribute('data-service-state');
     var token = $("input[name='__RequestVerificationToken']").val();
     var recaptchaKey = document.getElementById('scriptsTag').getAttribute("data-recaptcha-key");
-
-    $("#spinner-" + ref).html('<span class="spinner-grow spinner-grow-sm text-secondary" role="status"></span>');
 
     grecaptcha.ready(function () {
         grecaptcha.execute(recaptchaKey, { action: 'UserReport' }).then(function (recaptchaToken) {
@@ -247,6 +259,8 @@ function reportService(e) {
                         fingerprint: murmur,
                         state: status,
                         recaptchaToken: recaptchaToken,
+                        latitude: latitude,
+                        longitude: longitude,
                         __RequestVerificationToken: token
                     },
                     success: function (data) {

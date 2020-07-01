@@ -7,6 +7,7 @@
       "wwwroot/lib/font-awesome/css/fontawesome.min.css",
       "wwwroot/lib/font-awesome/css/solid.min.css",
       "Lib/external/toastr.js/toastr.min.css",
+      "Lib/external/mapbox-gl/mapbox-gl.min.css",
       "Lib/local/css/site.css"
     ]
   },
@@ -22,6 +23,7 @@
       "Lib/external/toastr.js/toastr.min.js",
       "Lib/external/fingerprintjs2/fingerprint2.min.js",
       "Lib/external/apexcharts/apexcharts.min.js",
+      "Lib/external/mapbox-gl/mapbox-gl.min.js",
       "Lib/local/js/site.js",
       "Lib/local/js/night-mode.js",
       "Lib/local/js/mithril/models/*.js",

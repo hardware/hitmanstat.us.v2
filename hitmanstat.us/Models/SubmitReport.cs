@@ -17,5 +17,11 @@ namespace hitmanstat.us.Models
 
         [Required]
         public string RecaptchaToken { get; set; }
+
+        [Required]
+        public double Latitude { get; set; }
+
+        [Required]
+        public double Longitude { get; set; }
     }
 }

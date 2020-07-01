@@ -107,7 +107,16 @@ services.refresh = function () {
     });
 };
 
-var chartRendered = false;
+var statsPanelsRendered = false;
+
+mapboxgl.accessToken = 'pk.eyJ1Ijoic2F2ZW5zZXBpMGwiLCJhIjoiY2tjM2J1ejVzMWR4eTJ2bXJ0b29saXVweCJ9.SUaiNbskaseteDeKrWvNug';
+var heatmapObj = new mapboxgl.Map({
+    container: 'heatmap',
+    style: 'mapbox://styles/mapbox/dark-v10',
+    center: [0, 20],
+    zoom: 1,
+    maxZoom: 10
+});
 
 services.renderChart = function () {
     m.request({
@@ -115,14 +124,29 @@ services.renderChart = function () {
         url: '/reports',
     })
     .then(function (result) {
-        if (chartRendered) {
+        if (statsPanelsRendered) {
+
+            /**
+             * Chart update
+             */
             ApexCharts.exec('playersReports', 'updateOptions', {
                 xaxis: {
                     categories: result.categories,
                 }
             }, false, true);
             ApexCharts.exec('playersReports', 'updateSeries', result.series, true);
+
+            /**
+             * Heatmap update
+             */
+            heatmapObj.getSource('reports').setData(JSON.parse(result.geoData));
+
         } else {
+
+            /**
+             * Chart initial load
+             */
+
             var options = {
                 chart: {
                     height: 350,
@@ -197,7 +221,59 @@ services.renderChart = function () {
 
             var chart = new ApexCharts(document.querySelector("#chart"), options);
             chart.render();
-            chartRendered = true;
+
+            /**
+             * Heatmap initial load
+             */
+            heatmapObj.on('load', function () {
+                heatmapObj.addSource('reports', {
+                    type: 'geojson',
+                    data: JSON.parse(result.geoData)
+                });
+                heatmapObj.addLayer({
+                    id: 'reports-heat',
+                    type: 'heatmap',
+                    source: 'reports',
+                    maxzoom: 11,
+                    paint: {
+                        // increase intensity as zoom level increases
+                        'heatmap-intensity': {
+                            stops: [
+                                [11, 1],
+                                [15, 3]
+                            ]
+                        },
+                        // assign color values be applied to points depending on their density
+                        'heatmap-color': [
+                            'interpolate',
+                            ['linear'],
+                            ['heatmap-density'],
+                            0, 'rgba(236,222,239,0)',
+                            0.2, 'rgb(208,209,230)',
+                            0.4, 'rgb(166,189,219)',
+                            0.6, 'rgb(103,169,207)',
+                            0.8, 'rgb(28,144,153)'
+                        ],
+                        // increase radius as zoom increases
+                        'heatmap-radius': {
+                            stops: [
+                                [11, 15],
+                                [15, 20]
+                            ]
+                        },
+                        // decrease opacity to transition into the circle layer
+                        'heatmap-opacity': {
+                            default: 1,
+                            stops: [
+                                [14, 1],
+                                [15, 0]
+                            ]
+                        },
+                    }
+                }, 'waterway-label');
+            });
+
+            statsPanelsRendered = true;
         }
     });
 };

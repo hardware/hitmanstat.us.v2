@@ -19,6 +19,8 @@ namespace hitmanstat.us.Models
         public string Service { get; set; }
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
 
         [NotMapped]
         public IPAddress IPAddress

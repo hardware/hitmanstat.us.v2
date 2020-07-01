@@ -5,10 +5,14 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using GeoJSON.Net.Geometry;
+using GeoJSON.Net.Feature;
 using hitmanstat.us.Data;
 using hitmanstat.us.Models;
 using hitmanstat.us.Framework;
@@ -48,6 +52,9 @@ namespace hitmanstat.us.Controllers
                 return Json(cachedChart);
             }
 
+            // Get chart data
+            // ---------------------------------------------------------------------------------------
+
             var counters = await (from c in _db.UserReportCounters
                             where c.Date > DateTime.Now.AddDays(-7)
                             select c).AsNoTracking().ToListAsync();
@@ -83,10 +90,34 @@ namespace hitmanstat.us.Controllers
             series.Add(new ChartSerie { Name = "HITMAN 2 PS4", Data = h2ps });
             series.Add(new ChartSerie { Name = "THRESHOLD", Data = thre });
 
+            // Get heatmap data
+            // ---------------------------------------------------------------------------------------
+
+            var reports = await (from c in _db.UserReports
+                                  where c.Date > DateTime.Now.AddDays(-1)
+                                  select c).AsNoTracking().ToListAsync();
+
+            var model = new FeatureCollection();
+
+            foreach (var report in reports)
+            {
+                if(report.Latitude != 0 && report.Longitude != 0)
+                {
+                    var position = new Position(report.Latitude, report.Longitude);
+                    var point = new Point(position);
+                    var feature = new Feature(point);
+                    
+                    model.Features.Add(feature);
+                }
+            }
+
+            var geoData = JsonConvert.SerializeObject(model);
+
             var chart = new Chart
             {
                 Categories = categories,
-                Series = series
+                Series = series,
+                GeoData = geoData
             };
 
             _cache.Set(CacheKeys.HitmanChartKey, chart, new MemoryCacheEntryOptions()
@@ -164,8 +195,10 @@ namespace hitmanstat.us.Controllers
                 {
                     IPAddress = address,
                     Fingerprint = model.Fingerprint,
-                    Service = GetServiceName(model.Reference)
-                }); ;
+                    Service = GetServiceName(model.Reference),
+                    Latitude = model.Latitude,
+                    Longitude = model.Longitude
+                });
 
                 var today = await _db.UserReportCounters.SingleOrDefaultAsync(c => c.Date.Date == DateTime.Today);
 

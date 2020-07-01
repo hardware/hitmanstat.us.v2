@@ -6,6 +6,7 @@ namespace hitmanstat.us.Models
     {
         public IEnumerable<string> Categories { get; set; }
         public IEnumerable<ChartSerie> Series { get; set; }
+        public string GeoData { get; set; }
     }
 
     public class ChartSerie

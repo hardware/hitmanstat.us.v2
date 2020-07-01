@@ -90,6 +90,15 @@
       "files": [
         "classList.min.js"
       ]
+    },
+    {
+      "library": "mapbox-gl@1.11.0",
+      "destination": "Lib/external/mapbox-gl/",
+      "files": [
+        "mapbox-gl.js.map",
+        "mapbox-gl.min.css",
+        "mapbox-gl.min.js"
+      ]
     }
   ]
 }
