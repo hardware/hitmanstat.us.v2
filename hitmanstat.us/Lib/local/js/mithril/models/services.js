@@ -181,7 +181,7 @@ services.renderStats = function () {
                         }
                     }]
                 },
-                colors: ['#cc2d00', '#6d9e01', '#017db5', '#ff3800', '#97dc00', '#00a7f3', 'transparent'],
+                colors: ['#cc2d00', '#6d9e01', '#017db5', '#ff3800', '#97dc00', '#00a7f3', '#cacaca'],
                 dataLabels: {
                     enabled: false
                 },

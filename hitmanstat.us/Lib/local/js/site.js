@@ -23,7 +23,7 @@ var showNotification = function (type, title, message) {
         "newestOnTop": true,
         "progressBar": true,
         "positionClass": "toast-top-center",
-        "timeOut": "5000",
+        "timeOut": "10000",
         "preventDuplicates": true
     }
 

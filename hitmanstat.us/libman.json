@@ -10,7 +10,7 @@
       ]
     },
     {
-      "library": "moment.js@2.24.0",
+      "library": "moment.js@2.27.0",
       "destination": "Lib/external/moment.js/",
       "files": [
         "moment.min.js"
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "library": "jquery@3.4.1",
+      "library": "jquery@3.5.1",
       "destination": "Lib/external/jquery/",
       "files": [
         "jquery.min.js",
@@ -50,14 +50,14 @@
       ]
     },
     {
-      "library": "apexcharts@3.15.5",
+      "library": "apexcharts@3.19.3",
       "destination": "Lib/external/apexcharts/",
       "files": [
         "apexcharts.min.js"
       ]
     },
     {
-      "library": "font-awesome@5.12.0",
+      "library": "font-awesome@5.13.1",
       "destination": "wwwroot/lib/font-awesome/",
       "files": [
         "css/brands.min.css",

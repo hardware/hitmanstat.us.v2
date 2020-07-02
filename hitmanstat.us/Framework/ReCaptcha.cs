@@ -21,7 +21,7 @@ namespace hitmanstat.us.Framework
 
             if (response.Success && response.Action == "UserReport")
             {
-                return (response.Score >= 0.5) ? true : false;
+                return (response.Score >= 0.5);
             }
 
             return false;
