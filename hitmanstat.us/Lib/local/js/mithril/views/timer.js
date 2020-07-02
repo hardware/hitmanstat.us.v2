@@ -11,7 +11,7 @@ function tick() {
         if (count === 0) {
             count = 30;
             services.refresh();
-            services.renderChart();
+            services.renderStats();
         } else
             count--;
         m.redraw();

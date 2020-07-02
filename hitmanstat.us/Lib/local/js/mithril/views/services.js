@@ -4,7 +4,6 @@ var dateFormat = 'YYYY.MM.DD hh:mmA';
 services.oncreate = function () {
     window.addEventListener("load", function () {
         services.refresh();
-        services.renderChart();
     });
 };
 
