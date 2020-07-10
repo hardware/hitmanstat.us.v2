@@ -40,6 +40,8 @@ namespace hitmanstat.us.Controllers
                             .AsNoTracking()
                             .ToListAsync();
 
+            events.RemoveAll(e => e.Service.Contains("FORUM"));
+
             return View(events);
         }
 

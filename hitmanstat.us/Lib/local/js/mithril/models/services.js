@@ -8,7 +8,7 @@ var heatmap = new mapboxgl.Map({
     style: 'mapbox://styles/mapbox/dark-v10',
     center: [0, 20],
     zoom: 1,
-    maxZoom: 10
+    maxZoom: 5
 });
 
 services.list = [
@@ -239,7 +239,7 @@ heatmap.on('load', function () {
         id: 'reports-heat',
         type: 'heatmap',
         source: 'reports',
-        maxzoom: 11,
+        maxzoom: 6,
         paint: {
             // increase intensity as zoom level increases
             'heatmap-intensity': {
