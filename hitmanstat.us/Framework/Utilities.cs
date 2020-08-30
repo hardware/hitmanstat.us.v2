@@ -36,6 +36,10 @@ namespace hitmanstat.us.Framework
                     Ref = "h1xb",
                     Node = "xboxone-service.hitman.io" },
                 new HitmanService {
+                    Name = "HITMAN STADIA",
+                    Ref = "h1st",
+                    Node = "stadia2-service.hitman.io" },
+                new HitmanService {
                     Name = "HITMAN 2 PC",
                     Ref = "h2pc",
                     Node = "pc2-service.hitman.io" },
@@ -46,7 +50,11 @@ namespace hitmanstat.us.Framework
                 new HitmanService {
                     Name = "HITMAN 2 XBOX ONE",
                     Ref = "h2xb",
-                    Node = "xboxone2-service.hitman.io" }
+                    Node = "xboxone2-service.hitman.io" },
+                new HitmanService {
+                    Name = "HITMAN 2 STADIA",
+                    Ref = "h2st",
+                    Node = "stadia2-service.hitman.io" }
             };
 
             foreach (var entity in entities)

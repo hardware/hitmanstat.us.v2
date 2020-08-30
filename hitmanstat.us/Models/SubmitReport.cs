@@ -5,7 +5,7 @@ namespace hitmanstat.us.Models
     public class SubmitReport
     {
         [Required]
-        [RegularExpression(@"^(h1pc|h1xb|h1ps|h2pc|h2xb|h2ps)$")]
+        [RegularExpression(@"^(h1pc|h1xb|h1ps|h1st|h2pc|h2xb|h2ps|h2st)$")]
         public string Reference { get; set; }
 
         [Required]

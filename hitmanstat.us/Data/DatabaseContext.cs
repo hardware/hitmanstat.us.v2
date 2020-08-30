@@ -37,6 +37,9 @@ namespace hitmanstat.us.Data
                 .Property(c => c.H1ps)
                 .HasDefaultValue(0);
             modelBuilder.Entity<UserReportCounter>()
+                .Property(c => c.H1st)
+                .HasDefaultValue(0);
+            modelBuilder.Entity<UserReportCounter>()
                 .Property(c => c.H2pc)
                 .HasDefaultValue(0);
             modelBuilder.Entity<UserReportCounter>()
@@ -44,6 +47,9 @@ namespace hitmanstat.us.Data
                 .HasDefaultValue(0);
             modelBuilder.Entity<UserReportCounter>()
                 .Property(c => c.H2ps)
+                .HasDefaultValue(0);
+            modelBuilder.Entity<UserReportCounter>()
+                .Property(c => c.H2st)
                 .HasDefaultValue(0);
             modelBuilder.Entity<UserReportCounter>()
                 .Property(c => c.Date)

@@ -65,9 +65,11 @@ namespace hitmanstat.us.Controllers
             var h1pc = new List<int>();
             var h1xb = new List<int>();
             var h1ps = new List<int>();
+            var h1st = new List<int>();
             var h2pc = new List<int>();
             var h2xb = new List<int>();
             var h2ps = new List<int>();
+            var h2st = new List<int>();
             var thre = new List<int>();
 
             foreach (var counter in counters)
@@ -76,18 +78,22 @@ namespace hitmanstat.us.Controllers
                 h1pc.Add(counter.H1pc);
                 h1xb.Add(counter.H1xb);
                 h1ps.Add(counter.H1ps);
+                h1st.Add(counter.H1st);
                 h2pc.Add(counter.H2pc);
                 h2xb.Add(counter.H2xb);
                 h2ps.Add(counter.H2ps);
+                h2st.Add(counter.H2st);
                 thre.Add(30);
             }
 
             series.Add(new ChartSerie { Name = "HITMAN PC", Data = h1pc });
             series.Add(new ChartSerie { Name = "HITMAN XBOX ONE", Data = h1xb });
             series.Add(new ChartSerie { Name = "HITMAN PS4", Data = h1ps });
+            series.Add(new ChartSerie { Name = "HITMAN STADIA", Data = h1st });
             series.Add(new ChartSerie { Name = "HITMAN 2 PC", Data = h2pc });
             series.Add(new ChartSerie { Name = "HITMAN 2 XBOX ONE", Data = h2xb });
             series.Add(new ChartSerie { Name = "HITMAN 2 PS4", Data = h2ps });
+            series.Add(new ChartSerie { Name = "HITMAN 2 STADIA", Data = h2st });
             series.Add(new ChartSerie { Name = "THRESHOLD", Data = thre });
 
             // Get heatmap data
@@ -209,9 +215,11 @@ namespace hitmanstat.us.Controllers
                         case "h1pc": today.H1pc++; break;
                         case "h1xb": today.H1xb++; break;
                         case "h1ps": today.H1ps++; break;
+                        case "h1st": today.H1st++; break;
                         case "h2pc": today.H2pc++; break;
                         case "h2xb": today.H2xb++; break;
                         case "h2ps": today.H2ps++; break;
+                        case "h2st": today.H2st++; break;
                     }
                 }
                 else
@@ -221,9 +229,11 @@ namespace hitmanstat.us.Controllers
                         H1pc = model.Reference == "h1pc" ? 1 : 0,
                         H1xb = model.Reference == "h1xb" ? 1 : 0,
                         H1ps = model.Reference == "h1ps" ? 1 : 0,
+                        H1st = model.Reference == "h1st" ? 1 : 0,
                         H2pc = model.Reference == "h2pc" ? 1 : 0,
                         H2xb = model.Reference == "h2xb" ? 1 : 0,
                         H2ps = model.Reference == "h2ps" ? 1 : 0,
+                        H2st = model.Reference == "h2st" ? 1 : 0,
                     });
                 }
 
@@ -252,6 +262,9 @@ namespace hitmanstat.us.Controllers
                 case "h1ps":
                     name = "HITMAN PS4";
                     break;
+                case "h1st":
+                    name = "HITMAN STADIA";
+                    break;
                 case "h2pc":
                     name = "HITMAN 2 PC";
                     break;
@@ -260,6 +273,9 @@ namespace hitmanstat.us.Controllers
                     break;
                 case "h2ps":
                     name = "HITMAN 2 PS4";
+                    break;
+                case "h2st":
+                    name = "HITMAN 2 STADIA";
                     break;
             }
 

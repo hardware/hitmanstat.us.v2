@@ -15,9 +15,11 @@ services.list = [
     { ref: "h2pc", group: "h2", name: 'hitman 2 pc', endpoint: 'pc2-service.hitman.io', platform: 'azure' },
     { ref: "h2xb", group: "h2", name: 'hitman 2 xbox one', endpoint: 'xboxone2-service.hitman.io', platform: 'azure' },
     { ref: "h2ps", group: "h2", name: 'hitman 2 ps4', endpoint: 'ps42-service.hitman.io', platform: 'azure' },
+    { ref: "h2st", group: "h2", name: 'hitman 2 stadia', endpoint: 'stadia2-service.hitman.io', platform: 'azure' },
     { ref: "h1pc", group: "h1", name: 'hitman pc', endpoint: 'pc-service.hitman.io', platform: 'azure' },
     { ref: "h1xb", group: "h1", name: 'hitman xbox one', endpoint: 'xboxone-service.hitman.io', platform: 'azure' },
     { ref: "h1ps", group: "h1", name: 'hitman ps4', endpoint: 'ps4-service.hitman.io', platform: 'azure' },
+    { ref: "h1st", group: "h1", name: 'hitman stadia', endpoint: 'stadia2-service.hitman.io', platform: 'azure' },
     { ref: "auth", group: "ot", name: 'hitman authentication', endpoint: 'auth.hitman.io', platform: 'azure' },
     { ref: "hmfc", group: "ot", name: 'hitmanforum.com', endpoint: 'hitmanforum', platform: 'discourse', url: 'https://www.hitmanforum.com/' }
 ];
@@ -181,7 +183,7 @@ services.renderStats = function () {
                         }
                     }]
                 },
-                colors: ['#cc2d00', '#6d9e01', '#017db5', '#ff3800', '#97dc00', '#00a7f3', '#cacaca'],
+                colors: ['#cc2d00', '#6d9e01', '#017db5', '#b618a6', '#ff3800', '#97dc00', '#00a7f3', '#b067a8', '#cacaca'],
                 dataLabels: {
                     enabled: false
                 },
@@ -217,7 +219,7 @@ services.renderStats = function () {
                     }
                 },
                 legend: {
-                    show: false
+                    show: true
                 }
             }
 

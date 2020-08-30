@@ -98,7 +98,7 @@ namespace hitmanstat.us
                 context.Response.Headers.Add("X-Xss-Protection", "1; mode=block");
                 context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
                 context.Response.Headers.Add("Referrer-Policy", "no-referrer");
-                context.Response.Headers.Add("Feature-Policy", "fullscreen 'self';camera 'none';geolocation 'self';gyroscope 'none';magnetometer 'none';microphone 'none';midi 'none';payment 'none';speaker 'none';sync-xhr 'none'");
+                //context.Response.Headers.Add("Feature-Policy", "fullscreen 'self';camera 'none';geolocation 'self';gyroscope 'none';magnetometer 'none';microphone 'none';midi 'none';payment 'none';speaker 'none';sync-xhr 'none'");
                 //context.Response.Headers.Add("Content-Security-Policy", "default-src 'none'; script-src 'self' 'unsafe-inline' *.msecnd.net www.google.com www.gstatic.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-src 'self' www.google.com; font-src 'self'; media-src 'self'; connect-src 'self' *.visualstudio.com *.mapbox.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
                 await next();
             });

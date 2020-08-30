@@ -262,7 +262,7 @@ namespace hitmanstat.us.Framework
                         .Where(e => e.State == maintenance)
                         .Count();
 
-                    if (maintenanceCount >= 3 && maintenanceCount < 6)
+                    if (maintenanceCount >= 4 && maintenanceCount < 8)
                     {
                         var downEvents = events.Where(e => e.State == down).ToList();
 
@@ -271,7 +271,7 @@ namespace hitmanstat.us.Framework
                             events.Clear();
                             events.Add(new Event()
                             {
-                                Service = "HITMAN 2 PC / XBOX ONE / PS4",
+                                Service = "HITMAN 2 PC / XBOX ONE / PS4 / STADIA",
                                 State = maintenance
                             });
                         }
@@ -280,7 +280,7 @@ namespace hitmanstat.us.Framework
                             events.Clear();
                             events.Add(new Event()
                             {
-                                Service = "HITMAN PC / XBOX ONE / PS4",
+                                Service = "HITMAN PC / XBOX ONE / PS4 / STADIA",
                                 State = maintenance
                             });
                         }
@@ -290,12 +290,12 @@ namespace hitmanstat.us.Framework
                             events.AddRange(downEvents);
                         }
                     }
-                    else if (maintenanceCount == 6)
+                    else if (maintenanceCount == 8)
                     {
                         events.Clear();
                         events.Add(new Event()
                         {
-                            Service = "HITMAN & HITMAN 2 PC / XBOX ONE / PS4",
+                            Service = "HITMAN & HITMAN 2 PC / XBOX ONE / PS4 / STADIA",
                             State = maintenance
                         });
                     }
