@@ -36,10 +36,6 @@ namespace hitmanstat.us.Framework
                     Ref = "h1xb",
                     Node = "xboxone-service.hitman.io" },
                 new HitmanService {
-                    Name = "HITMAN STADIA",
-                    Ref = "h1st",
-                    Node = "stadia2-service.hitman.io" },
-                new HitmanService {
                     Name = "HITMAN 2 PC",
                     Ref = "h2pc",
                     Node = "pc2-service.hitman.io" },

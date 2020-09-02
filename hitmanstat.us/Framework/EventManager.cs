@@ -262,7 +262,8 @@ namespace hitmanstat.us.Framework
                         .Where(e => e.State == maintenance)
                         .Count();
 
-                    if (maintenanceCount >= 4 && maintenanceCount < 8)
+                    // 3xH1 + 3xH2 (+ 1xH2 Stadia)
+                    if (maintenanceCount >= 4 && maintenanceCount < 7)
                     {
                         var downEvents = events.Where(e => e.State == down).ToList();
 
@@ -290,7 +291,7 @@ namespace hitmanstat.us.Framework
                             events.AddRange(downEvents);
                         }
                     }
-                    else if (maintenanceCount == 8)
+                    else if (maintenanceCount == 7)
                     {
                         events.Clear();
                         events.Add(new Event()

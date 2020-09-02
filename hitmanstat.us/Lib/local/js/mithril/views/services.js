@@ -85,7 +85,7 @@ function setLink(service) {
 }
 
 function setReport(service) {
-    if (service.group != "ot") {
+    if (service.ref != "hmfc") {
         var name = service.name.toUpperCase();
         if (service.status == "maintenance") {
             return m("button", {

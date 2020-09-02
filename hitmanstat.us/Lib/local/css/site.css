@@ -550,25 +550,11 @@ body.night-mode .alert-threshold {
     .card-footer {
         padding: 0.75rem 0.70rem;
     }
-
-    .card-footer .text-muted {
-        font-size: 0.65rem;
-    }
 }
 
 @media (max-width: 970px) {
     .card-span-title {
         font-size: 1rem;
-    }
-}
-
-@media (max-width: 870px) {
-    .card-footer .text-muted {
-        display: none;
-    }
-
-    .card-footer a {
-        display: none;
     }
 }
 
@@ -586,10 +572,6 @@ body.night-mode .alert-threshold {
     }
 
     .card-footer .text-muted {
-        font-size: 0.8rem;
-    }
-
-    .card-footer a {
         display: none;
     }
 
