@@ -48,6 +48,8 @@ namespace hitmanstat.us.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+            ViewBag.mainError = true;
+
             return View(new ErrorViewModel {
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
             });
@@ -57,6 +59,8 @@ namespace hitmanstat.us.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(int code)
         {
+            ViewBag.mainError = true;
+
             return View(new ErrorViewModel {
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
                 ErrorCode = code

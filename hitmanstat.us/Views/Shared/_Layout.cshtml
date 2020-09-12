@@ -1,6 +1,12 @@
 ﻿@{
     var description = "HITMAN status website provides the current status and incident reporting for HITMAN online services.";
     var title = ViewData["Title"] != null ? string.Format("{0} - HITMAN Status", ViewData["Title"]) : "HITMAN Status";
+    var background = string.Empty;
+
+    @if (ViewBag.mainError != null)
+    {
+        background = "main-error";
+    }
 }
 
 <!--
@@ -53,7 +59,7 @@
     <link rel="stylesheet" href="~/css/stylesheets.min.css" asp-append-version="true" />
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
-<body class="d-flex flex-column">
+<body class="d-flex flex-column @background">
     <header>
         <partial name="_Navbar">
     </header>
