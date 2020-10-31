@@ -15,7 +15,7 @@
  | __ || |  | | | |\/| |/ _ \| .` |   \__ \ | |/ _ \| | | |_| \__ \
  |_||_|___| |_| |_|  |_/_/ \_\_|\_|   |___/ |_/_/ \_\_|  \___/|___/
 
-   BuildID : 2020090201
+   BuildID : 2020103101
 
                      /|
                      \\  \`.
@@ -59,7 +59,26 @@
     <link rel="stylesheet" href="~/css/stylesheets.min.css" asp-append-version="true" />
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
-<body class="d-flex flex-column @background">
+<body class="d-flex flex-column night-mode @background">
+
+    <div class="not-compatible" id="ie-banner">
+        Unfortunately, your browser is too old to work on this website.
+        Please <a href="https://browsehappy.com">upgrade your browser</a> for full experience.
+    </div>
+
+    <script>
+        if (/Trident\/|MSIE/.test(window.navigator.userAgent)) {
+            document.getElementById('ie-banner').style.display = 'block';
+        }
+    </script>
+
+    <noscript>
+        <div class="not-compatible">
+            For full functionality of this website it is necessary to enable JavaScript.
+            Here are the <a href="https://www.enable-javascript.com/">instructions how to enable it in your web browser</a>.
+        </div>
+    </noscript>
+
     <header>
         <partial name="_Navbar">
     </header>

@@ -6,19 +6,6 @@
     <div class="mb-4" id="backend-error-container"></div>
 }
 
-<noscript>
-    <div class="alert alert-header mt-5" role="alert">
-        <div class="text-center">
-            <h4 class="alert-heading">Your browser does not support JavaScript.</h4>
-            <span class="separator"></span>
-            <p class="mb-0">
-                For full functionality of this website it is necessary to enable JavaScript.<br />
-                Here are the <a href="https://www.enable-javascript.com/">instructions how to enable it in your web browser</a>.
-            </p>
-        </div>
-    </div>
-</noscript>
-
 <div class="alert alert-secondary text-center alert-report" role="alert">
     <i class="fas fa-info-circle"></i> If a service isn't working for you, click on the exclamation mark to share your reporting. A significant number of reports may indicate an issue with the game servers. Keep in mind that Hitman's services also rely on Azure's infrastructure and third-party digital distribution  platforms services. If Hitman's servers appear online here but you still have some issues, you can check <a href="https://steamstat.us/">Steam</a>, <a href="https://status.epicgames.com/">Epic Games</a>, <a href="https://status.playstation.com/">PSN</a>, <a href="https://support.xbox.com/en-US/xbox-live-status">Xbox Live</a> and <a href="https://status.azure.com/">Azure</a> status pages to get more informations.
 </div>
@@ -52,6 +39,7 @@
 <div class="mb-5" id="heatmap"></div>
 
 @section Scripts {
-    <script src="https://www.google.com/recaptcha/api.js?render=@recaptchaKey"></script>
+    <script async src="https://www.google.com/recaptcha/api.js?render=@recaptchaKey"></script>
+    <script async src="//cdn.jsdelivr.net/npm/@@fingerprintjs/fingerprintjs@3/dist/fp.min.js"></script>
     <script id="scriptsTag" data-recaptcha-key="@recaptchaKey" src="~/js/scripts.min.js" asp-append-version="true"></script>
 }

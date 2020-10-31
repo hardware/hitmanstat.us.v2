@@ -13,9 +13,6 @@
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" onclick="toggleNight()" id="night-link" href="#">Night Mode</a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         More
@@ -26,14 +23,10 @@
                         <a class="dropdown-item" href="https://www.hitmanforum.com/">Forums</a>
                         <a class="dropdown-item" href="https://www.reddit.com/r/HiTMAN/">Reddit</a>
                         <a class="dropdown-item" href="https://www.hitmaps.com/">Interactive maps</a>
-                        <a class="dropdown-item" href="https://hitman-feedback.herokuapp.com/">Feedback</a>
                         <a class="dropdown-item" href="https://story.hitmanstat.us/">Season 1 story</a>
                     </div>
                 </li>
             </ul>
-            <span class="navbar-text feedback-button">
-                <a href="https://hitman-feedback.herokuapp.com/" data-toggle="tooltip" data-placement="bottom" data-original-title="Visit HITMAN 2 Feedback website" class="btn btn-danger btn-sm mr-3"><i class="fas fa-comments"></i> Feedback</a>
-            </span>
             @if (Context.Request.Path == "/")
             {
                 <span class="navbar-text">

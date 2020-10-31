@@ -10,14 +10,14 @@
       ]
     },
     {
-      "library": "moment.js@2.27.0",
+      "library": "moment.js@2.29.1",
       "destination": "Lib/external/moment.js/",
       "files": [
         "moment.min.js"
       ]
     },
     {
-      "library": "twitter-bootstrap@4.4.1",
+      "library": "twitter-bootstrap@4.5.3",
       "destination": "Lib/external/twitter-bootstrap/",
       "files": [
         "css/bootstrap.min.css",
@@ -43,21 +43,14 @@
       ]
     },
     {
-      "library": "fingerprintjs2@2.1.0",
-      "destination": "Lib/external/fingerprintjs2/",
-      "files": [
-        "fingerprint2.min.js"
-      ]
-    },
-    {
-      "library": "apexcharts@3.19.3",
+      "library": "apexcharts@3.22.0",
       "destination": "Lib/external/apexcharts/",
       "files": [
         "apexcharts.min.js"
       ]
     },
     {
-      "library": "font-awesome@5.13.1",
+      "library": "font-awesome@5.15.1",
       "destination": "wwwroot/lib/font-awesome/",
       "files": [
         "css/brands.min.css",
@@ -76,23 +69,7 @@
       ]
     },
     {
-      "provider": "jsdelivr",
-      "library": "promise-polyfill@8.1.3",
-      "destination": "Lib/external/promise-polyfill/",
-      "files": [
-        "dist/polyfill.min.js"
-      ]
-    },
-    {
-      "provider": "jsdelivr",
-      "library": "eligrey-classlist-js-polyfill@1.2.20180112",
-      "destination": "Lib/external/eligrey-classlist-js-polyfill/",
-      "files": [
-        "classList.min.js"
-      ]
-    },
-    {
-      "library": "mapbox-gl@1.11.0",
+      "library": "mapbox-gl@1.12.0",
       "destination": "Lib/external/mapbox-gl/",
       "files": [
         "mapbox-gl.js.map",

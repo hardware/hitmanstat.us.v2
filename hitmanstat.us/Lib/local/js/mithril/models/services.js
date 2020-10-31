@@ -7,7 +7,7 @@ var heatmap = new mapboxgl.Map({
     container: 'heatmap',
     style: 'mapbox://styles/mapbox/dark-v10',
     center: [0, 20],
-    zoom: 1,
+    zoom: 1.3,
     maxZoom: 5
 });
 

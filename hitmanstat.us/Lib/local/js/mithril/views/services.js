@@ -70,16 +70,16 @@ function setCardTitle(service) {
     } else if (service.name.indexOf("stadia") !== -1) {
         return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><path d="M.271 11.557a.631.631 0 0 0-.271.521v.005c0 .089.021.172.052.255l3.068 6.938a.646.646 0 0 0 .802.349c2.005-.719 8.948-2.979 13.443-1.76c0 0-4.51.26-8.583 3.458a.647.647 0 0 0-.193.76l1.375 3.104l.526 1.234a.398.398 0 0 0 .703.063c.953-1.432 2.557-2.146 4.099-2.771a23.227 23.227 0 0 1 4.906-1.401a21.538 21.538 0 0 1 5.427-.224a.634.634 0 0 0 .667-.443l1.385-4.427a.628.628 0 0 0-.234-.703c-1.542-1.12-7.656-4.875-18.401-3.365c0 0 9.167-5.271 20.813.521a.643.643 0 0 0 .896-.385l1.219-3.901a.531.531 0 0 0 .031-.182v-.021a.649.649 0 0 0-.323-.547c-1.464-.823-6.411-3.302-13.214-3.302c-5.219 0-11.526 1.453-18.193 6.224z" fill="#c8c2b6"/></svg><br />' + service.name;
     } else if (service.name.indexOf("auth") !== -1) {
-        return '<i class="fas fa-user-lock"></i> ' + service.name;
+        return '<i class="fas fa-user-lock"></i><br />' + service.name;
     } else if (service.name.indexOf("forum") !== -1) {
-        return '<i class="fab fa-discourse"></i> ' + service.name;
+        return '<i class="fab fa-discourse"></i><br />' + service.name;
     }
 }
 
 function setLink(service) {
     if (service.url) {
         return m("a", {
-            class: "btn btn-outline-secondary btn-sm float-right", href: service.url
+            class: "btn btn-outline-secondary float-right", href: service.url
         }, "Website");
     }
 }
@@ -235,66 +235,67 @@ function triggerReport(e, ref, latitude, longitude) {
 
     grecaptcha.ready(function () {
         grecaptcha.execute(recaptchaKey, { action: 'UserReport' }).then(function (recaptchaToken) {
-            Fingerprint2.get(function (components) {
-                var values = components.map(function (component) { return component.value });
-                var murmur = Fingerprint2.x64hash128(values.join(''), 31);
+            FingerprintJS.load().then(fp => {
+                fp.get().then(result => {
+                    var murmur = result.visitorId;
 
-                if (!murmur || 32 !== murmur.length) {
-                    browserNotCompatible("Invalid hash.", ref);
-                    return;
-                }
+                    if (!murmur || 32 !== murmur.length) {
+                        browserNotCompatible("Invalid hash.", ref);
+                        return;
+                    }
 
-                if (!token || 0 === token.length) {
-                    browserNotCompatible("Missing form token.", ref);
-                    return;
-                }
+                    if (!token || 0 === token.length) {
+                        browserNotCompatible("Missing form token.", ref);
+                        return;
+                    }
 
-                if (!recaptchaToken || 0 === recaptchaToken.length) {
-                    browserNotCompatible("Missing recaptcha token.", ref);
-                    return;
-                }
+                    if (!recaptchaToken || 0 === recaptchaToken.length) {
+                        browserNotCompatible("Missing recaptcha token.", ref);
+                        return;
+                    }
 
-                $.ajax({
-                    type: "post",
-                    url: "/UserReports/SubmitReport",
-                    data: {
-                        reference: ref,
-                        fingerprint: murmur,
-                        state: status,
-                        recaptchaToken: recaptchaToken,
-                        latitude: latitude,
-                        longitude: longitude,
-                        __RequestVerificationToken: token
-                    },
-                    success: function (data) {
-                        if (data.type == "success") {
-                            showNotification("success", "Your report has been saved.", "Platform : " + name);
-                            $("#spinner-" + ref)
-                                .html("&#10003")
-                                .css("color", "#61b329");
-                        } else if (data.type == "info") {
-                            showNotification("info", null, data.message);
-                            $("#spinner-" + ref)
-                                .html("&times")
-                                .css("color", "#ff6a00");
-                        } else if (data.type == "warning") {
-                            showNotification("warning", null, data.message);
-                            $("#spinner-" + ref)
-                                .html("&times")
-                                .css("color", "#ff6a00");
-                        } else if (data.type == "error") {
-                            showNotification("error", null, data.message);
+                    $.ajax({
+                        type: "post",
+                        url: "/UserReports/SubmitReport",
+                        data: {
+                            reference: ref,
+                            fingerprint: murmur,
+                            state: status,
+                            recaptchaToken: recaptchaToken,
+                            latitude: latitude,
+                            longitude: longitude,
+                            __RequestVerificationToken: token
+                        },
+                        success: function (data) {
+                            if (data.type == "success") {
+                                showNotification("success", "Your report has been saved.", "Platform : " + name);
+                                $("#spinner-" + ref)
+                                    .html("&#10003")
+                                    .css("color", "#61b329");
+                            } else if (data.type == "info") {
+                                showNotification("info", null, data.message);
+                                $("#spinner-" + ref)
+                                    .html("&times")
+                                    .css("color", "#ff6a00");
+                            } else if (data.type == "warning") {
+                                showNotification("warning", null, data.message);
+                                $("#spinner-" + ref)
+                                    .html("&times")
+                                    .css("color", "#ff6a00");
+                            } else if (data.type == "error") {
+                                showNotification("error", null, data.message);
+                                $("#spinner-" + ref)
+                                    .html("&times")
+                                    .css("color", "#c00");
+                            }
+                        },
+                        error: function () {
+                            showNotification("error", null, "An error has occurred.");
                             $("#spinner-" + ref)
                                 .html("&times")
                                 .css("color", "#c00");
                         }
-                    },
-                    error: function () {
-                        showNotification("error", null, "An error has occurred.");
-                        $("#spinner-" + ref)
-                            .html("&times")
-                            .css("color", "#c00");
-                    }
+                    });
                 });
             });
         });
