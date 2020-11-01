@@ -1,21 +1,13 @@
 ﻿@{
-    var description = "HITMAN status website provides the current status and incident reporting for HITMAN online services.";
     var title = ViewData["Title"] != null ? string.Format("{0} - HITMAN Status", ViewData["Title"]) : "HITMAN Status";
-    var background = string.Empty;
-
-    @if (ViewBag.mainError != null)
-    {
-        background = "main-error";
-    }
 }
-
 <!--
   _  _ ___ _____ __  __   _   _  _     ___ _____ _ _____ _   _ ___
  | || |_ _|_   _|  \/  | /_\ | \| |   / __|_   _/_\_   _| | | / __|
  | __ || |  | | | |\/| |/ _ \| .` |   \__ \ | |/ _ \| | | |_| \__ \
  |_||_|___| |_| |_|  |_/_/ \_\_|\_|   |___/ |_/_/ \_\_|  \___/|___/
 
-   BuildID : 2020103101
+   BuildID : 2020110103
 
                      /|
                      \\  \`.
@@ -34,33 +26,21 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="@description" />
-    <meta name="keywords" content="HITMAN, online, services, status" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="@title" />
-    <meta property="og:description" content="@description" />
-    <meta property="og:url" content="https://hitmanstat.us/" />
-    <meta property="og:image" content="https://hitmanstat.us/images/og-image.jpg?v=1" />
-    <meta name="apple-mobile-web-app-title" content="@title" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="application-name" content="@title" />
-    <meta name="theme-color" content="#ffffff" />
 
     <title>@title</title>
 
-    <link rel="apple-touch-icon" sizes="180x180" href="~/apple-touch-icon.png?v=5" />
-    <link rel="icon" type="image/png" sizes="32x32" href="~/images/favicon-32x32.png?v=5" />
-    <link rel="icon" type="image/png" sizes="16x16" href="~/images/favicon-16x16.png?v=5" />
-    <link rel="manifest" href="~/manifest.json?v=5" />
-    <link rel="mask-icon" href="~/images/safari-pinned-tab.svg?v=5" color="#495463" />
-    <link rel="shortcut icon" href="~/favicon.ico?v=5" />
+    @* Favicons / SEO / Social meta tags *@
+    <partial name="_Meta">
 
+    @* CSS bundle *@
     <link rel="stylesheet" href="~/css/stylesheets.min.css" asp-append-version="true" />
+
+    @* Application Insights scripts *@
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
-<body class="d-flex flex-column night-mode @background">
+<body class="d-flex flex-column night-mode @(ViewBag.mainError != null ? "main-error" : "" )">
 
+    @* IE banner *@
     <div class="not-compatible" id="ie-banner">
         Unfortunately, your browser is too old to work on this website.
         Please <a href="https://browsehappy.com">upgrade your browser</a> for full experience.
@@ -72,6 +52,7 @@
         }
     </script>
 
+    @* Javascript banner *@
     <noscript>
         <div class="not-compatible">
             For full functionality of this website it is necessary to enable JavaScript.
@@ -79,27 +60,31 @@
         </div>
     </noscript>
 
+    @* Header section *@
     <header>
         <partial name="_Navbar">
     </header>
 
     @RenderSection("EventsHeader", required: false)
 
+    @* Body section *@
     <div class="container-fluid mb-4">
         <main role="main" class="flex-fill">
             @RenderBody()
         </main>
     </div>
 
+    @* Footer section *@
     <footer class="footer mt-auto bg-dark box-shadow">
         <div class="container">
             <div class="text-center text-muted">
                 <p>&copy; 2017 - @DateTime.Now.Year Hitmanstat.us</p>
-                <p>HITMAN&trade;, HITMAN&trade; 2 are trademarks exclusively licensed to <a href="https://www.ioi.dk/">IO Interactive</a>.</p>
+                <p>HITMAN&trade; is a trademark exclusively licensed to <a href="https://www.ioi.dk/">IO Interactive</a>.</p>
             </div>
         </div>
     </footer>
 
+    @* Scripts bundle *@
     @RenderSection("Scripts", required: false)
 </body>
 </html>

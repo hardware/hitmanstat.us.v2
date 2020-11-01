@@ -61,10 +61,23 @@
                 }
 
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Date) UTC</td>
+                    <td>@Html.DisplayFor(modelItem => item.Date) <span class="badge badge-dark">UTC</span></td>
                     <td class="col1" data-utcdate="@item.Date.ToString("yyyy-MM-ddTHH:mm:sszzz")">N/D</td>
                     <td>@Html.DisplayFor(modelItem => item.Service)</td>
-                    <td>@Html.DisplayFor(modelItem => item.State)</td>
+                    <td>
+                        @switch (item.State)
+                        {
+                            case "down":
+                                <span class="badge badge-danger">DOWN</span>
+                                break;
+                            case "maintenance":
+                                <span class="badge badge-warning">MAINTENANCE</span>
+                                break;
+                            case "unknown":
+                                <span class="badge badge-secondary">UNKNOWN</span>
+                                break;
+                        }
+                    </td>
                 </tr>
 
                 lastDate = sdate;

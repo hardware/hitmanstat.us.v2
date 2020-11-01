@@ -13,7 +13,7 @@ namespace hitmanstat.us.Models
         public string Status { get; set; }
         public string Message { get; set; }
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:MMM d, yyyy HH:mm}")]
+        [DisplayFormat(DataFormatString = "{0:MMM d, HH:mm}")]
         public DateTime Date { get; set; }
     }
 }

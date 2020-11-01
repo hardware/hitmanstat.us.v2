@@ -469,6 +469,10 @@ body.night-mode .table tbody > tr {
     color: #c8c2b6;
 }
 
+body.night-mode .table tbody > tr:nth-child(even) {
+    background-color: #323232;
+}
+
 body.night-mode .table tbody > tr td.table-secondary {
     background-color: #2f3030;
     color: #dedede;
