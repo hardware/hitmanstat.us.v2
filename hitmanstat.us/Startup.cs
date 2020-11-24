@@ -24,6 +24,9 @@ namespace hitmanstat.us
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // Captures database-related exceptions during development
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
             // Database context
             services.AddDbContext<DatabaseContext>(
                 options => options.UseSqlServer(
@@ -85,7 +88,8 @@ namespace hitmanstat.us
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
+
                 configuration.DisableTelemetry = true;
             }
             else

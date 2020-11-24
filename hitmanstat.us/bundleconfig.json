@@ -14,8 +14,6 @@
   {
     "outputFileName": "wwwroot/js/scripts.min.js",
     "inputFiles": [
-      "Lib/external/promise-polyfill/dist/polyfill.min.js",
-      "Lib/external/eligrey-classlist-js-polyfill/classList.min.js",
       "Lib/external/jquery/jquery.min.js",
       "Lib/external/twitter-bootstrap/js/bootstrap.bundle.min.js",
       "Lib/external/mithril/mithril.min.js",
