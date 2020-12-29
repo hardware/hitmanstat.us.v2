@@ -43,7 +43,7 @@
       ]
     },
     {
-      "library": "apexcharts@3.22.0",
+      "library": "apexcharts@3.23.0",
       "destination": "Lib/external/apexcharts/",
       "files": [
         "apexcharts.min.js"
@@ -69,12 +69,10 @@
       ]
     },
     {
-      "library": "mapbox-gl@1.12.0",
+      "library": "mapbox-gl@2.0.1",
       "destination": "Lib/external/mapbox-gl/",
       "files": [
-        "mapbox-gl.js.map",
-        "mapbox-gl.min.css",
-        "mapbox-gl.min.js"
+        "mapbox-gl.min.css"
       ]
     }
   ]
