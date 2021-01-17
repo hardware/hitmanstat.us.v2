@@ -62,7 +62,7 @@ a.btn {
     font-family: sans-serif;
     color: #000;
     font-size: 14px;
-    padding: 15px;
+    padding: 18px;
     
 }
 
@@ -70,11 +70,20 @@ a.btn {
     display: none;
 }
 
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.hide-btn {
+    line-height: 0.5
+}
+
 /*
  * NAVBAR
  */
 .navbar {
-    border-bottom: 0px;
+    border-bottom: 1px solid #bc4242;
 }
 
 a.navbar-brand {
@@ -84,7 +93,7 @@ a.navbar-brand {
 }
 
 nav.bg-dark {
-    background-color: rgba(52, 58, 64, 0.68) !important;
+    background-color: rgba(31, 34, 38, 0.68) !important;
 }
 
 #next-refresh {
@@ -203,10 +212,26 @@ nav.bg-dark {
     color: #6c757d;
 }
 
+.card-body-misc {
+    background-color: #2a262f !important;
+    text-transform: uppercase;
+    border-bottom: 1px solid #0092a9;
+    padding: 0.8rem;
+}
+
+.card-body-misc a {
+    color: #e1e1e1;
+    transition: all ease .15s;
+}
+
+.card-body-misc a:hover {
+    color: #0092a9;
+    text-decoration: none;
+}
+
 /*
  * LIST GROUPS
  */
-
 .list-group {
     margin-bottom: -1px;
 }
@@ -228,6 +253,31 @@ nav.bg-dark {
 
 .list-group-item.elusive-target {
     color: #fff;
+}
+
+/*
+ * SECTIONS
+ */
+
+#section-btn-group {
+    margin-top: 8px;
+}
+
+.section-unselected {
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+    border-top: 1px solid #564c4c;
+    border-bottom: 2px solid #818181;
+}
+
+.section-selected {
+    color: #38b6ff;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+    border-top: 1px solid #564c4c;
+    border-bottom: 2px solid #38b6ff;
 }
 
 /*
@@ -269,7 +319,7 @@ nav.bg-dark {
 }
 
 .alert-header-main {
-    background-color: rgba(128,0,0,.8);
+    background-color: rgba(50, 47, 53, 0.8) !important;
 }
 
 .alert-desc {
@@ -546,6 +596,10 @@ body.night-mode .alert-threshold {
     background-color: rgba(220, 53, 69, 0.36);
 }
 
+body.night-mode .alert-section {
+    background-color: rgba(55, 121, 134, 0.36);
+}
+
 /*
  * MEDIA QUERIES
  */
@@ -643,5 +697,8 @@ body.night-mode .alert-threshold {
 @media (max-width: 375px) {
     .h4, h4 {
         font-size: 1.25rem;
+    }
+    .section-unselected, .section-selected {
+        font-size: 0.78em;
     }
 }

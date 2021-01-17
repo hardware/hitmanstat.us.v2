@@ -12,7 +12,7 @@
     ]
   },
   {
-    "outputFileName": "wwwroot/js/scripts.min.js",
+    "outputFileName": "wwwroot/js/scripts.index.min.js",
     "inputFiles": [
       "Lib/external/jquery/jquery.min.js",
       "Lib/external/twitter-bootstrap/js/bootstrap.bundle.min.js",
@@ -21,18 +21,30 @@
       "Lib/external/toastr.js/toastr.min.js",
       "Lib/external/apexcharts/apexcharts.min.js",
       "Lib/local/js/site.js",
-      "Lib/local/js/mithril/models/*.js",
-      "Lib/local/js/mithril/views/*.js"
+      "Lib/local/js/mithril/models/services.js",
+      "Lib/local/js/mithril/views/index/index.js",
+      "Lib/local/js/mithril/views/index/services.js",
+      "Lib/local/js/mithril/views/index/timer.js"
     ]
   },
   {
-    "outputFileName": "wwwroot/js/jquery-bootstrap.min.js",
+    "outputFileName": "wwwroot/js/scripts.map.min.js",
+    "inputFiles": [
+      "Lib/external/jquery/jquery.min.js",
+      "Lib/external/twitter-bootstrap/js/bootstrap.bundle.min.js",
+      "Lib/external/mithril/mithril.min.js",
+      "Lib/local/js/site.js",
+      "Lib/local/js/mithril/views/map/map.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/scripts.catchall.min.js",
     "inputFiles": [
       "Lib/external/jquery/jquery.min.js",
       "Lib/external/moment.js/moment.min.js",
       "Lib/external/twitter-bootstrap/js/bootstrap.bundle.min.js",
       "Lib/local/js/site.js",
-      "Lib/local/js/events.js"
+      "Lib/local/js/mithril/views/events/events.js"
     ]
   }
 ]

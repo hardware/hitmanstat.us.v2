@@ -6,15 +6,52 @@
     <div class="mb-4" id="backend-error-container"></div>
 }
 
-<div class="alert alert-secondary text-center alert-report" role="alert">
+<div class="alert alert-secondary text-center alert-report d-none" id="top-banner" role="alert">
     <i class="fas fa-info-circle"></i> If a service isn't working for you, click on the exclamation mark to share your reporting. A significant number of reports may indicate an issue with the game servers. Keep in mind that Hitman's services also rely on Azure's infrastructure and third-party digital distribution  platforms services. If Hitman's servers appear online here but you still have some issues, you can check <a href="https://steamstat.us/">Steam</a>, <a href="https://status.epicgames.com/">Epic Games</a>, <a href="https://status.playstation.com/">PSN</a>, <a href="https://support.xbox.com/en-US/xbox-live-status">Xbox Live</a> and <a href="https://status.azure.com/">Azure</a> status pages to get more informations.
+    <button type="button" class="btn btn-secondary btn-sm hide-btn" id="hide-top-banner">Hide</button>
 </div>
 
 @Html.AntiForgeryToken()
 
-<div id="services-container"></div>
+<div id="section-btn-group" class="btn-group d-none" role="group">
+    <button class="btn btn-dark w-100 section-unselected" type="button" data-toggle="collapse" id="h1-selector" data-target=".h1-section" onclick="this.blur();">
+        HITMAN 1
+    </button>
+    <button class="btn btn-dark w-100 section-unselected" type="button" data-toggle="collapse" id="h2-selector" data-target=".h2-section" onclick="this.blur();">
+        HITMAN 2
+    </button>
+    <button class="btn btn-dark w-100 section-selected" type="button" data-toggle="collapse" id="h3-selector" data-target=".h3-section" onclick="this.blur();">
+        HITMAN 3
+    </button>
+    <button class="btn btn-dark w-100 section-unselected" type="button" data-toggle="collapse" id="ot-selector" data-target=".ot-section" onclick="this.blur();">
+        FORUM
+    </button>
+</div>
 
-<h4 class="index-title mb-4">
+<div id="services-container" class="d-none"></div>
+
+<div class="card-deck">
+    <div class="card">
+        <img class="card-img-top" src="~/images/hitman-3.jpg" alt="Hitman 3 Progression Carryover" asp-append-version="true">
+        <div class="card-body card-body-misc">
+            <a class="misc-link" href="https://account.ioi.dk">Progression Carryover</a>
+        </div>
+    </div>
+    <div class="card">
+        <img class="card-img-top" src="~/images/hitmaps.png" alt="Hitmaps" asp-append-version="true">
+        <div class="card-body card-body-misc">
+            <a class="misc-link" href="https://www.hitmaps.com/">HITMAPS</a>
+        </div>
+    </div>
+    <div class="card">
+        <img class="card-img-top" src="~/images/f7sc.jpg" alt="Frote's speedrun community" asp-append-version="true">
+        <div class="card-body card-body-misc">
+            <a class="misc-link" href="https://discord.gg/bAFSWUNXbu">Frote's speedrun community</a>
+        </div>
+    </div>
+</div>
+
+<h4 class="index-title mt-5 mb-4">
     <i class="fas fa-chart-bar"></i>
     Issues reported last week
     <small class="text-muted">(based on community reports)</small>
@@ -26,21 +63,22 @@
 
 <div class="mb-4" id="chart"></div>
 
-<h4 class="index-title mb-4">
+<h4 class="index-title mt-5 mb-4">
     <i class="fas fa-map-marker-alt"></i>
-    Reports location for the last 24 hours
-    <small class="text-muted">(based on community reports)</small>
+    Live outage map
 </h4>
 
-<div class="alert-bis alert-secondary text-center alert-report" role="alert">
-    Only reports of players who have agreed to share their location are displayed on this map.
+<div class="card mb-5">
+    <img class="card-img" src="~/images/map.jpg" alt="Live outage map" asp-append-version="true">
+    <div class="card-img-overlay d-flex">
+        <a class="align-self-center mx-auto" asp-controller="Home" asp-action="Map">
+            <div class="btn btn-outline-warning my-5 align-self-center">Live Outage Map</div>
+        </a>
+    </div>
 </div>
-
-<div class="mb-5" id="heatmap"></div>
 
 @section Scripts {
     <script src="https://www.google.com/recaptcha/api.js?render=@recaptchaKey" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@@fingerprintjs/fingerprintjs@3/dist/fp.min.js" async defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/mapbox-gl@@2.0.1/dist/mapbox-gl.js"></script>
-    <script id="scriptsTag" data-recaptcha-key="@recaptchaKey" src="~/js/scripts.min.js" asp-append-version="true"></script>
+    <script id="scriptsTag" data-recaptcha-key="@recaptchaKey" src="~/js/scripts.index.min.js" asp-append-version="true"></script>
 }

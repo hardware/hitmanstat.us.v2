@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Live outage map";
+}
+
+<h4 class="index-title mt-2 mb-4">
+    <i class="fas fa-map-marker-alt"></i>
+    Reports for the last 24 hours
+    <small class="text-muted">(based on community reports)</small>
+</h4>
+
+<div class="alert-bis alert-secondary text-center alert-report" role="alert">
+    Only reports of players who have agreed to share their location are displayed on this map.
+</div>
+
+<div class="mb-5" id="heatmap"></div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/mapbox-gl@@2.0.1/dist/mapbox-gl.js"></script>
+    <script src="~/js/scripts.map.min.js" asp-append-version="true"></script>
+}

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Net;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.EntityFrameworkCore;
@@ -65,32 +63,54 @@ namespace hitmanstat.us.Controllers
             var h1pc = new List<int>();
             var h1xb = new List<int>();
             var h1ps = new List<int>();
+
             var h2pc = new List<int>();
             var h2xb = new List<int>();
             var h2ps = new List<int>();
-            var h2st = new List<int>();
+
+            var h3pc = new List<int>();
+            var h3xb = new List<int>();
+            var h3ps = new List<int>();
+            var h3st = new List<int>();
+            var h3sw = new List<int>();
+
             var thre = new List<int>();
 
             foreach (var counter in counters)
             {
                 categories.Add(counter.Date.ToString("MMM d"));
+
                 h1pc.Add(counter.H1pc);
                 h1xb.Add(counter.H1xb);
                 h1ps.Add(counter.H1ps);
+
                 h2pc.Add(counter.H2pc);
                 h2xb.Add(counter.H2xb);
                 h2ps.Add(counter.H2ps);
-                h2st.Add(counter.H2st);
+
+                h3pc.Add(counter.H3pc);
+                h3xb.Add(counter.H3xb);
+                h3ps.Add(counter.H3ps);
+                h3st.Add(counter.H3st);
+                h3sw.Add(counter.H3sw);
+
                 thre.Add(30);
             }
 
             series.Add(new ChartSerie { Name = "HITMAN PC", Data = h1pc });
             series.Add(new ChartSerie { Name = "HITMAN XBOX ONE", Data = h1xb });
             series.Add(new ChartSerie { Name = "HITMAN PS4", Data = h1ps });
+
             series.Add(new ChartSerie { Name = "HITMAN 2 PC", Data = h2pc });
             series.Add(new ChartSerie { Name = "HITMAN 2 XBOX ONE", Data = h2xb });
             series.Add(new ChartSerie { Name = "HITMAN 2 PS4", Data = h2ps });
-            series.Add(new ChartSerie { Name = "HITMAN 2 STADIA", Data = h2st });
+
+            series.Add(new ChartSerie { Name = "HITMAN 3 PC", Data = h3pc });
+            series.Add(new ChartSerie { Name = "HITMAN 3 XBOX", Data = h3xb });
+            series.Add(new ChartSerie { Name = "HITMAN 3 PLAYSTATION", Data = h3ps });
+            series.Add(new ChartSerie { Name = "HITMAN 3 STADIA", Data = h3st });
+            series.Add(new ChartSerie { Name = "HITMAN 3 SWITCH", Data = h3sw });
+
             series.Add(new ChartSerie { Name = "THRESHOLD", Data = thre });
 
             // Get heatmap data
@@ -212,10 +232,16 @@ namespace hitmanstat.us.Controllers
                         case "h1pc": today.H1pc++; break;
                         case "h1xb": today.H1xb++; break;
                         case "h1ps": today.H1ps++; break;
+
                         case "h2pc": today.H2pc++; break;
                         case "h2xb": today.H2xb++; break;
                         case "h2ps": today.H2ps++; break;
-                        case "h2st": today.H2st++; break;
+
+                        case "h3pc": today.H3pc++; break;
+                        case "h3xb": today.H3xb++; break;
+                        case "h3ps": today.H3ps++; break;
+                        case "h3st": today.H3st++; break;
+                        case "h3sw": today.H3sw++; break;
                     }
                 }
                 else
@@ -225,10 +251,16 @@ namespace hitmanstat.us.Controllers
                         H1pc = model.Reference == "h1pc" ? 1 : 0,
                         H1xb = model.Reference == "h1xb" ? 1 : 0,
                         H1ps = model.Reference == "h1ps" ? 1 : 0,
+
                         H2pc = model.Reference == "h2pc" ? 1 : 0,
                         H2xb = model.Reference == "h2xb" ? 1 : 0,
                         H2ps = model.Reference == "h2ps" ? 1 : 0,
-                        H2st = model.Reference == "h2st" ? 1 : 0,
+
+                        H3pc = model.Reference == "h3pc" ? 1 : 0,
+                        H3xb = model.Reference == "h3xb" ? 1 : 0,
+                        H3ps = model.Reference == "h3ps" ? 1 : 0,
+                        H3st = model.Reference == "h3st" ? 1 : 0,
+                        H3sw = model.Reference == "h3sw" ? 1 : 0,
                     });
                 }
 
@@ -242,12 +274,13 @@ namespace hitmanstat.us.Controllers
             }
         }
 
-        private string GetServiceName(string reference)
+        private static string GetServiceName(string reference)
         {
             string name = null;
 
             switch (reference)
             {
+                // HITMAN 1
                 case "h1pc":
                     name = "HITMAN PC";
                     break;
@@ -257,6 +290,7 @@ namespace hitmanstat.us.Controllers
                 case "h1ps":
                     name = "HITMAN PS4";
                     break;
+                // HITMAN 2
                 case "h2pc":
                     name = "HITMAN 2 PC";
                     break;
@@ -266,8 +300,21 @@ namespace hitmanstat.us.Controllers
                 case "h2ps":
                     name = "HITMAN 2 PS4";
                     break;
-                case "h2st":
-                    name = "HITMAN 2 STADIA";
+                // HITMAN 3
+                case "h3pc":
+                    name = "HITMAN 3 PC";
+                    break;
+                case "h3xb":
+                    name = "HITMAN 3 XBOX";
+                    break;
+                case "h3ps":
+                    name = "HITMAN 3 PLAYSTATION";
+                    break;
+                case "h3st":
+                    name = "HITMAN 3 STADIA";
+                    break;
+                case "h3sw":
+                    name = "HITMAN 3 SWITCH";
                     break;
             }
 

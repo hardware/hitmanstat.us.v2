@@ -345,8 +345,9 @@ healthchecksdb
 /hitmanstat.us/lib/external
 /hitmanstat.us/wwwroot/lib/
 /hitmanstat.us/wwwroot/css/stylesheets.min.css
-/hitmanstat.us/wwwroot/js/scripts.min.js
-/hitmanstat.us/wwwroot/js/jquery-bootstrap.min.js
+/hitmanstat.us/wwwroot/js/scripts.index.min.js
+/hitmanstat.us/wwwroot/js/scripts.map.min.js
+/hitmanstat.us/wwwroot/js/scripts.catchall.min.js
 /hitmanstat.us/appsettings.Development.json
 /hitmanstat.us/Properties/launchSettings.json
 /hitmanstat.us/Properties/ServiceDependencies/*

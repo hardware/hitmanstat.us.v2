@@ -253,50 +253,145 @@ namespace hitmanstat.us.Framework
                     return;
                 }
 
-                if (events.Count > 2)
+                /*
+                 * Maintenance events grouping (per game)
+                 * 5(H3) + 3(H2) + 3(H1) = 11
+                 */
+                var min = 2;
+                var max = 11;
+
+                if (events.Count >= min)
                 {
                     var down = HitmanServiceHealth.Down.GetAttribute<DisplayAttribute>().Name;
                     var maintenance = HitmanServiceHealth.Maintenance.GetAttribute<DisplayAttribute>().Name;
+                    var maintenanceEvents = events.Where(e => e.State == maintenance);
+                    var maintenanceCount = maintenanceEvents.Count();
 
-                    var maintenanceCount = events
-                        .Where(e => e.State == maintenance)
-                        .Count();
-
-                    // 3xH1 + 3xH2 (+ 1xH2 Stadia)
-                    if (maintenanceCount >= 4 && maintenanceCount < 7)
+                    if (maintenanceCount >= min && maintenanceCount < max)
                     {
                         var downEvents = events.Where(e => e.State == down).ToList();
 
-                        if (events.First(e => e.State == maintenance).Service.StartsWith("HITMAN 2"))
+                        var h3MaintenanceEvents = new List<Event>();
+                        var h2MaintenanceEvents = new List<Event>();
+                        var h1MaintenanceEvents = new List<Event>();
+
+                        foreach (var ev in maintenanceEvents)
                         {
-                            events.Clear();
-                            events.Add(new Event()
+                            if (ev.Service.StartsWith("HITMAN 3"))
                             {
-                                Service = "HITMAN 2 PC / XBOX ONE / PS4 / STADIA",
-                                State = maintenance
-                            });
-                        }
-                        else
-                        {
-                            events.Clear();
-                            events.Add(new Event()
+                                h3MaintenanceEvents.Add(ev);
+
+                            }
+                            else if (ev.Service.StartsWith("HITMAN 2"))
                             {
-                                Service = "HITMAN PC / XBOX ONE / PS4 / STADIA",
-                                State = maintenance
-                            });
+                                h2MaintenanceEvents.Add(ev);
+                            }
+                            else
+                            {
+                                h1MaintenanceEvents.Add(ev);
+                            }
                         }
 
-                        if(downEvents.Count() > 0)
+                        events.Clear();
+
+                        if (h3MaintenanceEvents.Count > 0)
+                        {
+                            // 5(H3)
+                            if (h3MaintenanceEvents.Count == 5)
+                            {
+                                events.Add(new Event()
+                                {
+                                    Service = "ALL HITMAN 3 SERVICES",
+                                    State = maintenance
+                                });
+                            }
+                            else
+                            {
+                                var items = new List<string>();
+
+                                foreach (var ev in h3MaintenanceEvents)
+                                {
+                                    var item = ev.Service.Replace("HITMAN 3 ", string.Empty);
+                                    items.Add(item);
+                                }
+
+                                events.Add(new Event()
+                                {
+                                    Service = $"HITMAN 3 { string.Join(" / ", items) }",
+                                    State = maintenance
+                                });
+                            }
+                        }
+
+                        if (h2MaintenanceEvents.Count > 0)
+                        {
+                            // 3(H2)
+                            if (h2MaintenanceEvents.Count == 3)
+                            {
+                                events.Add(new Event()
+                                {
+                                    Service = "ALL HITMAN 2 SERVICES",
+                                    State = maintenance
+                                });
+                            }
+                            else
+                            {
+                                var items = new List<string>();
+
+                                foreach (var ev in h2MaintenanceEvents)
+                                {
+                                    var item = ev.Service.Replace("HITMAN 2 ", string.Empty);
+                                    items.Add(item);
+                                }
+
+                                events.Add(new Event()
+                                {
+                                    Service = $"HITMAN 2 { string.Join(" / ", items) }",
+                                    State = maintenance
+                                });
+                            }
+                        }
+
+                        if (h1MaintenanceEvents.Count > 0)
+                        {
+                            // 3(H1)
+                            if (h1MaintenanceEvents.Count == 3)
+                            {
+                                events.Add(new Event()
+                                {
+                                    Service = "ALL HITMAN 1 SERVICES",
+                                    State = maintenance
+                                });
+                            }
+                            else
+                            {
+                                var items = new List<string>();
+
+                                foreach (var ev in h1MaintenanceEvents)
+                                {
+                                    var item = ev.Service.Replace("HITMAN ", string.Empty);
+                                    items.Add(item);
+                                }
+
+                                events.Add(new Event()
+                                {
+                                    Service = $"HITMAN 1 { string.Join(" / ", items) }",
+                                    State = maintenance
+                                });
+                            }
+                        }
+
+                        if (downEvents.Count > 0)
                         {
                             events.AddRange(downEvents);
                         }
                     }
-                    else if (maintenanceCount == 7)
+                    else if (maintenanceCount == max)
                     {
                         events.Clear();
                         events.Add(new Event()
                         {
-                            Service = "HITMAN & HITMAN 2 PC / XBOX ONE / PS4 / STADIA",
+                            Service = "ALL HITMAN SERVICES",
                             State = maintenance
                         });
                     }

@@ -27,17 +27,24 @@ namespace hitmanstat.us.Controllers
             return View();
         }
 
-        [Route("/about")]
+        [Route("/map")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Map()
+        {
+            return View();
+        }
+
+        [Route("/about")]
+        [ResponseCache(Duration = 43200, Location = ResponseCacheLocation.Any)]
         public IActionResult About()
         {
             return View();
         }
 
         [Route("/events")]
-        [Route("/events/{days:int:range(1,30)}")]
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public async Task<IActionResult> Events(int days = 7)
+        [Route("/events/{days:int:range(1,7)}")]
+        [ResponseCache(Duration = 120, Location = ResponseCacheLocation.Any, VaryByQueryKeys = new string[] { "days" })]
+        public async Task<IActionResult> Events(int days = 1)
         {
             ViewBag.days = days;
 

@@ -13,8 +13,8 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#c80000",
-    "background_color": "#c80000",
+    "theme_color": "#343a40",
+    "background_color": "#343a40",
     "display": "standalone",
     "start_url": "https://hitmanstat.us/",
     "orientation": "any"

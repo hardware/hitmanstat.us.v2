@@ -23,6 +23,8 @@ namespace hitmanstat.us.Framework
         public static IEnumerable<HitmanService> ParseHitmanServicesEntities(JObject json)
         {
             var entities = new List<HitmanService> {
+                // HITMAN 1 (PC, PS4, XBOX ONE)
+                // -----------------------------------------------
                 new HitmanService {
                     Name = "HITMAN PC",
                     Ref = "h1pc",
@@ -35,6 +37,8 @@ namespace hitmanstat.us.Framework
                     Name = "HITMAN XBOX ONE",
                     Ref = "h1xb",
                     Node = "xboxone-service.hitman.io" },
+                // HITMAN 2 (PC, PS4, XBOX ONE)
+                // -----------------------------------------------
                 new HitmanService {
                     Name = "HITMAN 2 PC",
                     Ref = "h2pc",
@@ -47,10 +51,28 @@ namespace hitmanstat.us.Framework
                     Name = "HITMAN 2 XBOX ONE",
                     Ref = "h2xb",
                     Node = "xboxone2-service.hitman.io" },
+                // HITMAN 3 (PC, PLAYSTATION, XBOX, STADIA, SWITCH)
+                // -----------------------------------------------
                 new HitmanService {
-                    Name = "HITMAN 2 STADIA",
-                    Ref = "h2st",
-                    Node = "stadia2-service.hitman.io" }
+                    Name = "HITMAN 3 PC",
+                    Ref = "h3pc",
+                    Node = "epic.hm3-service.hitman.io" },
+                new HitmanService {
+                    Name = "HITMAN 3 PLAYSTATION",
+                    Ref = "h3ps",
+                    Node = "ps.hm3-service.hitman.io" },
+                new HitmanService {
+                    Name = "HITMAN 3 XBOX",
+                    Ref = "h3xb",
+                    Node = "xbox.hm3-service.hitman.io" },
+                new HitmanService {
+                    Name = "HITMAN 3 STADIA",
+                    Ref = "h3st",
+                    Node = "stadia.hm3-service.hitman.io" },
+                new HitmanService {
+                    Name = "HITMAN 3 SWITCH",
+                    Ref = "h3sw",
+                    Node = "switch.hm3-service.hitman.io" }
             };
 
             foreach (var entity in entities)

@@ -2,6 +2,13 @@
 
 @{
     ViewData["Title"] = "Events";
+
+    var period = "day";
+
+    if (ViewBag.days > 1)
+    {
+        period += "s";
+    }
 }
 
 @section EventsHeader {
@@ -10,14 +17,14 @@
             <h4 class="alert-heading">LATEST DOWN OR MAINTENANCE EVENTS DETECTED</h4>
             <span class="separator"></span>
             <p class="mb-0">
-                Since @ViewBag.days days ago &nbsp; | &nbsp;
-                @if (ViewBag.days == 30)
+                Since @ViewBag.days @period ago &nbsp; | &nbsp;
+                @if (ViewBag.days == 7)
                 {
-                    <a asp-area="" asp-controller="Home" asp-action="Events" asp-route-days="7"><i class="fas fa-calendar-alt"></i> Show last week</a>
+                    <a asp-controller="Home" asp-action="Events" asp-route-days="1"><i class="fas fa-calendar-alt"></i> Show last day</a>
                 }
                 else
                 {
-                    <a asp-area="" asp-controller="Home" asp-action="Events" asp-route-days="30"><i class="fas fa-calendar-alt"></i> Show last month</a>
+                    <a asp-controller="Home" asp-action="Events" asp-route-days="7"><i class="fas fa-calendar-alt"></i> Show last week</a>
                 }
             </p>
         </div>
@@ -93,5 +100,5 @@
 </table>
 
 @section Scripts {
-    <script src="~/js/jquery-bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/js/scripts.catchall.min.js" asp-append-version="true"></script>
 }

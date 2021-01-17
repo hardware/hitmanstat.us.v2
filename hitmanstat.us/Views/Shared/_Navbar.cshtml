@@ -1,6 +1,6 @@
 ﻿<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark box-shadow mb-3">
     <div class="container-fluid">
-        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-barcode"></i> HITMAN Status</a>
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index"><i class="fas fa-barcode"></i> HITMAN Status</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -8,26 +8,16 @@
         <div class="navbar-collapse collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Events">Events</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="Events">Events</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="Map">Outage map</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        More
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="https://hitman.com/">Official website</a>
-                        <a class="dropdown-item" href="https://www.ioi.dk/">IO Interactive website</a>
-                        <a class="dropdown-item" href="https://www.hitmanforum.com/">Forums</a>
-                        <a class="dropdown-item" href="https://www.reddit.com/r/HiTMAN/">Reddit</a>
-                        <a class="dropdown-item" href="https://www.hitmaps.com/">Interactive maps</a>
-                        <a class="dropdown-item" href="https://story.hitmanstat.us/">Season 1 story</a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
                 </li>
             </ul>
-            @if (Context.Request.Path == "/")
+            @if (Context.Request.Path == "/" || Context.Request.Path == "/map")
             {
                 <span class="navbar-text">
                     Refreshing in <span id="next-refresh">?</span> seconds.

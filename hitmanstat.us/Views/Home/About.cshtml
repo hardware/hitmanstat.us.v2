@@ -1,4 +1,8 @@
-﻿<div class="page-content my-3 p-3 bg-white rounded box-shadow">
+﻿@{
+    ViewData["Title"] = "About";
+}
+
+<div class="page-content my-3 p-3 bg-white rounded box-shadow">
     <h1 class="pb-2 mb-4"><i class="fas fa-question-circle"></i> About</h1>
     <p class="text-justify">
         Hitmanstat.us is not affiliated with IO Interactive, Warner Bros. Interactive Entertainment or Square Enix. This website is only maintained by an Hitman fan. However, all services informations shown here come from an official API kindly provided by IO Interactive for the community. Thank you to the online team and Christian Corsano (<a href="https://twitter.com/ccorsano">@@ccorsano</a>).
@@ -8,13 +12,11 @@
     </p>
 
     <p>
-        <div class="alert text-center" role="alert">
-            The reporting system is protected by reCAPTCHA and the Google
-            <a href="https://policies.google.com/privacy">Privacy Policy</a> and
-            <a href="https://policies.google.com/terms">Terms of Service</a> apply.
-        </div>
+        The reporting system is protected by reCAPTCHA and the Google
+        <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+        <a href="https://policies.google.com/terms">Terms of Service</a> apply.
     </p>
-    
+
     <p class="text-justify">
         Remember that Hitmanstat.us can only detect internal issues. If any outage comes from your local network, your internet provider or from a regional network issue, this website will not be able to give you any information about that.
     </p>
@@ -39,5 +41,5 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/jquery-bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/js/scripts.catchall.min.js" asp-append-version="true"></script>
 }

@@ -1,24 +1,22 @@
 ﻿var services = services || {};
 var chartRendered = false;
 
-mapboxgl.accessToken = 'pk.eyJ1Ijoic2F2ZW5zZXBpMGwiLCJhIjoiY2tjM2J1ejVzMWR4eTJ2bXJ0b29saXVweCJ9.SUaiNbskaseteDeKrWvNug';
-
-var heatmap = new mapboxgl.Map({
-    container: 'heatmap',
-    style: 'mapbox://styles/mapbox/dark-v10',
-    center: [0, 20],
-    zoom: 1.3,
-    maxZoom: 5
-});
-
 services.list = [
+    // HITMAN 3
+    { ref: "h3pc", group: "h3-1", name: 'hitman 3 pc', endpoint: 'epic.hm3-service.hitman.io', platform: 'azure' },
+    { ref: "h3xb", group: "h3-1", name: 'hitman 3 xbox', endpoint: 'xbox.hm3-service.hitman.io', platform: 'azure' },
+    { ref: "h3ps", group: "h3-1", name: 'hitman 3 playstation', endpoint: 'ps.hm3-service.hitman.io', platform: 'azure' },
+    { ref: "h3st", group: "h3-2", name: 'hitman 3 stadia', endpoint: 'stadia.hm3-service.hitman.io', platform: 'azure' },
+    { ref: "h3sw", group: "h3-2", name: 'hitman 3 switch', endpoint: 'switch.hm3-service.hitman.io', platform: 'azure' },
+    // HITMAN 2
     { ref: "h2pc", group: "h2", name: 'hitman 2 pc', endpoint: 'pc2-service.hitman.io', platform: 'azure' },
     { ref: "h2xb", group: "h2", name: 'hitman 2 xbox one', endpoint: 'xboxone2-service.hitman.io', platform: 'azure' },
     { ref: "h2ps", group: "h2", name: 'hitman 2 ps4', endpoint: 'ps42-service.hitman.io', platform: 'azure' },
+    // HITMAN 1
     { ref: "h1pc", group: "h1", name: 'hitman pc', endpoint: 'pc-service.hitman.io', platform: 'azure' },
     { ref: "h1xb", group: "h1", name: 'hitman xbox one', endpoint: 'xboxone-service.hitman.io', platform: 'azure' },
     { ref: "h1ps", group: "h1", name: 'hitman ps4', endpoint: 'ps4-service.hitman.io', platform: 'azure' },
-    { ref: "h2st", group: "ot", name: 'hitman 2 stadia', endpoint: 'stadia2-service.hitman.io', platform: 'azure' },
+    // HITMANFORUM
     { ref: "hmfc", group: "ot", name: 'hitmanforum.com', endpoint: 'hitmanforum', platform: 'discourse', url: 'https://www.hitmanforum.com/' }
 ];
 
@@ -56,20 +54,6 @@ services.refresh = function () {
                 }
                 // Next maintenance
                 var nextWindow = result.services[service.endpoint].nextWindow;
-                var state = result.services[service.endpoint].status;
-                // Service main state
-                switch (state) {
-                    case 'UI_GAME_SERVICE_NOT_AVAILABLE':
-                        if (!nextWindow) break;
-                        // if the service is in maintenance during the next window
-                        if (nextWindow.status == 'UI_GAME_SERVICE_DOWN_MAINTENANCE') {
-                            service.status = 'maintenance';
-                            service.title = '';
-                            service.nextWindow = nextWindow;
-                            service.lastCheck = lastCheck;
-                            return;
-                        }
-                }
                 // Service health (unknown, down, maintenance, slow, healthy)
                 var status = result.services[service.endpoint].health;
                 var map = { healthy: 'up', slow: 'warn' };
@@ -77,11 +61,12 @@ services.refresh = function () {
                 status = status.replace(regex, function (match) {
                     return map[match];
                 });
+                // Service definition
                 service.status = status;
-                service.state = (state) ? state : null;
                 service.title = (service.status == 'warn') ? 'high load' : '';
                 service.nextWindow = (nextWindow) ? nextWindow : null;
                 service.lastCheck = lastCheck;
+                service.elusive = null;
                 // Elusives status
                 if (result.elusives) {
                     var elusive = result.elusives[service.endpoint][0];
@@ -118,17 +103,12 @@ services.refresh = function () {
     });
 };
 
-services.renderStats = function () {
+services.renderChart = function () {
     m.request({
         method: 'GET',
         url: '/reports',
     })
     .then(function (result) {
-
-        /**
-         * Heatmap update
-         */
-        heatmap.getSource('reports').setData(JSON.parse(result.geoData));
 
         if (chartRendered) {
 
@@ -148,7 +128,6 @@ services.renderStats = function () {
             /**
              * Chart initial load
              */
-
             var options = {
                 chart: {
                     height: 350,
@@ -181,7 +160,7 @@ services.renderStats = function () {
                         }
                     }]
                 },
-                colors: ['#cc2d00', '#6d9e01', '#017db5', '#ff3800', '#97dc00', '#00a7f3', '#b067a8', '#cacaca'],
+                colors: ['#761a00', '#395300', '#004362', '#ac2600', '#6c9d00', '#0072a7', '#ff3800', '#9fe700', '#00aeff', '#c251b6', '#e60012', '#cacaca'],
                 dataLabels: {
                     enabled: false
                 },
@@ -217,7 +196,7 @@ services.renderStats = function () {
                     }
                 },
                 legend: {
-                    show: true
+                    show: false
                 }
             }
 
@@ -227,56 +206,3 @@ services.renderStats = function () {
         }
     });
 };
-
-heatmap.on('load', function () {
-
-    heatmap.addSource('reports', {
-        type: 'geojson',
-        data: JSON.parse("{\"type\":\"FeatureCollection\",\"features\":[]}")
-    });
-
-    heatmap.addLayer({
-        id: 'reports-heat',
-        type: 'heatmap',
-        source: 'reports',
-        maxzoom: 6,
-        paint: {
-            // increase intensity as zoom level increases
-            'heatmap-intensity': {
-                stops: [
-                    [11, 1],
-                    [15, 3]
-                ]
-            },
-            // assign color values be applied to points depending on their density
-            'heatmap-color': [
-                'interpolate',
-                ['linear'],
-                ['heatmap-density'],
-                0, 'rgba(236,222,239,0)',
-                0.2, 'rgb(208,209,230)',
-                0.4, 'rgb(166,189,219)',
-                0.6, 'rgb(103,169,207)',
-                0.8, 'rgb(28,144,153)'
-            ],
-            // increase radius as zoom increases
-            'heatmap-radius': {
-                stops: [
-                    [11, 15],
-                    [15, 20]
-                ]
-            },
-            // decrease opacity to transition into the circle layer
-            'heatmap-opacity': {
-                default: 1,
-                stops: [
-                    [14, 1],
-                    [15, 0]
-                ]
-            },
-        }
-    }, 'waterway-label');
-
-    services.renderStats();
-
-});
