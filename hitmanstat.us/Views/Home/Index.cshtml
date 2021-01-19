@@ -7,8 +7,8 @@
 }
 
 <div class="alert alert-secondary text-center alert-report d-none" id="top-banner" role="alert">
-    <i class="fas fa-info-circle"></i> If a service isn't working for you, click on the exclamation mark to share your reporting. A significant number of reports may indicate an issue with the game servers. Keep in mind that Hitman's services also rely on Azure's infrastructure and third-party digital distribution  platforms services. If Hitman's servers appear online here but you still have some issues, you can check <a href="https://steamstat.us/">Steam</a>, <a href="https://status.epicgames.com/">Epic Games</a>, <a href="https://status.playstation.com/">PSN</a>, <a href="https://support.xbox.com/en-US/xbox-live-status">Xbox Live</a> and <a href="https://status.azure.com/">Azure</a> status pages to get more informations.
-    <button type="button" class="btn btn-secondary btn-sm hide-btn" id="hide-top-banner">Hide</button>
+    If a service isn't working for you, click on the exclamation mark to share your reporting. A significant number of reports may indicate an issue with the game servers. Keep in mind that Hitman's services also rely on Azure's infrastructure and third-party digital distribution  platforms services. If Hitman's servers appear online here but you still have some issues, you can check <a href="https://steamstat.us/">Steam</a>, <a href="https://status.epicgames.com/">Epic Games</a>, <a href="https://status.playstation.com/">PSN</a>, <a href="https://support.xbox.com/en-US/xbox-live-status">Xbox Live</a> and <a href="https://status.azure.com/">Azure</a> status pages to get more informations.
+    <button type="button" class="btn btn-secondary btn-sm hide-btn" id="hide-top-banner">&times; hide</button>
 </div>
 
 @Html.AntiForgeryToken()
@@ -32,29 +32,41 @@
 
 <div class="card-deck">
     <div class="card">
-        <img class="card-img-top" src="~/images/hitman-3.jpg" alt="Hitman 3 Progression Carryover" asp-append-version="true">
+        <a href="https://account.ioi.dk">
+            <div class="card-img-wrap">
+                <div class="ribbon ribbon-top-left"><span>featured</span></div>
+                <img class="card-img-top" src="~/images/hitman-3.jpg" alt="Hitman 3 Progression Carryover" asp-append-version="true">
+            </div>
+        </a>
         <div class="card-body card-body-misc">
             <a class="misc-link" href="https://account.ioi.dk">Progression Carryover</a>
         </div>
     </div>
     <div class="card">
-        <img class="card-img-top" src="~/images/hitmaps.png" alt="Hitmaps" asp-append-version="true">
+        <a href="https://www.hitmaps.com">
+            <div class="card-img-wrap">
+                <img class="card-img-top" src="~/images/hitmaps.png" alt="Hitmaps" asp-append-version="true">
+            </div>
+        </a>
         <div class="card-body card-body-misc">
-            <a class="misc-link" href="https://www.hitmaps.com/">HITMAPS</a>
+            <a class="misc-link" href="https://www.hitmaps.com">HITMAPS</a>
         </div>
     </div>
     <div class="card">
-        <img class="card-img-top" src="~/images/f7sc.jpg" alt="Frote's speedrun community" asp-append-version="true">
+        <a href="https://discord.gg/bAFSWUNXbu">
+        <div class="card-img-wrap">
+            <img class="card-img-top" src="~/images/f7sc.jpg" alt="Frote's speedrun community" asp-append-version="true">
+        </div>
+        </a>
         <div class="card-body card-body-misc">
             <a class="misc-link" href="https://discord.gg/bAFSWUNXbu">Frote's speedrun community</a>
         </div>
     </div>
 </div>
 
-<h4 class="index-title mt-5 mb-4">
+<h4 class="index-title mt-4 mb-4">
     <i class="fas fa-chart-bar"></i>
     Issues reported last week
-    <small class="text-muted">(based on community reports)</small>
 </h4>
 
 <div class="alert-bis alert-secondary text-center alert-report alert-threshold" role="alert">
@@ -63,7 +75,7 @@
 
 <div class="mb-4" id="chart"></div>
 
-<h4 class="index-title mt-5 mb-4">
+<h4 class="index-title mt-4 mb-4">
     <i class="fas fa-map-marker-alt"></i>
     Live outage map
 </h4>
@@ -72,7 +84,7 @@
     <img class="card-img" src="~/images/map.jpg" alt="Live outage map" asp-append-version="true">
     <div class="card-img-overlay d-flex">
         <a class="align-self-center mx-auto" asp-controller="Home" asp-action="Map">
-            <div class="btn btn-outline-warning my-5 align-self-center">Live Outage Map</div>
+            <div class="btn btn-outline-warning my-5 align-self-center">Open Live Outage Map</div>
         </a>
     </div>
 </div>

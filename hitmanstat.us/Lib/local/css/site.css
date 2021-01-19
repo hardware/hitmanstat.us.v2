@@ -16,7 +16,7 @@ body {
 }
 
 body.main-error {
-    background-image: url(/images/grid.png),url(/images/error_background.jpg);
+    background-image: url(/images/grid.png), url(/images/error_background.jpg);
 }
 
 .container-fluid {
@@ -29,6 +29,9 @@ h3 {
 
 h4.index-title {
     color: #fff;
+    padding: 15px 15px 15px 20px;
+    background-color: rgba(187,170,204,.15);
+    border-left: 2px solid #ffffff54;
 }
 
 hr {
@@ -82,6 +85,7 @@ a.btn {
 /*
  * NAVBAR
  */
+
 .navbar {
     border-bottom: 1px solid #bc4242;
 }
@@ -229,9 +233,92 @@ nav.bg-dark {
     text-decoration: none;
 }
 
+.card-img-wrap {
+    overflow: hidden;
+    position: relative;
+}
+
+.card-img-wrap:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 123, 255, 0.1);
+    opacity: 0;
+    transition: opacity .50s;
+}
+
+.card-img-wrap:hover:after {
+    opacity: 1;
+}
+
+/*
+ * RIBBON
+ */
+
+.ribbon {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    position: absolute;
+}
+
+.ribbon::before,
+.ribbon::after {
+    position: absolute;
+    z-index: -1;
+    content: '';
+    display: block;
+    border: 5px solid #2980b9;
+}
+
+.ribbon span {
+    position: absolute;
+    display: block;
+    width: 242px;
+    padding: 16px 0;
+    background-color: rgb(144, 1, 1);
+    box-shadow: 0 5px 10px rgba(0, 0, 0,.1);
+    color: #e0e0e0;
+    font: 700 14px/1 'Lato', sans-serif;
+    text-shadow: 0 1px 1px rgba(0, 0, 0,.2);
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.ribbon-top-left {
+    top: -20px;
+    left: -20px;
+}
+
+.ribbon-top-left::before,
+.ribbon-top-left::after {
+    border-top-color: transparent;
+    border-left-color: transparent;
+}
+
+.ribbon-top-left::before {
+    top: 0;
+    right: 0;
+}
+
+.ribbon-top-left::after {
+    bottom: 0;
+    left: 0;
+}
+
+.ribbon-top-left span {
+    right: -30px;
+    top: 35px;
+    transform: rotate(-45deg);
+}
+
 /*
  * LIST GROUPS
  */
+
 .list-group {
     margin-bottom: -1px;
 }
@@ -278,6 +365,11 @@ nav.bg-dark {
     border-radius: 0;
     border-top: 1px solid #564c4c;
     border-bottom: 2px solid #38b6ff;
+    box-shadow: 0 4px 5px -5px #38b6ff;
+}
+
+.section-selected:hover {
+    box-shadow: none;
 }
 
 /*
