@@ -61,7 +61,7 @@ namespace hitmanstat.us.Controllers
                 return Json(new
                 {
                     type = "warning",
-                    message = "A large number of reports have been detected, slow mode enabled for 30 minutes. The amount of reports is high enough to have a reliable overview."
+                    message = "A large number of reports have been detected, slow mode enabled for 1 hour. The amount of reports is high enough to have a reliable overview."
                 });
             }
 
@@ -72,7 +72,7 @@ namespace hitmanstat.us.Controllers
             if(latestCount >= 1000)
             {
                 _cache.Set(CacheKeys.ReportBurnout, 1, new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(30)));
+                    .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
             }
 
             if (!ModelState.IsValid)
