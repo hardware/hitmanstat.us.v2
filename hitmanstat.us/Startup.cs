@@ -63,6 +63,7 @@ namespace hitmanstat.us
             // Status seekers Hosted services
             services.AddHostedService<HitmanStatusSeekerHostedService>();
             services.AddHostedService<HitmanForumStatusSeekerHostedService>();
+            services.AddHostedService<HitmanReportStatusSeekerHostedService>();
 
             // Enable Application Insights Telemetry
             services.AddApplicationInsightsTelemetry();

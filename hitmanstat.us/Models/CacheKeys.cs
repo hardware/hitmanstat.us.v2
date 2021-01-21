@@ -15,5 +15,6 @@
         public static string HitmanLastRequestTimestampKey { get { return "_HitmanLastRequestTimestamp"; } }
         public static string CurrentUserReportCountersKey  { get { return "_CurrentUserReportCounters"; } }
         public static string HitmanChartKey                { get { return "_HitmanChart"; } }
+        public static string ReportBurnout                 { get { return "_ReportBurnout"; } }
     }
 }
