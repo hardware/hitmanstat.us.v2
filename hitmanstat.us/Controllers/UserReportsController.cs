@@ -61,18 +61,8 @@ namespace hitmanstat.us.Controllers
                 return Json(new
                 {
                     type = "warning",
-                    message = "A large number of reports have been detected, slow mode enabled for 1 hour. The amount of reports is high enough to have a reliable overview."
+                    message = "A large number of reports have been detected, slow mode enabled for 2 minutes. Please wait."
                 });
-            }
-
-            var latestCount = await (from r in _db.UserReports
-                               where (r.Date > DateTime.Now.AddHours(-1))
-                               select r).AsNoTracking().CountAsync();
-
-            if(latestCount >= 1000)
-            {
-                _cache.Set(CacheKeys.ReportBurnout, 1, new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
             }
 
             if (!ModelState.IsValid)
@@ -120,13 +110,23 @@ namespace hitmanstat.us.Controllers
                 }
             }
 
-            var count = await (from r in _db.UserReports
+            var lastMinuteCount = await (from r in _db.UserReports
+                                     where (r.Date > DateTime.Now.AddMinutes(-1))
+                                     select r).AsNoTracking().CountAsync();
+
+            if (lastMinuteCount >= 50)
+            {
+                _cache.Set(CacheKeys.ReportBurnout, 1, new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(2)));
+            }
+
+            var userCount = await (from r in _db.UserReports
                          where (r.IPAddressBytes == address.GetAddressBytes() 
                          || r.Fingerprint == model.Fingerprint)
                          && r.Date > DateTime.Now.AddHours(-1)
                          select r).AsNoTracking().CountAsync();
 
-            if (count > 0)
+            if (userCount > 0)
             {
                 return Json(new { 
                     type = "info", 

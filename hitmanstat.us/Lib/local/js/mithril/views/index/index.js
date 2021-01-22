@@ -56,7 +56,7 @@
     $("#services-container").removeClass('d-none');
     $("#section-btn-group").removeClass('d-none').addClass('d-flex');
 
-    $('button[id$=-selector]').click(function () {
+    $('button[id$=-selector]').click(debounce(function () {
 
         if ($(this).hasClass(unselected)) {
             $(this).removeClass(unselected).addClass(selected);
@@ -78,6 +78,6 @@
         localStorage.setItem(storageItemsUnselected, unselectedItems.slice(0, -1));
         localStorage.setItem(storageItemsSelected, selectedItems.slice(0, -1));
 
-    });
+    }, 250));
 
 });

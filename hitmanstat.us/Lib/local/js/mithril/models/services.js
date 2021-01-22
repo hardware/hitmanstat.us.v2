@@ -147,7 +147,7 @@ services.renderChart = function () {
                 },
                 annotations: {
                     yaxis: [{
-                        y: 30,
+                        y: 100,
                         borderColor: '#FF0000',
                         label: {
                             borderColor: '#FF4560',

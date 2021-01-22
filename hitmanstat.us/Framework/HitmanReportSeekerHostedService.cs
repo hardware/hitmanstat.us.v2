@@ -92,7 +92,7 @@ namespace hitmanstat.us.Framework
                     h3st.Add(counter.H3st);
                     h3sw.Add(counter.H3sw);
 
-                    thre.Add(30);
+                    thre.Add(100);
                 }
 
                 series.Add(new ChartSerie { Name = "HITMAN PC", Data = h1pc });
