@@ -157,6 +157,8 @@ services.renderChart = function () {
                             },
                             text: 'threshold',
                             show: true,
+                            position: 'left',
+                            offsetX: 52
                         }
                     }]
                 },

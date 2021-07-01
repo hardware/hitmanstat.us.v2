@@ -188,7 +188,7 @@ function setElusiveModal(service) {
                             m("tr", [m("th", "Location"), m("td", service.elusive.location)]),
                             m("tr", [m("th", "Start date"), m("td", start.format(dateFormat))]),
                             m("tr", [m("th", "End date"), m("td", end.format(dateFormat))]),
-                            m("tr", [m("th", "Duration"), m("td", end.diff(start, 'days') + ' days')]),
+                            m("tr", [m("th", "Duration"), m("td", end.diff(start, 'days') + ' day(s)')]),
                             m("tr", [m("th", (moment().isAfter(start)) ? 'Started since' : 'Start in'), m("td", duration.humanize())]),
                         ])
                     ]),
@@ -219,10 +219,10 @@ function setMaintenanceModal(service) {
                     m("div", { class: "modal-body" }, [
                         m("div", {
                             class: "alert alert-info text-center", role: "alert"
-                        }, "All online features are unavailable during maintenance. However, the game remains playable in offline mode."),
+                        }, "All online features are unavailable during maintenance. However, the game remains playable in offline mode. The end date is the one currently provided by IOI and defined server side, but it may change at any time depending on the current maintenance progression. You can consider this date as a maximum time limit."),
                         m("table", { class: "table" }, [
                             m("tr", [m("th", (moment().isAfter(start)) ? 'Started since' : 'Start in'), m("td", duration.humanize())]),
-                            m("tr", [m("th", "Duration"), m("td", end.diff(start, 'hours') + ' hours')]),
+                            m("tr", [m("th", "Duration"), m("td", end.diff(start, 'hours') + ' hour(s)')]),
                             m("tr", [m("th", "Start date"), m("td", start.format(dateFormat))]),
                             m("tr", [m("th", "End date"), m("td", end.format(dateFormat))])
                         ])
