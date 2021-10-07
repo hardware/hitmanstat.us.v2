@@ -89,6 +89,10 @@ a.btn {
     font-size: 0.94rem;
 }
 
+.cursor-help {
+    cursor: help;
+}
+
 /*
  * NAVBAR
  */

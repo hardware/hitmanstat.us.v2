@@ -49,7 +49,9 @@ var showNotification = function (type, title, message) {
  * Tooltips
  */
 $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
+    $("body").tooltip({
+        selector: '[data-toggle="tooltip"]'
+    });
 });
 
 /**
