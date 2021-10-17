@@ -40,6 +40,61 @@ namespace hitmanstat.us
             services.AddControllersWithViews()
                     .AddNewtonsoftJson();
 
+            // Bundling and minification
+            services.AddWebOptimizer(pipeline =>
+            {
+                /*
+                 * Stylesheets
+                 */
+
+                // All pages
+                pipeline.AddCssBundle("/css/bundle.css",
+                    "Lib/external/twitter-bootstrap/css/bootstrap.min.css",
+                    "Lib/external/toastr.js/toastr.min.css",
+                    "Lib/external/mapbox-gl/mapbox-gl.min.css",
+                    "Lib/local/css/site.css")
+                .UseContentRoot();
+
+                /*
+                 * Javascript
+                 */
+
+                // Index page
+                pipeline.AddJavaScriptBundle("/js/index.bundle.js",
+                    "Lib/external/jquery/jquery.min.js",
+                    "Lib/external/twitter-bootstrap/js/bootstrap.bundle.min.js",
+                    "Lib/external/mithril/mithril.min.js",
+                    "Lib/external/moment.js/moment.min.js",
+                    "Lib/external/toastr.js/toastr.min.js",
+                    "Lib/external/apexcharts/apexcharts.min.js",
+                    "Lib/local/js/site.js",
+                    "Lib/local/js/mithril/models/*.js",
+                    "Lib/local/js/mithril/views/index/*.js")
+                .UseContentRoot();
+
+                // World map page
+                pipeline.AddJavaScriptBundle("/js/map.bundle.js",
+                    "Lib/external/jquery/jquery.min.js",
+                    "Lib/external/twitter-bootstrap/js/bootstrap.bundle.min.js",
+                    "Lib/external/mithril/mithril.min.js",
+                    "Lib/local/js/site.js",
+                    "Lib/local/js/mithril/views/map/*.js")
+                .UseContentRoot();
+
+                // All other pages
+                pipeline.AddJavaScriptBundle("/js/catchall.bundle.js",
+                    "Lib/external/jquery/jquery.min.js",
+                    "Lib/external/moment.js/moment.min.js",
+                    "Lib/external/twitter-bootstrap/js/bootstrap.bundle.min.js",
+                    "Lib/local/js/site.js",
+                    "Lib/local/js/mithril/views/events/*.js")
+                .UseContentRoot();
+
+                // This will minify any JS and CSS file that isn't part of any bundle
+                pipeline.MinifyCssFiles();
+                pipeline.MinifyJsFiles();
+            });
+
             // CSRF protection
             services.AddAntiforgery(options =>
             {
@@ -71,6 +126,8 @@ namespace hitmanstat.us
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TelemetryConfiguration configuration)
         {
+            app.UseWebOptimizer();
+
             var cultureInfo = new CultureInfo("en-US");
 
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
@@ -86,9 +143,10 @@ namespace hitmanstat.us
             options.KnownProxies.Clear();
             app.UseForwardedHeaders(options);
 
+            app.UseDeveloperExceptionPage();
+
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
 
                 configuration.DisableTelemetry = true;

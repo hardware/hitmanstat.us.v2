@@ -20,11 +20,11 @@
                 Since @ViewBag.days @period ago &nbsp; | &nbsp;
                 @if (ViewBag.days == 7)
                 {
-                    <a asp-controller="Home" asp-action="Events" asp-route-days="1"><i class="fas fa-calendar-alt"></i> Show last day</a>
+                    <a asp-controller="Home" asp-action="Events" asp-route-days="1">Show last day</a>
                 }
                 else
                 {
-                    <a asp-controller="Home" asp-action="Events" asp-route-days="7"><i class="fas fa-calendar-alt"></i> Show last week</a>
+                    <a asp-controller="Home" asp-action="Events" asp-route-days="7">Show last week</a>
                 }
             </p>
         </div>
@@ -100,5 +100,5 @@
 </table>
 
 @section Scripts {
-    <script src="~/js/scripts.catchall.min.js" asp-append-version="true"></script>
+    <script src="/js/catchall.bundle.js"></script>
 }

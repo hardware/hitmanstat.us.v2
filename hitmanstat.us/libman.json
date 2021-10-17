@@ -17,13 +17,11 @@
       ]
     },
     {
-      "library": "twitter-bootstrap@4.5.3",
+      "library": "twitter-bootstrap@4.6.0",
       "destination": "Lib/external/twitter-bootstrap/",
       "files": [
         "css/bootstrap.min.css",
-        "css/bootstrap.min.css.map",
-        "js/bootstrap.bundle.min.js",
-        "js/bootstrap.bundle.min.js.map"
+        "js/bootstrap.bundle.min.js"
       ]
     },
     {
@@ -43,33 +41,14 @@
       ]
     },
     {
-      "library": "apexcharts@3.27.1",
+      "library": "apexcharts@3.29.0",
       "destination": "Lib/external/apexcharts/",
       "files": [
         "apexcharts.min.js"
       ]
     },
     {
-      "library": "font-awesome@5.15.3",
-      "destination": "wwwroot/lib/font-awesome/",
-      "files": [
-        "css/brands.min.css",
-        "css/fontawesome.min.css",
-        "css/solid.min.css",
-        "webfonts/fa-brands-400.eot",
-        "webfonts/fa-brands-400.svg",
-        "webfonts/fa-brands-400.ttf",
-        "webfonts/fa-brands-400.woff",
-        "webfonts/fa-brands-400.woff2",
-        "webfonts/fa-solid-900.eot",
-        "webfonts/fa-solid-900.svg",
-        "webfonts/fa-solid-900.ttf",
-        "webfonts/fa-solid-900.woff",
-        "webfonts/fa-solid-900.woff2"
-      ]
-    },
-    {
-      "library": "mapbox-gl@2.3.1",
+      "library": "mapbox-gl@2.5.1",
       "destination": "Lib/external/mapbox-gl/",
       "files": [
         "mapbox-gl.min.css"

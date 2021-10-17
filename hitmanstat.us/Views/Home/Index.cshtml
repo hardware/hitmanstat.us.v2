@@ -65,7 +65,6 @@
 </div>
 
 <h4 class="index-title mt-4 mb-4">
-    <i class="fas fa-chart-bar"></i>
     Issues reported last week
 </h4>
 
@@ -76,7 +75,6 @@
 <div class="mb-4" id="chart"></div>
 
 <h4 class="index-title mt-4 mb-4">
-    <i class="fas fa-map-marker-alt"></i>
     Live outage map
 </h4>
 
@@ -92,5 +90,5 @@
 @section Scripts {
     <script src="https://www.google.com/recaptcha/api.js?render=@recaptchaKey" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@@fingerprintjs/fingerprintjs@3/dist/fp.min.js" async defer></script>
-    <script id="scriptsTag" data-recaptcha-key="@recaptchaKey" src="~/js/scripts.index.min.js" asp-append-version="true"></script>
+    <script id="scriptsTag" data-recaptcha-key="@recaptchaKey" src="/js/index.bundle.js"></script>
 }
