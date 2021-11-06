@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using Microsoft.ApplicationInsights;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
 using hitmanstat.us.Models;
 
@@ -100,6 +103,35 @@ namespace hitmanstat.us.Framework
             }
 
             return entities;
+        }
+
+        public static void TimestampMonitoring(IMemoryCache cache, EndpointStatus endpoint, TelemetryClient telemetry)
+        {
+            if (!cache.TryGetValue(CacheKeys.HitmanTimestampKey, out dynamic _))
+            {
+                cache.Set(CacheKeys.HitmanTimestampKey, string.Empty, new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromSeconds(60)));
+
+                var json = JObject.Parse(endpoint.Status);
+
+                if (DateTime.TryParse((string)json["timestamp"], out DateTime timestamp))
+                {
+                    if (timestamp <= DateTime.UtcNow.Add(new TimeSpan(0, -10, 0)))
+                    {
+                        if (!cache.TryGetValue(CacheKeys.TimestampNotUpdatedBurnout, out dynamic _))
+                        {
+                            try
+                            {
+                                telemetry.TrackEvent("HitmanTimestampNotUpdated");
+
+                                cache.Set(CacheKeys.TimestampNotUpdatedBurnout, string.Empty, new MemoryCacheEntryOptions()
+                                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(30)));
+                            }
+                            catch { }
+                        }
+                    }
+                }
+            }
         }
     }
 }

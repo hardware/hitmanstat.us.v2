@@ -17,7 +17,7 @@
       ]
     },
     {
-      "library": "twitter-bootstrap@4.5.3",
+      "library": "twitter-bootstrap@4.6.1",
       "destination": "Lib/external/twitter-bootstrap/",
       "files": [
         "css/bootstrap.min.css",
@@ -43,14 +43,14 @@
       ]
     },
     {
-      "library": "apexcharts@3.27.1",
+      "library": "apexcharts@3.29.0",
       "destination": "Lib/external/apexcharts/",
       "files": [
         "apexcharts.min.js"
       ]
     },
     {
-      "library": "font-awesome@5.15.3",
+      "library": "font-awesome@5.15.4",
       "destination": "wwwroot/lib/font-awesome/",
       "files": [
         "css/brands.min.css",
@@ -69,7 +69,7 @@
       ]
     },
     {
-      "library": "mapbox-gl@2.3.1",
+      "library": "mapbox-gl@2.5.1",
       "destination": "Lib/external/mapbox-gl/",
       "files": [
         "mapbox-gl.min.css"

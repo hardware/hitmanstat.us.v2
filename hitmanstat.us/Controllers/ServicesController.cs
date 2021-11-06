@@ -1,9 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
-using Newtonsoft.Json.Linq;
+using hitmanstat.us.Framework;
 using hitmanstat.us.Models;
 
 namespace hitmanstat.us.Controllers
@@ -31,23 +30,7 @@ namespace hitmanstat.us.Controllers
                 }
                 else if (_cache.TryGetValue(CacheKeys.HitmanKey, out EndpointStatus cachedEndpoint))
                 {
-                    try
-                    {
-                        var json = JObject.Parse(cachedEndpoint.Status);
-                        var timestamp = (DateTime)json["timestamp"];
-
-                        if (timestamp <= DateTime.UtcNow.Add(new TimeSpan(0, -10, 0)))
-                        {
-                            if (!_cache.TryGetValue(CacheKeys.TimestampNotUpdatedBurnout, out int cachedChart))
-                            {
-                                _telemetry.TrackEvent("HitmanTimestampNotUpdated");
-                                _cache.Set(CacheKeys.TimestampNotUpdatedBurnout, 1, new MemoryCacheEntryOptions()
-                                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(30)));
-                            }
-                        }
-                    }
-                    catch
-                    {}
+                    Utilities.TimestampMonitoring(_cache, cachedEndpoint, _telemetry);
 
                     return Content(cachedEndpoint.Status, "application/json");
                 }

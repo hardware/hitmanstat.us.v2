@@ -6,6 +6,6 @@ namespace hitmanstat.us.Framework
     public class DefaultHttpClientHandler : HttpClientHandler
     {
         public DefaultHttpClientHandler() =>
-            AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
+            AutomaticDecompression = DecompressionMethods.Brotli | DecompressionMethods.Deflate | DecompressionMethods.GZip;
     }
 }
