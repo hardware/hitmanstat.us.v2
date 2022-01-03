@@ -20,6 +20,7 @@
       "Lib/external/moment.js/moment.min.js",
       "Lib/external/toastr.js/toastr.min.js",
       "Lib/external/apexcharts/apexcharts.min.js",
+      "Lib/external/fingerprintjs/dist/fp.min.js",
       "Lib/local/js/site.js",
       "Lib/local/js/mithril/models/services.js",
       "Lib/local/js/mithril/views/index/index.js",

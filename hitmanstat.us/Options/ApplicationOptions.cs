@@ -5,5 +5,6 @@
         public PolicyOptions Policies { get; set; }
         public HitmanClientOptions HitmanClient { get; set; }
         public HitmanForumClientOptions HitmanForumClient { get; set; }
+        public ReCaptchaClientOptions RecaptchaClient { get; set; }
     }
 }

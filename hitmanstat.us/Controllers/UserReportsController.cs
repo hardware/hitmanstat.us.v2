@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
+using hitmanstat.us.Clients;
 using hitmanstat.us.Data;
 using hitmanstat.us.Models;
 using hitmanstat.us.Framework;
@@ -17,11 +18,13 @@ namespace hitmanstat.us.Controllers
     {
         private readonly DatabaseContext _db;
         private readonly IMemoryCache _cache;
+        private readonly IRecaptchaClient _captcha;
 
-        public UserReportsController(DatabaseContext context, IMemoryCache cache)
+        public UserReportsController(DatabaseContext context, IMemoryCache cache, IRecaptchaClient client)
         {
             _db = context;
             _cache = cache;
+            _captcha = client;
         }
 
         [Route("/ip")]
@@ -76,7 +79,7 @@ namespace hitmanstat.us.Controllers
 
             var address = Request.HttpContext.Connection.RemoteIpAddress;
 
-            if (!ReCaptcha.Validate(model.RecaptchaToken, address))
+            if (!await _captcha.Validate(model.RecaptchaToken, address))
             {
                 return Json(new
                 {

@@ -55,7 +55,10 @@ namespace hitmanstat.us
                     nameof(ApplicationOptions.HitmanClient))
                 .AddHttpClient<IHitmanForumClient, HitmanForumClient, HitmanForumClientOptions>(
                     Configuration,
-                    nameof(ApplicationOptions.HitmanForumClient));
+                    nameof(ApplicationOptions.HitmanForumClient))
+                .AddHttpClient<IRecaptchaClient, RecaptchaClient, ReCaptchaClientOptions>(
+                    Configuration,
+                    nameof(ApplicationOptions.RecaptchaClient));
 
             // Memory caching
             services.AddMemoryCache();

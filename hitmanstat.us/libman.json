@@ -43,7 +43,7 @@
       ]
     },
     {
-      "library": "apexcharts@3.29.0",
+      "library": "apexcharts@3.32.1",
       "destination": "Lib/external/apexcharts/",
       "files": [
         "apexcharts.min.js"
@@ -69,10 +69,18 @@
       ]
     },
     {
-      "library": "mapbox-gl@2.5.1",
+      "library": "mapbox-gl@2.6.1",
       "destination": "Lib/external/mapbox-gl/",
       "files": [
         "mapbox-gl.min.css"
+      ]
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "@fingerprintjs/fingerprintjs@3.3.2",
+      "destination": "Lib/external/fingerprintjs/",
+      "files": [
+        "dist/fp.min.js"
       ]
     }
   ]
