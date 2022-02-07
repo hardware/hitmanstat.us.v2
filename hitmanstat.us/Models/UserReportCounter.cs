@@ -12,7 +12,8 @@ namespace hitmanstat.us.Models
         public int H2pc { get; set; }
         public int H2xb { get; set; }
         public int H2ps { get; set; }
-        public int H3pc { get; set; }
+        public int H3epic { get; set; }
+        public int H3steam { get; set; }
         public int H3xb { get; set; }
         public int H3ps { get; set; }
         public int H3st { get; set; }

@@ -54,11 +54,15 @@ namespace hitmanstat.us.Framework
                     Name = "HITMAN 2 XBOX ONE",
                     Ref = "h2xb",
                     Node = "xboxone2-service.hitman.io" },
-                // HITMAN 3 (PC, PLAYSTATION, XBOX, STADIA, SWITCH)
+                // HITMAN 3 (STEAM, EPIC, PLAYSTATION, XBOX, STADIA, SWITCH)
                 // -----------------------------------------------
                 new HitmanService {
-                    Name = "HITMAN 3 PC",
-                    Ref = "h3pc",
+                    Name = "HITMAN 3 STEAM",
+                    Ref = "h3steam",
+                    Node = "steam.hm3-service.hitman.io" },
+                new HitmanService {
+                    Name = "HITMAN 3 EPIC",
+                    Ref = "h3epic",
                     Node = "epic.hm3-service.hitman.io" },
                 new HitmanService {
                     Name = "HITMAN 3 PLAYSTATION",

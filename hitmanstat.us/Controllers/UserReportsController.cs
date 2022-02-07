@@ -162,7 +162,8 @@ namespace hitmanstat.us.Controllers
                         case "h2xb": today.H2xb++; break;
                         case "h2ps": today.H2ps++; break;
 
-                        case "h3pc": today.H3pc++; break;
+                        case "h3steam": today.H3steam++; break;
+                        case "h3epic": today.H3epic++; break;
                         case "h3xb": today.H3xb++; break;
                         case "h3ps": today.H3ps++; break;
                         case "h3st": today.H3st++; break;
@@ -181,7 +182,8 @@ namespace hitmanstat.us.Controllers
                         H2xb = model.Reference == "h2xb" ? 1 : 0,
                         H2ps = model.Reference == "h2ps" ? 1 : 0,
 
-                        H3pc = model.Reference == "h3pc" ? 1 : 0,
+                        H3steam = model.Reference == "h3steam" ? 1 : 0,
+                        H3epic = model.Reference == "h3epic" ? 1 : 0,
                         H3xb = model.Reference == "h3xb" ? 1 : 0,
                         H3ps = model.Reference == "h3ps" ? 1 : 0,
                         H3st = model.Reference == "h3st" ? 1 : 0,
@@ -226,8 +228,11 @@ namespace hitmanstat.us.Controllers
                     name = "HITMAN 2 PS4";
                     break;
                 // HITMAN 3
-                case "h3pc":
-                    name = "HITMAN 3 PC";
+                case "h3steam":
+                    name = "HITMAN 3 STEAM";
+                    break;
+                case "h3epic":
+                    name = "HITMAN 3 EPIC";
                     break;
                 case "h3xb":
                     name = "HITMAN 3 XBOX";

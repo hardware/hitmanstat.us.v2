@@ -58,7 +58,10 @@ namespace hitmanstat.us.Data
 
             // -- HITMAN 3 counters definition
             modelBuilder.Entity<UserReportCounter>()
-                .Property(c => c.H3pc)
+                .Property(c => c.H3steam)
+                .HasDefaultValue(0);
+            modelBuilder.Entity<UserReportCounter>()
+                .Property(c => c.H3epic)
                 .HasDefaultValue(0);
             modelBuilder.Entity<UserReportCounter>()
                 .Property(c => c.H3xb)

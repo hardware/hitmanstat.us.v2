@@ -33,6 +33,9 @@
 
     @* CSS bundle *@
     <link rel="stylesheet" href="~/css/stylesheets.min.css" asp-append-version="true" />
+
+    @* Application Insights scripts *@
+    @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body class="d-flex flex-column night-mode @(ViewBag.mainError != null ? "main-error" : "" )">
 

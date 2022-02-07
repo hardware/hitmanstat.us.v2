@@ -33,28 +33,57 @@
     },
     "epic.hm3-service.hitman.io": {
       "status": null,
-      "health": "healthy",
-      "nextWindow": null
+      "health": "maintenance",
+      "nextWindow": {
+        "start": "2019-06-15T18:00:00+00:00",
+        "end": "2019-06-16T22:00:00+00:00",
+        "status": null
+      }
+    },
+    "steam.hm3-service.hitman.io": {
+      "status": null,
+      "health": "maintenance",
+      "nextWindow": {
+        "start": "2019-06-15T18:00:00+00:00",
+        "end": "2019-06-16T22:00:00+00:00",
+        "status": null
+      }
     },
     "ps.hm3-service.hitman.io": {
       "status": null,
-      "health": "healthy",
-      "nextWindow": null
+      "health": "maintenance",
+      "nextWindow": {
+        "start": "2019-06-15T18:00:00+00:00",
+        "end": "2019-06-16T22:00:00+00:00",
+        "status": null
+      }
     },
     "xbox.hm3-service.hitman.io": {
       "status": null,
-      "health": "healthy",
-      "nextWindow": null
+      "health": "maintenance",
+      "nextWindow": {
+        "start": "2019-06-15T18:00:00+00:00",
+        "end": "2019-06-16T22:00:00+00:00",
+        "status": null
+      }
     },
     "stadia.hm3-service.hitman.io": {
       "status": null,
-      "health": "healthy",
-      "nextWindow": null
+      "health": "maintenance",
+      "nextWindow": {
+        "start": "2019-06-15T18:00:00+00:00",
+        "end": "2019-06-16T22:00:00+00:00",
+        "status": null
+      }
     },
     "switch.hm3-service.hitman.io": {
       "status": null,
-      "health": "healthy",
-      "nextWindow": null
+      "health": "maintenance",
+      "nextWindow": {
+        "start": "2019-06-15T18:00:00+00:00",
+        "end": "2019-06-16T22:00:00+00:00",
+        "status": null
+      }
     }
   },
   "elusives": {
@@ -68,6 +97,7 @@
     "ps42-service.hitman.io": [],
     "xboxone2-service.hitman.io": [],
     "epic.hm3-service.hitman.io": [],
+    "steam.hm3-service.hitman.io": [],
     "ps.hm3-service.hitman.io": [],
     "xbox.hm3-service.hitman.io": [],
     "stadia.hm3-service.hitman.io": [],

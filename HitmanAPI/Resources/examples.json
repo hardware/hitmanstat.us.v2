@@ -36,6 +36,11 @@
       "health": "down",
       "nextWindow": null
     },
+    "steam.hm3-service.hitman.io": {
+      "status": null,
+      "health": "down",
+      "nextWindow": null
+    },
     "ps.hm3-service.hitman.io": {
       "status": null,
       "health": "healthy",
@@ -88,6 +93,7 @@
     "ps42-service.hitman.io": [],
     "xboxone2-service.hitman.io": [],
     "epic.hm3-service.hitman.io": [],
+    "steam.hm3-service.hitman.io": [],
     "ps.hm3-service.hitman.io": [],
     "xbox.hm3-service.hitman.io": [],
     "stadia.hm3-service.hitman.io": [],

@@ -66,7 +66,8 @@ namespace hitmanstat.us.Framework
                 var h2xb = new List<int>();
                 var h2ps = new List<int>();
 
-                var h3pc = new List<int>();
+                var h3steam = new List<int>();
+                var h3epic = new List<int>();
                 var h3xb = new List<int>();
                 var h3ps = new List<int>();
                 var h3st = new List<int>();
@@ -86,7 +87,8 @@ namespace hitmanstat.us.Framework
                     h2xb.Add(counter.H2xb);
                     h2ps.Add(counter.H2ps);
 
-                    h3pc.Add(counter.H3pc);
+                    h3steam.Add(counter.H3steam);
+                    h3epic.Add(counter.H3epic);
                     h3xb.Add(counter.H3xb);
                     h3ps.Add(counter.H3ps);
                     h3st.Add(counter.H3st);
@@ -103,7 +105,8 @@ namespace hitmanstat.us.Framework
                 series.Add(new ChartSerie { Name = "HITMAN 2 XBOX ONE", Data = h2xb });
                 series.Add(new ChartSerie { Name = "HITMAN 2 PS4", Data = h2ps });
 
-                series.Add(new ChartSerie { Name = "HITMAN 3 PC", Data = h3pc });
+                series.Add(new ChartSerie { Name = "HITMAN 3 STEAM", Data = h3steam });
+                series.Add(new ChartSerie { Name = "HITMAN 3 EPIC", Data = h3epic });
                 series.Add(new ChartSerie { Name = "HITMAN 3 XBOX", Data = h3xb });
                 series.Add(new ChartSerie { Name = "HITMAN 3 PLAYSTATION", Data = h3ps });
                 series.Add(new ChartSerie { Name = "HITMAN 3 STADIA", Data = h3st });
