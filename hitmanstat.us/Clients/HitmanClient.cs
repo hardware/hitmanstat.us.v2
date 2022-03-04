@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.ApplicationInsights;
 using Polly.Timeout;
 using Polly.CircuitBreaker;
 using hitmanstat.us.Models;
@@ -12,8 +13,13 @@ namespace hitmanstat.us.Clients
     public class HitmanClient : IHitmanClient
     {
         private readonly HttpClient HttpClient;
+        private readonly TelemetryClient TelemetryClient;
 
-        public HitmanClient(HttpClient httpClient) => HttpClient = httpClient;
+        public HitmanClient(HttpClient httpClient, TelemetryClient telemetryClient)
+        {
+            HttpClient = httpClient;
+            TelemetryClient = telemetryClient;
+        }
 
         public async Task<EndpointStatus> GetStatusAsync()
         {
@@ -49,13 +55,13 @@ namespace hitmanstat.us.Clients
                     switch (response.StatusCode)
                     {
                         case HttpStatusCode.InternalServerError:
-                            endpoint.Status = "Internal authentication server error";
+                            endpoint.Status = "Authentication server critical error";
                             break;
                         case HttpStatusCode.BadGateway:
                         case HttpStatusCode.ServiceUnavailable:
                         case HttpStatusCode.GatewayTimeout:
                             endpoint.State = EndpointState.Maintenance;
-                            endpoint.Status = "Temporary Azure backend maintenance";
+                            endpoint.Status = "Authentication server unavailable";
                             break;
                         default:
                             endpoint.Status = string.Format(
@@ -71,13 +77,17 @@ namespace hitmanstat.us.Clients
             }
             catch (OperationCanceledException)
             {
-                endpoint.Status = "Authentication server connection timeout";
+                endpoint.Status = "Authentication server connection canceled";
             }
             finally
             {
                 if(endpoint.State == EndpointState.Up)
                 {
                     endpoint.Status = await response.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    TelemetryClient.TrackEvent("HitmanTransientHTTPError");
                 }
             }
 
