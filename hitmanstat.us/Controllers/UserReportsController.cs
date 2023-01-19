@@ -166,7 +166,6 @@ namespace hitmanstat.us.Controllers
                         case "h3epic": today.H3epic++; break;
                         case "h3xb": today.H3xb++; break;
                         case "h3ps": today.H3ps++; break;
-                        case "h3st": today.H3st++; break;
                         case "h3sw": today.H3sw++; break;
                     }
                 }
@@ -186,7 +185,6 @@ namespace hitmanstat.us.Controllers
                         H3epic = model.Reference == "h3epic" ? 1 : 0,
                         H3xb = model.Reference == "h3xb" ? 1 : 0,
                         H3ps = model.Reference == "h3ps" ? 1 : 0,
-                        H3st = model.Reference == "h3st" ? 1 : 0,
                         H3sw = model.Reference == "h3sw" ? 1 : 0,
                     });
                 }
@@ -239,9 +237,6 @@ namespace hitmanstat.us.Controllers
                     break;
                 case "h3ps":
                     name = "HITMAN 3 PLAYSTATION";
-                    break;
-                case "h3st":
-                    name = "HITMAN 3 STADIA";
                     break;
                 case "h3sw":
                     name = "HITMAN 3 SWITCH";

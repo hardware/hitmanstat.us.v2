@@ -7,7 +7,6 @@ services.list = [
     { ref: "h3epic", group: "h3-1", name: 'hitman 3 epic', endpoint: 'epic.hm3-service.hitman.io', platform: 'azure' },
     { ref: "h3xb", group: "h3-1", name: 'hitman 3 xbox', endpoint: 'xbox.hm3-service.hitman.io', platform: 'azure' },
     { ref: "h3ps", group: "h3-2", name: 'hitman 3 playstation', endpoint: 'ps.hm3-service.hitman.io', platform: 'azure' },
-    { ref: "h3st", group: "h3-2", name: 'hitman 3 stadia', endpoint: 'stadia.hm3-service.hitman.io', platform: 'azure' },
     { ref: "h3sw", group: "h3-2", name: 'hitman 3 switch', endpoint: 'switch.hm3-service.hitman.io', platform: 'azure' },
     // HITMAN 2
     { ref: "h2pc", group: "h2", name: 'hitman 2 pc', endpoint: 'pc2-service.hitman.io', platform: 'azure' },
@@ -163,7 +162,7 @@ services.renderChart = function () {
                         }
                     }]
                 },
-                colors: ['#761a00', '#395300', '#004362', '#ac2600', '#6c9d00', '#0072a7', '#ff3800', '#ff3800', '#9fe700', '#00aeff', '#c251b6', '#e60012', '#cacaca'],
+                colors: ['#761a00', '#395300', '#004362', '#ac2600', '#6c9d00', '#0072a7', '#ff3800', '#ff3800', '#9fe700', '#00aeff', '#e60012', '#cacaca'],
                 dataLabels: {
                     enabled: false
                 },

@@ -255,10 +255,10 @@ namespace hitmanstat.us.Framework
 
                 /*
                  * Maintenance events grouping (per game)
-                 * 6(H3) + 3(H2) + 3(H1) = 12
+                 * 5(H3) + 3(H2) + 3(H1) = 11
                  */
                 var min = 2;
-                var max = 12;
+                var max = 11;
 
                 if (events.Count >= min)
                 {
@@ -296,8 +296,8 @@ namespace hitmanstat.us.Framework
 
                         if (h3MaintenanceEvents.Count > 0)
                         {
-                            // 6(H3)
-                            if (h3MaintenanceEvents.Count == 6)
+                            // 5(H3)
+                            if (h3MaintenanceEvents.Count == 5)
                             {
                                 events.Add(new Event()
                                 {

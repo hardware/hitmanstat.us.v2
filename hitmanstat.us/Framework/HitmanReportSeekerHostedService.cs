@@ -70,7 +70,6 @@ namespace hitmanstat.us.Framework
                 var h3epic = new List<int>();
                 var h3xb = new List<int>();
                 var h3ps = new List<int>();
-                var h3st = new List<int>();
                 var h3sw = new List<int>();
 
                 var thre = new List<int>();
@@ -91,7 +90,6 @@ namespace hitmanstat.us.Framework
                     h3epic.Add(counter.H3epic);
                     h3xb.Add(counter.H3xb);
                     h3ps.Add(counter.H3ps);
-                    h3st.Add(counter.H3st);
                     h3sw.Add(counter.H3sw);
 
                     thre.Add(50);
@@ -109,7 +107,6 @@ namespace hitmanstat.us.Framework
                 series.Add(new ChartSerie { Name = "HITMAN 3 EPIC", Data = h3epic });
                 series.Add(new ChartSerie { Name = "HITMAN 3 XBOX", Data = h3xb });
                 series.Add(new ChartSerie { Name = "HITMAN 3 PLAYSTATION", Data = h3ps });
-                series.Add(new ChartSerie { Name = "HITMAN 3 STADIA", Data = h3st });
                 series.Add(new ChartSerie { Name = "HITMAN 3 SWITCH", Data = h3sw });
 
                 series.Add(new ChartSerie { Name = "THRESHOLD", Data = thre });

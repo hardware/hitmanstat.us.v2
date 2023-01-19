@@ -70,9 +70,6 @@ namespace hitmanstat.us.Data
                 .Property(c => c.H3ps)
                 .HasDefaultValue(0);
             modelBuilder.Entity<UserReportCounter>()
-                .Property(c => c.H3st)
-                .HasDefaultValue(0);
-            modelBuilder.Entity<UserReportCounter>()
                 .Property(c => c.H3sw)
                 .HasDefaultValue(0);
 
