@@ -234,6 +234,10 @@ nav.bg-dark {
     padding: 0.8rem;
 }
 
+.card-body-misc.elusive-body {
+    border-bottom: 1px solid #a99c00;
+}
+
 .card-body-misc a {
     color: #e1e1e1;
     transition: all ease .15s;
@@ -241,6 +245,11 @@ nav.bg-dark {
 
 .card-body-misc a:hover {
     color: #0092a9;
+    text-decoration: none;
+}
+
+.card-body-misc.elusive-body a:hover {
+    color: #a99c00;
     text-decoration: none;
 }
 
@@ -795,6 +804,10 @@ body.night-mode .alert-section {
     .card-footer a {
         display: inline;
     }
+
+    .section-unselected, .section-selected {
+        font-size: 0.75rem;
+    }
 }
 
 @media (max-width: 375px) {
@@ -802,6 +815,6 @@ body.night-mode .alert-section {
         font-size: 1.25rem;
     }
     .section-unselected, .section-selected {
-        font-size: 0.78em;
+        font-size: 0.75rem;
     }
 }

@@ -1,5 +1,5 @@
 ﻿{
-  "timestamp": "2021-01-14T19:22:50.9180268+00:00",
+  "timestamp": "2023-03-17T09:56:15.0826549+00:00",
   "services": {
     "pc-service.hitman.io": {
       "status": null,
@@ -16,6 +16,33 @@
       "health": "healthy",
       "nextWindow": null
     },
+    "scpc-service.hitman.io": {
+      "status": "UI_GAME_SERVICE_NOT_AVAILABLE_INVALID_TIME",
+      "health": "unknown",
+      "nextWindow": {
+        "start": "2018-11-13T12:00:00+00:00",
+        "end": "2050-09-10T14:30:00+00:00",
+        "status": "UI_GAME_SERVICE_NOT_AVAILABLE_INVALID_TIME"
+      }
+    },
+    "scps4-service.hitman.io": {
+      "status": "UI_GAME_SERVICE_NOT_AVAILABLE_INVALID_TIME",
+      "health": "unknown",
+      "nextWindow": {
+        "start": "2018-11-13T12:00:00+00:00",
+        "end": "2050-09-10T14:30:00+00:00",
+        "status": "UI_GAME_SERVICE_NOT_AVAILABLE_INVALID_TIME"
+      }
+    },
+    "scxboxone-service.hitman.io": {
+      "status": "UI_GAME_SERVICE_NOT_AVAILABLE_INVALID_TIME",
+      "health": "unknown",
+      "nextWindow": {
+        "start": "2018-11-13T12:00:00+00:00",
+        "end": "2050-09-10T14:30:00+00:00",
+        "status": "UI_GAME_SERVICE_NOT_AVAILABLE_INVALID_TIME"
+      }
+    },
     "pc2-service.hitman.io": {
       "status": null,
       "health": "healthy",
@@ -31,50 +58,44 @@
       "health": "healthy",
       "nextWindow": null
     },
-    "epic.hm3-service.hitman.io": {
-      "status": null,
+    "stadia2-service.hitman.io": {
+      "status": "UI_GAME_SERVICE_DOWN_MAINTENANCE",
       "health": "maintenance",
       "nextWindow": {
-        "start": "2019-06-15T18:00:00+00:00",
-        "end": "2019-06-16T22:00:00+00:00",
-        "status": null
+        "start": "2021-01-17T09:00:00+00:00",
+        "end": "2030-01-20T16:00:00+00:00",
+        "status": "UI_GAME_SERVICE_DOWN_MAINTENANCE"
       }
+    },
+    "epic.hm3-service.hitman.io": {
+      "status": null,
+      "health": "healthy",
+      "nextWindow": null
     },
     "steam.hm3-service.hitman.io": {
       "status": null,
-      "health": "maintenance",
-      "nextWindow": {
-        "start": "2019-06-15T18:00:00+00:00",
-        "end": "2019-06-16T22:00:00+00:00",
-        "status": null
-      }
+      "health": "healthy",
+      "nextWindow": null
     },
     "ps.hm3-service.hitman.io": {
       "status": null,
-      "health": "maintenance",
-      "nextWindow": {
-        "start": "2019-06-15T18:00:00+00:00",
-        "end": "2019-06-16T22:00:00+00:00",
-        "status": null
-      }
+      "health": "healthy",
+      "nextWindow": null
     },
     "xbox.hm3-service.hitman.io": {
       "status": null,
-      "health": "maintenance",
-      "nextWindow": {
-        "start": "2019-06-15T18:00:00+00:00",
-        "end": "2019-06-16T22:00:00+00:00",
-        "status": null
-      }
+      "health": "healthy",
+      "nextWindow": null
+    },
+    "stadia.hm3-service.hitman.io": {
+      "status": null,
+      "health": "healthy",
+      "nextWindow": null
     },
     "switch.hm3-service.hitman.io": {
       "status": null,
-      "health": "maintenance",
-      "nextWindow": {
-        "start": "2019-06-15T18:00:00+00:00",
-        "end": "2019-06-16T22:00:00+00:00",
-        "status": null
-      }
+      "health": "healthy",
+      "nextWindow": null
     }
   },
   "elusives": {
@@ -87,10 +108,216 @@
     "pc2-service.hitman.io": [],
     "ps42-service.hitman.io": [],
     "xboxone2-service.hitman.io": [],
-    "epic.hm3-service.hitman.io": [],
-    "steam.hm3-service.hitman.io": [],
-    "ps.hm3-service.hitman.io": [],
-    "xbox.hm3-service.hitman.io": [],
-    "switch.hm3-service.hitman.io": []
+    "stadia2-service.hitman.io": [],
+    "epic.hm3-service.hitman.io": [
+      {
+        "name": "The Broker - Year 3",
+        "tile": "https://webcontent.hitman.io/images/stVqlSCptPqwZWj4fxqKGw.jpg",
+        "description": "[REDACTED]",
+        "location": "Paris, France",
+        "nextWindow": {
+          "start": "2023-03-24T12:00:00+00:00",
+          "end": "2023-04-03T12:00:00+00:00",
+          "status": "Active"
+        }
+      },
+      {
+        "name": "The Collector - Year 3",
+        "tile": "https://webcontent.hitman.io/images/ZLU6WX0DYLGSXc26JJ3z2A.jpg",
+        "description": "[REDACTED]",
+        "location": "Dartmoor, England",
+        "nextWindow": {
+          "start": "2023-03-31T11:00:00+00:00",
+          "end": "2023-04-10T12:00:00+00:00",
+          "status": "Active"
+        }
+      },
+      {
+        "name": "The Heartbreaker - Year 3",
+        "tile": "https://webcontent.hitman.io/images/mAV/mn5H5MVxAS68CeU0IA.jpg",
+        "description": "[REDACTED]",
+        "location": "Mendoza, Argentina",
+        "nextWindow": {
+          "start": "2023-03-17T12:00:00+00:00",
+          "end": "2023-03-27T12:00:00+00:00",
+          "status": "Active"
+        }
+      }
+    ],
+    "steam.hm3-service.hitman.io": [
+      {
+        "name": "The Broker - Year 3",
+        "tile": "https://webcontent.hitman.io/images/stVqlSCptPqwZWj4fxqKGw.jpg",
+        "description": "[REDACTED]",
+        "location": "Paris, France",
+        "nextWindow": {
+          "start": "2023-03-24T12:00:00+00:00",
+          "end": "2023-04-03T12:00:00+00:00",
+          "status": "Active"
+        }
+      },
+      {
+        "name": "The Collector - Year 3",
+        "tile": "https://webcontent.hitman.io/images/ZLU6WX0DYLGSXc26JJ3z2A.jpg",
+        "description": "[REDACTED]",
+        "location": "Dartmoor, England",
+        "nextWindow": {
+          "start": "2023-03-31T11:00:00+00:00",
+          "end": "2023-04-10T12:00:00+00:00",
+          "status": "Active"
+        }
+      },
+      {
+        "name": "The Heartbreaker - Year 3",
+        "tile": "https://webcontent.hitman.io/images/mAV/mn5H5MVxAS68CeU0IA.jpg",
+        "description": "[REDACTED]",
+        "location": "Mendoza, Argentina",
+        "nextWindow": {
+          "start": "2023-03-17T12:00:00+00:00",
+          "end": "2023-03-27T12:00:00+00:00",
+          "status": "Active"
+        }
+      }
+    ],
+    "ps.hm3-service.hitman.io": [
+      {
+        "name": "The Broker - Year 3",
+        "tile": "https://webcontent.hitman.io/images/stVqlSCptPqwZWj4fxqKGw.jpg",
+        "description": "[REDACTED]",
+        "location": "Paris, France",
+        "nextWindow": {
+          "start": "2023-03-24T12:00:00+00:00",
+          "end": "2023-04-03T12:00:00+00:00",
+          "status": "Active"
+        }
+      },
+      {
+        "name": "The Collector - Year 3",
+        "tile": "https://webcontent.hitman.io/images/ZLU6WX0DYLGSXc26JJ3z2A.jpg",
+        "description": "[REDACTED]",
+        "location": "Dartmoor, England",
+        "nextWindow": {
+          "start": "2023-03-31T11:00:00+00:00",
+          "end": "2023-04-10T12:00:00+00:00",
+          "status": "Active"
+        }
+      },
+      {
+        "name": "The Heartbreaker - Year 3",
+        "tile": "https://webcontent.hitman.io/images/mAV/mn5H5MVxAS68CeU0IA.jpg",
+        "description": "[REDACTED]",
+        "location": "Mendoza, Argentina",
+        "nextWindow": {
+          "start": "2023-03-17T12:00:00+00:00",
+          "end": "2023-03-27T12:00:00+00:00",
+          "status": "Active"
+        }
+      }
+    ],
+    "xbox.hm3-service.hitman.io": [
+      {
+        "name": "The Broker - Year 3",
+        "tile": "https://webcontent.hitman.io/images/stVqlSCptPqwZWj4fxqKGw.jpg",
+        "description": "[REDACTED]",
+        "location": "Paris, France",
+        "nextWindow": {
+          "start": "2023-03-24T12:00:00+00:00",
+          "end": "2023-04-03T12:00:00+00:00",
+          "status": "Active"
+        }
+      },
+      {
+        "name": "The Collector - Year 3",
+        "tile": "https://webcontent.hitman.io/images/ZLU6WX0DYLGSXc26JJ3z2A.jpg",
+        "description": "[REDACTED]",
+        "location": "Dartmoor, England",
+        "nextWindow": {
+          "start": "2023-03-31T11:00:00+00:00",
+          "end": "2023-04-10T12:00:00+00:00",
+          "status": "Active"
+        }
+      },
+      {
+        "name": "The Heartbreaker - Year 3",
+        "tile": "https://webcontent.hitman.io/images/mAV/mn5H5MVxAS68CeU0IA.jpg",
+        "description": "[REDACTED]",
+        "location": "Mendoza, Argentina",
+        "nextWindow": {
+          "start": "2023-03-17T12:00:00+00:00",
+          "end": "2023-03-27T12:00:00+00:00",
+          "status": "Active"
+        }
+      }
+    ],
+    "stadia.hm3-service.hitman.io": [
+      {
+        "name": "The Broker - Year 3",
+        "tile": "https://webcontent.hitman.io/images/stVqlSCptPqwZWj4fxqKGw.jpg",
+        "description": "[REDACTED]",
+        "location": "Paris, France",
+        "nextWindow": {
+          "start": "2023-03-24T12:00:00+00:00",
+          "end": "2023-04-03T12:00:00+00:00",
+          "status": "Active"
+        }
+      },
+      {
+        "name": "The Collector - Year 3",
+        "tile": "https://webcontent.hitman.io/images/ZLU6WX0DYLGSXc26JJ3z2A.jpg",
+        "description": "[REDACTED]",
+        "location": "Dartmoor, England",
+        "nextWindow": {
+          "start": "2023-03-31T11:00:00+00:00",
+          "end": "2023-04-10T12:00:00+00:00",
+          "status": "Active"
+        }
+      },
+      {
+        "name": "The Heartbreaker - Year 3",
+        "tile": "https://webcontent.hitman.io/images/mAV/mn5H5MVxAS68CeU0IA.jpg",
+        "description": "[REDACTED]",
+        "location": "Mendoza, Argentina",
+        "nextWindow": {
+          "start": "2023-03-17T12:00:00+00:00",
+          "end": "2023-03-27T12:00:00+00:00",
+          "status": "Active"
+        }
+      }
+    ],
+    "switch.hm3-service.hitman.io": [
+      {
+        "name": "The Broker - Year 3",
+        "tile": "https://webcontent.hitman.io/images/stVqlSCptPqwZWj4fxqKGw.jpg",
+        "description": "[REDACTED]",
+        "location": "Paris, France",
+        "nextWindow": {
+          "start": "2023-03-24T12:00:00+00:00",
+          "end": "2023-04-03T12:00:00+00:00",
+          "status": "Active"
+        }
+      },
+      {
+        "name": "The Collector - Year 3",
+        "tile": "https://webcontent.hitman.io/images/ZLU6WX0DYLGSXc26JJ3z2A.jpg",
+        "description": "[REDACTED]",
+        "location": "Dartmoor, England",
+        "nextWindow": {
+          "start": "2023-03-31T11:00:00+00:00",
+          "end": "2023-04-10T12:00:00+00:00",
+          "status": "Active"
+        }
+      },
+      {
+        "name": "The Heartbreaker - Year 3",
+        "tile": "https://webcontent.hitman.io/images/mAV/mn5H5MVxAS68CeU0IA.jpg",
+        "description": "[REDACTED]",
+        "location": "Mendoza, Argentina",
+        "nextWindow": {
+          "start": "2023-03-17T12:00:00+00:00",
+          "end": "2023-03-27T12:00:00+00:00",
+          "status": "Active"
+        }
+      }
+    ]
   }
 }

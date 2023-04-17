@@ -29,15 +29,15 @@ namespace hitmanstat.us.Framework
                 // HITMAN 1 (PC, PS4, XBOX ONE)
                 // -----------------------------------------------
                 new HitmanService {
-                    Name = "HITMAN PC",
+                    Name = "HITMAN 1 PC",
                     Ref = "h1pc",
                     Node = "pc-service.hitman.io" },
                 new HitmanService {
-                    Name = "HITMAN PS4",
+                    Name = "HITMAN 1 PS4",
                     Ref = "h1ps",
                     Node = "ps4-service.hitman.io" },
                 new HitmanService {
-                    Name = "HITMAN XBOX ONE",
+                    Name = "HITMAN 1 XBOX ONE",
                     Ref = "h1xb",
                     Node = "xboxone-service.hitman.io" },
                 // HITMAN 2 (PC, PS4, XBOX ONE)
@@ -54,26 +54,26 @@ namespace hitmanstat.us.Framework
                     Name = "HITMAN 2 XBOX ONE",
                     Ref = "h2xb",
                     Node = "xboxone2-service.hitman.io" },
-                // HITMAN 3 (STEAM, EPIC, PLAYSTATION, XBOX, SWITCH)
+                // HITMAN WOA (STEAM, EPIC, PLAYSTATION, XBOX, SWITCH)
                 // -----------------------------------------------
                 new HitmanService {
-                    Name = "HITMAN 3 STEAM",
+                    Name = "HITMAN STEAM",
                     Ref = "h3steam",
                     Node = "steam.hm3-service.hitman.io" },
                 new HitmanService {
-                    Name = "HITMAN 3 EPIC",
+                    Name = "HITMAN EPIC",
                     Ref = "h3epic",
                     Node = "epic.hm3-service.hitman.io" },
                 new HitmanService {
-                    Name = "HITMAN 3 PLAYSTATION",
+                    Name = "HITMAN PLAYSTATION",
                     Ref = "h3ps",
                     Node = "ps.hm3-service.hitman.io" },
                 new HitmanService {
-                    Name = "HITMAN 3 XBOX",
+                    Name = "HITMAN XBOX",
                     Ref = "h3xb",
                     Node = "xbox.hm3-service.hitman.io" },
                 new HitmanService {
-                    Name = "HITMAN 3 SWITCH",
+                    Name = "HITMAN SWITCH",
                     Ref = "h3sw",
                     Node = "switch.hm3-service.hitman.io" }
             };

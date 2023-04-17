@@ -33,30 +33,6 @@ namespace hitmanstat.us.Data
             // UserReportCounter table
             // -----------------------
             modelBuilder.Entity<UserReportCounter>().ToTable("UserReportCounter");
-
-            // -- HITMAN 1 counters definition
-            modelBuilder.Entity<UserReportCounter>()
-                .Property(c => c.H1pc)
-                .HasDefaultValue(0);
-            modelBuilder.Entity<UserReportCounter>()
-                .Property(c => c.H1xb)
-                .HasDefaultValue(0);
-            modelBuilder.Entity<UserReportCounter>()
-                .Property(c => c.H1ps)
-                .HasDefaultValue(0);
-
-            // -- HITMAN 2 counters definition
-            modelBuilder.Entity<UserReportCounter>()
-                .Property(c => c.H2pc)
-                .HasDefaultValue(0);
-            modelBuilder.Entity<UserReportCounter>()
-                .Property(c => c.H2xb)
-                .HasDefaultValue(0);
-            modelBuilder.Entity<UserReportCounter>()
-                .Property(c => c.H2ps)
-                .HasDefaultValue(0);
-
-            // -- HITMAN 3 counters definition
             modelBuilder.Entity<UserReportCounter>()
                 .Property(c => c.H3steam)
                 .HasDefaultValue(0);

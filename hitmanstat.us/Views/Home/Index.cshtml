@@ -14,17 +14,21 @@
 @Html.AntiForgeryToken()
 
 <div id="section-btn-group" class="btn-group d-none" role="group">
-    <button class="btn btn-dark w-100 section-unselected" type="button" data-toggle="collapse" id="h1-selector" data-target=".h1-section" onclick="this.blur();">
-        HITMAN 1
+    <button class="btn btn-dark w-50 section-unselected" type="button" data-toggle="collapse" id="h1-selector" data-target=".h1-section" onclick="this.blur();">
+        <span data-toggle="tooltip" data-placement="bottom" title="Legacy servers for HITMAN (2016) game">H1 (Legacy)</span>
     </button>
-    <button class="btn btn-dark w-100 section-unselected" type="button" data-toggle="collapse" id="h2-selector" data-target=".h2-section" onclick="this.blur();">
-        HITMAN 2
+    <button class="btn btn-dark w-50 section-unselected" type="button" data-toggle="collapse" id="h2-selector" data-target=".h2-section" onclick="this.blur();">
+        <span data-toggle="tooltip" data-placement="bottom" title="Legacy servers for HITMAN 2 (2018) game">H2 (Legacy)</span>
     </button>
     <button class="btn btn-dark w-100 section-selected" type="button" data-toggle="collapse" id="h3-selector" data-target=".h3-section" onclick="this.blur();">
-        HITMAN 3
+        HITMAN World of Assassination
     </button>
-    <button class="btn btn-dark w-100 section-unselected" type="button" data-toggle="collapse" id="ot-selector" data-target=".ot-section" onclick="this.blur();">
-        FORUM
+    <button class="btn btn-dark w-50 section-unselected" type="button" data-toggle="collapse" id="elusives-selector" data-target=".elusives-section" onclick="this.blur();">
+        Elusive Targets
+        <span id="elusive-count" class="badge badge-warning">?</span>
+    </button>
+    <button class="btn btn-dark w-50 section-unselected" type="button" data-toggle="collapse" id="ot-selector" data-target=".ot-section" onclick="this.blur();">
+        Forum
     </button>
 </div>
 
@@ -40,8 +44,7 @@
     <div class="card">
         <a href="https://ioisupport.zendesk.com/hc/en-us">
             <div class="card-img-wrap">
-                <div class="ribbon ribbon-top-left"><span>featured</span></div>
-                <img class="card-img-top" src="~/images/hitman-help.jpg" alt="Hitman 3 Player Support" asp-append-version="true">
+                <img class="card-img-top" src="~/images/hitman-help.jpg" alt="Hitman Player Support" asp-append-version="true">
             </div>
         </a>
         <div class="card-body card-body-misc">

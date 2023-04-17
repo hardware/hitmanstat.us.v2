@@ -277,10 +277,9 @@ namespace hitmanstat.us.Framework
 
                         foreach (var ev in maintenanceEvents)
                         {
-                            if (ev.Service.StartsWith("HITMAN 3"))
+                            if (ev.Service.StartsWith("HITMAN 1"))
                             {
-                                h3MaintenanceEvents.Add(ev);
-
+                                h1MaintenanceEvents.Add(ev);
                             }
                             else if (ev.Service.StartsWith("HITMAN 2"))
                             {
@@ -288,7 +287,7 @@ namespace hitmanstat.us.Framework
                             }
                             else
                             {
-                                h1MaintenanceEvents.Add(ev);
+                                h3MaintenanceEvents.Add(ev);
                             }
                         }
 
@@ -301,7 +300,7 @@ namespace hitmanstat.us.Framework
                             {
                                 events.Add(new Event()
                                 {
-                                    Service = "ALL HITMAN 3 SERVICES",
+                                    Service = "ALL HITMAN SERVICES",
                                     State = maintenance
                                 });
                             }
@@ -311,13 +310,13 @@ namespace hitmanstat.us.Framework
 
                                 foreach (var ev in h3MaintenanceEvents)
                                 {
-                                    var item = ev.Service.Replace("HITMAN 3 ", string.Empty);
+                                    var item = ev.Service.Replace("HITMAN ", string.Empty);
                                     items.Add(item);
                                 }
 
                                 events.Add(new Event()
                                 {
-                                    Service = $"HITMAN 3 { string.Join(" / ", items) }",
+                                    Service = $"HITMAN { string.Join(" / ", items) }",
                                     State = maintenance
                                 });
                             }
@@ -369,7 +368,7 @@ namespace hitmanstat.us.Framework
 
                                 foreach (var ev in h1MaintenanceEvents)
                                 {
-                                    var item = ev.Service.Replace("HITMAN ", string.Empty);
+                                    var item = ev.Service.Replace("HITMAN 1 ", string.Empty);
                                     items.Add(item);
                                 }
 
@@ -391,7 +390,7 @@ namespace hitmanstat.us.Framework
                         events.Clear();
                         events.Add(new Event()
                         {
-                            Service = "ALL HITMAN SERVICES",
+                            Service = "ALL HITMAN 1, 2 and WOA SERVICES",
                             State = maintenance
                         });
                     }

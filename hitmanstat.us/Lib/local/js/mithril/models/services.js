@@ -2,20 +2,20 @@
 var chartRendered = false;
 
 services.list = [
-    // HITMAN 3
-    { ref: "h3steam", group: "h3-1", name: 'hitman 3 steam', endpoint: 'steam.hm3-service.hitman.io', platform: 'azure' },
-    { ref: "h3epic", group: "h3-1", name: 'hitman 3 epic', endpoint: 'epic.hm3-service.hitman.io', platform: 'azure' },
-    { ref: "h3xb", group: "h3-1", name: 'hitman 3 xbox', endpoint: 'xbox.hm3-service.hitman.io', platform: 'azure' },
-    { ref: "h3ps", group: "h3-2", name: 'hitman 3 playstation', endpoint: 'ps.hm3-service.hitman.io', platform: 'azure' },
-    { ref: "h3sw", group: "h3-2", name: 'hitman 3 switch', endpoint: 'switch.hm3-service.hitman.io', platform: 'azure' },
+    // HITMAN WOA
+    { ref: "h3steam", group: "h3-1", name: 'steam', endpoint: 'steam.hm3-service.hitman.io', platform: 'azure' },
+    { ref: "h3epic", group: "h3-1", name: 'epic', endpoint: 'epic.hm3-service.hitman.io', platform: 'azure' },
+    { ref: "h3xb", group: "h3-1", name: 'xbox', endpoint: 'xbox.hm3-service.hitman.io', platform: 'azure' },
+    { ref: "h3ps", group: "h3-1", name: 'playstation', endpoint: 'ps.hm3-service.hitman.io', platform: 'azure' },
+    { ref: "h3sw", group: "h3-1", name: 'switch', endpoint: 'switch.hm3-service.hitman.io', platform: 'azure' },
     // HITMAN 2
     { ref: "h2pc", group: "h2", name: 'hitman 2 pc', endpoint: 'pc2-service.hitman.io', platform: 'azure' },
     { ref: "h2xb", group: "h2", name: 'hitman 2 xbox one', endpoint: 'xboxone2-service.hitman.io', platform: 'azure' },
     { ref: "h2ps", group: "h2", name: 'hitman 2 ps4', endpoint: 'ps42-service.hitman.io', platform: 'azure' },
     // HITMAN 1
-    { ref: "h1pc", group: "h1", name: 'hitman pc', endpoint: 'pc-service.hitman.io', platform: 'azure' },
-    { ref: "h1xb", group: "h1", name: 'hitman xbox one', endpoint: 'xboxone-service.hitman.io', platform: 'azure' },
-    { ref: "h1ps", group: "h1", name: 'hitman ps4', endpoint: 'ps4-service.hitman.io', platform: 'azure' },
+    { ref: "h1pc", group: "h1", name: 'hitman 1 pc', endpoint: 'pc-service.hitman.io', platform: 'azure' },
+    { ref: "h1xb", group: "h1", name: 'hitman 1 xbox one', endpoint: 'xboxone-service.hitman.io', platform: 'azure' },
+    { ref: "h1ps", group: "h1", name: 'hitman 1 ps4', endpoint: 'ps4-service.hitman.io', platform: 'azure' },
     // HITMANFORUM
     { ref: "hmfc", group: "ot", name: 'hitmanforum.com', endpoint: 'hitmanforum', platform: 'discourse', url: 'https://www.hitmanforum.com/' }
 ];
@@ -69,15 +69,22 @@ services.refresh = function () {
                 service.elusive = null;
                 // Elusives status
                 if (result.elusives) {
-                    var elusive = result.elusives[service.endpoint][0];
-                    if (elusive) {
-                        service.elusive = {
-                            name: elusive.name,
-                            tile: elusive.tile,
-                            description: elusive.description,
-                            location: elusive.location,
-                            nextWindow: elusive.nextWindow,
-                        };
+                    var elusives = result.elusives[service.endpoint];
+                    if (elusives) {
+                        if (service.ref === "h3steam") {
+                            document.getElementById("elusive-count").innerHTML = elusives.length
+                        }
+                        if (elusives.length > 0) {
+                            while (elusives.length < 3) {
+                                elusives.push({
+                                    name: "placeholder",
+                                    tile: "/images/unknown-elusive.jpg",
+                                });
+                            }
+                            service.elusives = elusives;
+                        }
+                    } else {
+                        document.getElementById("elusive-count").innerHTML = 0
                     }
                 }
             });
@@ -162,7 +169,7 @@ services.renderChart = function () {
                         }
                     }]
                 },
-                colors: ['#761a00', '#395300', '#004362', '#ac2600', '#6c9d00', '#0072a7', '#ff3800', '#ff3800', '#9fe700', '#00aeff', '#e60012', '#cacaca'],
+                colors: ['#ff3800', '#ff3800', '#9fe700', '#00aeff', '#e60012', '#cacaca'],
                 dataLabels: {
                     enabled: false
                 },

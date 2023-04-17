@@ -154,14 +154,6 @@ namespace hitmanstat.us.Controllers
                 {
                     switch (model.Reference)
                     {
-                        case "h1pc": today.H1pc++; break;
-                        case "h1xb": today.H1xb++; break;
-                        case "h1ps": today.H1ps++; break;
-
-                        case "h2pc": today.H2pc++; break;
-                        case "h2xb": today.H2xb++; break;
-                        case "h2ps": today.H2ps++; break;
-
                         case "h3steam": today.H3steam++; break;
                         case "h3epic": today.H3epic++; break;
                         case "h3xb": today.H3xb++; break;
@@ -173,14 +165,6 @@ namespace hitmanstat.us.Controllers
                 {
                     _db.Add(new UserReportCounter
                     {
-                        H1pc = model.Reference == "h1pc" ? 1 : 0,
-                        H1xb = model.Reference == "h1xb" ? 1 : 0,
-                        H1ps = model.Reference == "h1ps" ? 1 : 0,
-
-                        H2pc = model.Reference == "h2pc" ? 1 : 0,
-                        H2xb = model.Reference == "h2xb" ? 1 : 0,
-                        H2ps = model.Reference == "h2ps" ? 1 : 0,
-
                         H3steam = model.Reference == "h3steam" ? 1 : 0,
                         H3epic = model.Reference == "h3epic" ? 1 : 0,
                         H3xb = model.Reference == "h3xb" ? 1 : 0,
@@ -205,41 +189,20 @@ namespace hitmanstat.us.Controllers
 
             switch (reference)
             {
-                // HITMAN 1
-                case "h1pc":
-                    name = "HITMAN PC";
-                    break;
-                case "h1xb":
-                    name = "HITMAN XBOX ONE";
-                    break;
-                case "h1ps":
-                    name = "HITMAN PS4";
-                    break;
-                // HITMAN 2
-                case "h2pc":
-                    name = "HITMAN 2 PC";
-                    break;
-                case "h2xb":
-                    name = "HITMAN 2 XBOX ONE";
-                    break;
-                case "h2ps":
-                    name = "HITMAN 2 PS4";
-                    break;
-                // HITMAN 3
                 case "h3steam":
-                    name = "HITMAN 3 STEAM";
+                    name = "HITMAN STEAM";
                     break;
                 case "h3epic":
-                    name = "HITMAN 3 EPIC";
+                    name = "HITMAN EPIC";
                     break;
                 case "h3xb":
-                    name = "HITMAN 3 XBOX";
+                    name = "HITMAN XBOX";
                     break;
                 case "h3ps":
-                    name = "HITMAN 3 PLAYSTATION";
+                    name = "HITMAN PLAYSTATION";
                     break;
                 case "h3sw":
-                    name = "HITMAN 3 SWITCH";
+                    name = "HITMAN SWITCH";
                     break;
             }
 

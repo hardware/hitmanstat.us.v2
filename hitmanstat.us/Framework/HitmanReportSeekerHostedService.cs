@@ -58,14 +58,6 @@ namespace hitmanstat.us.Framework
                 var categories = new List<string>();
                 var series = new List<ChartSerie>();
 
-                var h1pc = new List<int>();
-                var h1xb = new List<int>();
-                var h1ps = new List<int>();
-
-                var h2pc = new List<int>();
-                var h2xb = new List<int>();
-                var h2ps = new List<int>();
-
                 var h3steam = new List<int>();
                 var h3epic = new List<int>();
                 var h3xb = new List<int>();
@@ -78,14 +70,6 @@ namespace hitmanstat.us.Framework
                 {
                     categories.Add(counter.Date.ToString("MMM d"));
 
-                    h1pc.Add(counter.H1pc);
-                    h1xb.Add(counter.H1xb);
-                    h1ps.Add(counter.H1ps);
-
-                    h2pc.Add(counter.H2pc);
-                    h2xb.Add(counter.H2xb);
-                    h2ps.Add(counter.H2ps);
-
                     h3steam.Add(counter.H3steam);
                     h3epic.Add(counter.H3epic);
                     h3xb.Add(counter.H3xb);
@@ -95,19 +79,11 @@ namespace hitmanstat.us.Framework
                     thre.Add(50);
                 }
 
-                series.Add(new ChartSerie { Name = "HITMAN PC", Data = h1pc });
-                series.Add(new ChartSerie { Name = "HITMAN XBOX ONE", Data = h1xb });
-                series.Add(new ChartSerie { Name = "HITMAN PS4", Data = h1ps });
-
-                series.Add(new ChartSerie { Name = "HITMAN 2 PC", Data = h2pc });
-                series.Add(new ChartSerie { Name = "HITMAN 2 XBOX ONE", Data = h2xb });
-                series.Add(new ChartSerie { Name = "HITMAN 2 PS4", Data = h2ps });
-
-                series.Add(new ChartSerie { Name = "HITMAN 3 STEAM", Data = h3steam });
-                series.Add(new ChartSerie { Name = "HITMAN 3 EPIC", Data = h3epic });
-                series.Add(new ChartSerie { Name = "HITMAN 3 XBOX", Data = h3xb });
-                series.Add(new ChartSerie { Name = "HITMAN 3 PLAYSTATION", Data = h3ps });
-                series.Add(new ChartSerie { Name = "HITMAN 3 SWITCH", Data = h3sw });
+                series.Add(new ChartSerie { Name = "HITMAN STEAM", Data = h3steam });
+                series.Add(new ChartSerie { Name = "HITMAN EPIC", Data = h3epic });
+                series.Add(new ChartSerie { Name = "HITMAN XBOX", Data = h3xb });
+                series.Add(new ChartSerie { Name = "HITMAN PLAYSTATION", Data = h3ps });
+                series.Add(new ChartSerie { Name = "HITMAN SWITCH", Data = h3sw });
 
                 series.Add(new ChartSerie { Name = "THRESHOLD", Data = thre });
 
